@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 My Book of Emotions</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Comic Sans MS", cursive;
+    background: linear-gradient(to bottom, #e3f2f1, #fffdf5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .book {
+    width: 90%;
+    max-width: 950px;
+    height: 80vh;
+    background: #faf9f4;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+  }
+
+  .book::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 6px;
+    height: 100%;
+    background: rgba(0,0,0,0.1);
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  .left-page, .right-page {
+    width: 50%;
+    padding: 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .left-page {
+    background: linear-gradient(to left, #ffffff, #f2ede4);
+    border-right: 1px solid #d3c6a5;
+  }
+
+  .right-page {
+    background: linear-gradient(to right, #ffffff, #f2ede4);
+  }
+
+  h2 {
+    margin-top: 10px;
+    color: #4a4a4a;
+    font-size: 1.8em;
+  }
+
+  .emotion-img {
+    width: 280px;
+    height: 280px;
+    border-radius: 15%;
+    border: 5px solid #97c1a9;
+    background: #fff;
+    object-fit: contain;
+    box-shadow: 0 0 10px rgba(150,200,180,0.5);
+  }
+
+  canvas {
+    border: 3px dashed #a4d4c1;
+    border-radius: 15px;
+    background: white;
+    cursor: crosshair;
+    width: 100%;
+    max-width: 350px;
+    height: 300px;
+  }
+
+  .instructions {
+    font-size: 1em;
+    color: #444;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .controls {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-size: 1em;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #b2dfdb;
+    color: #2c3e50;
+    transition: transform 0.2s, background 0.3s;
+  }
+
+  button:hover {
+    background: #9dd1c8;
+    transform: scale(1.05);
+  }
+
+  input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .message {
+    font-size: 1.1em;
+    color: #3a7d44;
+    margin-top: 8px;
+    min-height: 24px;
+  }
+
+  /* COVER PAGE */
+  .cover {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #a7d7c5, #f6f5ec);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 10;
+  }
+
+  .cover h1 {
+    font-size: 2.3em;
+    color: #2c3e50;
+  }
+
+  .cover button {
+    margin-top: 25px;
+    font-size: 1.3em;
+    background: #97c1a9;
+    color: white;
+    border-radius: 20px;
+    padding: 15px 40px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .cover button:hover {
+    background: #88b69c;
+  }
+
+  /* FINAL PAGE */
+  .final-page {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom right, #f9faf7, #e4f3ec);
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    overflow-y: auto;
+    animation: fadeIn 1.5s ease-in-out;
+    z-index: 9;
+  }
+
+  .final-page h2 {
+    color: #3a7d44;
+  }
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  .gallery img {
+    width: 150px;
+    height: 150px;
+    border: 3px solid #97c1a9;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(167,215,197,0.7);
+    animation: sparkle 2s infinite ease-in-out alternate;
+  }
+
+  @keyframes sparkle {
+    0% { box-shadow: 0 0 8px rgba(167,215,197,0.5); }
+    100% { box-shadow: 0 0 20px rgba(134,194,168,0.9); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .play-again {
+    margin-top: 25px;
+    background: #a4d4c1;
+    color: white;
+    font-size: 1.2em;
+    padding: 12px 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .play-again:hover {
+    background: #8cc3ae;
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+
+<div class="book" id="book">
+  <!-- COVER -->
+  <div class="cover" id="cover">
+    <h1>📖 My Book of Emotions</h1>
+    <p style="color:#2c3e50;">Click to start your creative journey 🎨✨</p>
+    <button onclick="openBook()">Start Game</button>
+  </div>
+
+  <!-- PAGES -->
+  <div class="left-page">
+    <img id="emotionImage" class="emotion-img" src="happy.png" alt="emotion">
+    <h2 id="emotionName">Happy</h2>
+  </div>
+
+  <div class="right-page">
+    <div class="instructions" id="instructions">
+      ✏️ Draw how you feel when you are <b>happy</b>. Use any colors you like!
+    </div>
+
+    <canvas id="drawArea" width="350" height="300"></canvas>
+
+    <div class="controls">
+      <input type="color" id="colorPicker" value="#000000">
+      <button onclick="clearCanvas()">🧽 Delte</button>
+      <button onclick="saveDrawing()">💾 Save</button>
+    </div>
+
+    <div class="controls">
+      <button onclick="prevPage()">⬅️ Previous</button>
+      <button onclick="nextPage()">Next ➡️</button>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <!-- FINAL PAGE -->
+  <div class="final-page" id="finalPage" style="display:none;">
+    <h2>🎉 Your Feelings Book!</h2>
+    <p id="finalMessage" style="color:#2c3e50; font-size:1.2em; margin-bottom:15px;"></p>
+    <div class="gallery" id="gallery"></div>
+    <button class="play-again" onclick="restartBook()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+  const emotions = [
+    { name: "Happy", img: "happy.png", text: "Draw how you feel when you are happy 💛" },
+    { name: "Sad", img: "sad.png", text: "Draw how you feel when you are sad 💙" },
+    { name: "Angry", img: "angry.png", text: "Draw how you feel when you are angry ❤️" },
+    { name: "Scared", img: "scared.png", text: "Draw how you feel when you are scared 💜" },
+    { name: "Excited", img: "Excited.png", text: "Draw how you feel when you are Excited 💚" }
+  ];
+
+  let current = 0;
+  let drawings = [];
+  const cover = document.getElementById("cover");
+  const emotionName = document.getElementById("emotionName");
+  const emotionImage = document.getElementById("emotionImage");
+  const instructions = document.getElementById("instructions");
+  const canvas = document.getElementById("drawArea");
+  const ctx = canvas.getContext("2d");
+  const colorPicker = document.getElementById("colorPicker");
+  const message = document.getElementById("message");
+  const finalPage = document.getElementById("finalPage");
+  const gallery = document.getElementById("gallery");
+  const finalMessage = document.getElementById("finalMessage");
+  let drawing = false;
+
+  function openBook() {
+    cover.style.display = "none";
+  }
+
+  function showPage() {
+    const e = emotions[current];
+    emotionName.textContent = e.name;
+    emotionImage.src = e.img;
+    instructions.innerHTML = `✏️ ${e.text}`;
+    clearCanvas();
+    message.textContent = "";
+  }
+
+  function nextPage() {
+    if (current < emotions.length - 1) {
+      current++;
+      showPage();
+    } else {
+      showFinalPage();
+    }
+  }
+
+  function prevPage() {
+    if (current > 0) {
+      current--;
+      showPage();
+    }
+  }
+
+  function clearCanvas() {
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function saveDrawing() {
+    const imgData = canvas.toDataURL("image/png");
+    drawings[current] = imgData;
+    const praises = [
+      "🌟 Excellent work!",
+      "🎉 Great job!",
+      "💖 So creative!",
+      "😊 Beautiful drawing!",
+      "👏 Keep it up!"
+    ];
+    message.textContent = praises[Math.floor(Math.random() * praises.length)];
+  }
+
+  function showFinalPage() {
+    finalPage.style.display = "block";
+    gallery.innerHTML = "";
+    drawings.forEach((img, i) => {
+      const image = document.createElement("img");
+      image.src = img;
+      image.alt = emotions[i].name;
+      gallery.appendChild(image);
+    });
+    const compliments = [
+      "🌈 Your feelings shine through every drawing!",
+      "💫 What a wonderful artist you are!",
+      "🌻 Your emotions look beautiful!",
+      "🐰 Your book is full of magic!",
+      "💕 Amazing job, little artist!"
+    ];
+    finalMessage.textContent = compliments[Math.floor(Math.random() * compliments.length)];
+  }
+
+  function restartBook() {
+    finalPage.style.display = "none";
+    cover.style.display = "flex";
+    drawings = [];
+    current = 0;
+    showPage();
+  }
+
+  canvas.addEventListener("mousedown", () => drawing = true);
+  canvas.addEventListener("mouseup", () => drawing = false);
+  canvas.addEventListener("mouseout", () => drawing = false);
+  canvas.addEventListener("mousemove", draw);
+
+  function draw(e) {
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    ctx.fillStyle = colorPicker.value;
+    ctx.beginPath();
+    ctx.arc(e.clientX - rect.left, e.clientY - rect.top, 4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  showPage();
+</script>
+
+</body>
+</html>

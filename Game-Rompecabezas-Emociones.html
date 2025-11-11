@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>🧩 Emotion Puzzle Game</title>
+<style>
+  :root{
+    --accent:#0077b6;
+    --bg:linear-gradient(135deg,#e3f2fd,#fff3e0);
+  }
+  body{
+    margin:0;
+    font-family:"Comic Sans MS", cursive;
+    background:var(--bg);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    min-height:100vh;
+    padding:18px;
+    box-sizing:border-box;
+  }
+  .cover, .final {
+    width:100%;
+    max-width:900px;
+    padding:24px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+    text-align:center;
+    background:linear-gradient(135deg,#caf0f8,#fde4cf);
+  }
+  h1{ color:var(--accent); margin:0; }
+  .game {
+    width:100%;
+    max-width:900px;
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+    justify-content:center;
+  }
+  .left {
+    flex:1 1 620px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .right {
+    width:200px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+  }
+
+  .board {
+    width: calc(3*120px + 2*6px);
+    height: calc(3*120px + 2*6px);
+    display:grid;
+    grid-template-columns:repeat(3,120px);
+    grid-template-rows:repeat(3,120px);
+    gap:6px;
+    padding:6px;
+    background:#fff;
+    border-radius:10px;
+    border:4px solid var(--accent);
+    box-shadow:0 8px 20px rgba(0,0,0,0.12);
+  }
+
+  .cell {
+    width:120px;
+    height:120px;
+    border-radius:8px;
+    background-repeat:no-repeat;
+    background-size:360px 360px;
+    cursor:grab;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,0.03);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .cell:active{ cursor:grabbing; transform:scale(.98); }
+
+  .cell.animate {
+    transform: scale(1.1);
+    box-shadow:0 0 15px rgba(255,215,0,0.6);
+  }
+
+  .message{ color:#28a745; font-weight:700; display:none; margin-top:10px; }
+  .btn{ background:var(--accent); color:#fff; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; }
+  .gallery img{ width:140px; height:100px; object-fit:cover; border-radius:8px; border:3px solid var(--accent); box-shadow:0 8px 20px rgba(0,0,0,0.12); }
+  .emotionTitle{ text-align:center; color:#000; font-size:20px; font-weight:700; margin:6px 0; }
+  @media(max-width:880px){
+    .game{ flex-direction:column; }
+    .right{ width:100%; flex-direction:row; justify-content:center; flex-wrap:wrap; }
+    .gallery img{ width:120px; height:80px; }
+    .board{ transform:scale(.9); transform-origin:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="cover" id="cover">
+  <h1>🧩 Emotion Puzzle Game</h1>
+  <p>Complete each emotion puzzle by dragging the pieces to the correct place. </p>
+  <button class="btn" onclick="startGame()">Start Game</button>
+</div>
+
+<!-- Game -->
+<div id="game" style="display:none; width:100%; max-width:900px;">
+  <div class="emotionTitle" id="emotionName">Happy 😊</div>
+
+  <div class="game">
+    <div class="left">
+      <div id="board" class="board" aria-label="Puzzle board"></div>
+      <div id="message" class="message">🎉 Excellent job!</div>
+    </div>
+
+    <div class="right">
+      <div><strong>Completed</strong></div>
+      <div id="gallery" class="gallery"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Final -->
+<div id="final" class="final" style="display:none;">
+  <h1>🎉 Amazing!</h1>
+  <p id="finalScore" style="font-weight:700; color:var(--accent);">You scored 10/10!</p>
+  <div id="finalGallery" style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:12px;"></div>
+  <div style="margin-top:12px;">
+    <button class="btn" onclick="restart()">Play Again</button>
+  </div>
+</div>
+
+<script>
+const emotions = [
+  { name: "Happy", img: "happy.png" },
+  { name: "Sad", img: "sad.png" },
+  { name: "Angry", img: "angry.png" },
+  { name: "Scared", img: "scared.png" },
+  { name: "Excited", img: "excited.png" }
+];
+
+const SIZE = 3;
+const TILE = 120;
+let current = 0;
+let draggedCell = null;
+let picked = null;
+
+const board = document.getElementById('board');
+
+function startGame(){
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('final').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+  document.getElementById('gallery').innerHTML = '';
+  current = 0;
+  loadPuzzle();
+}
+
+function loadPuzzle(){
+  const emo = emotions[current];
+  document.getElementById('emotionName').textContent = `${emo.name} 😊`;
+  document.getElementById('message').style.display = 'none';
+  board.innerHTML = '';
+
+  const indices = [...Array(SIZE*SIZE).keys()];
+  const positions = indices.slice();
+  shuffle(positions);
+
+  positions.forEach((correctIndex, gridIndex) => {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.dataset.correct = String(correctIndex);
+    cell.dataset.current = String(gridIndex);
+    const sx = (correctIndex % SIZE) * -TILE;
+    const sy = Math.floor(correctIndex / SIZE) * -TILE;
+    cell.style.backgroundImage = `url(${emo.img})`;
+    cell.style.backgroundPosition = `${sx}px ${sy}px`;
+    cell.draggable = true;
+
+    cell.addEventListener('dragstart', (e) => { draggedCell = e.currentTarget; });
+    cell.addEventListener('dragover', (e) => e.preventDefault());
+    cell.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const target = e.currentTarget;
+      if(!draggedCell || draggedCell === target) return;
+      swapCells(draggedCell, target);
+      animateCell(target);
+      checkSolved();
+      draggedCell = null;
+    });
+
+    cell.addEventListener('click', onCellClick);
+    board.appendChild(cell);
+  });
+}
+
+function swapCells(a,b){
+  const parent = a.parentNode;
+  const children = Array.from(parent.children);
+  const aIndex = children.indexOf(a);
+  const bIndex = children.indexOf(b);
+  if(aIndex < bIndex){
+    parent.insertBefore(b,a);
+    parent.insertBefore(a,parent.children[bIndex]);
+  } else {
+    parent.insertBefore(a,b);
+    parent.insertBefore(b,parent.children[aIndex]);
+  }
+}
+
+function onCellClick(e){
+  const cell = e.currentTarget;
+  if(!picked){
+    picked = cell;
+    cell.style.outline = '4px solid rgba(0,0,0,0.2)';
+    return;
+  }
+  if(picked === cell){
+    picked.style.outline = '';
+    picked = null;
+    return;
+  }
+  swapCells(picked, cell);
+  picked.style.outline = '';
+  animateCell(cell);
+  checkSolved();
+  picked = null;
+}
+
+function animateCell(cell){
+  cell.classList.add('animate');
+  setTimeout(() => cell.classList.remove('animate'), 250);
+}
+
+function checkSolved(){
+  const cells = Array.from(board.children);
+  const solved = cells.every((cell,index) => String(index) === cell.dataset.correct);
+  if(solved){
+    const msg = document.getElementById('message');
+    msg.textContent = '🎉 Excellent job!';
+    msg.style.display = 'block';
+
+    const img = document.createElement('img');
+    img.src = emotions[current].img;
+    img.alt = emotions[current].name;
+    document.getElementById('gallery').appendChild(img);
+
+    setTimeout(() => {
+      current++;
+      if(current < emotions.length){
+        loadPuzzle();
+      } else {
+        showFinal();
+      }
+    }, 1000);
+  }
+}
+
+function showFinal(){
+  document.getElementById('game').style.display = 'none';
+  const final = document.getElementById('final');
+  final.style.display = 'block';
+  document.getElementById('finalScore').textContent = `You completed all puzzles! 🎖️ Score: ${emotions.length}/${emotions.length}`;
+  const g = document.getElementById('finalGallery');
+  g.innerHTML = '';
+  Array.from(document.getElementById('gallery').children).forEach(img => {
+    const clone = img.cloneNode();
+    clone.style.width = '120px';
+    clone.style.height = '80px';
+    g.appendChild(clone);
+  });
+}
+
+function restart(){
+  document.getElementById('final').style.display = 'none';
+  document.getElementById('cover').style.display = 'block';
+}
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game of Emotions</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Comic Sans MS", cursive;
+    background: url("paisaje.jpg") no-repeat center center/cover;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+/* Línea de instrucciones */
+.instructions-line {
+  text-align: center;
+  background-color: #fff7ae;
+  border: 2px dashed #f8c537;
+  color: #6a0572;
+  font-family: "Comic Sans MS", cursive;
+  font-size: 20px;
+  padding: 12px 20px;
+  margin: 10px auto;
+  width: 80%;
+  border-radius: 15px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  animation: glowText 2s ease-in-out infinite;
+}
+
+/* brillo animado */
+@keyframes glowText {
+  0%, 100% { background-color: #fff7ae; color: #6a0572; }
+  50% { background-color: #fff3a3; color: #d45d00; }
+}
+
+
+  h1 {
+    text-align: center;
+    color: #ff69b4;
+    text-shadow: 2px 2px #fff;
+  }
+
+  .start-screen, .end-screen {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 5;
+  }
+
+  .start-button, .restart-button {
+    background-color: #ffb6c1;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 20px 50px;
+    border-radius: 40px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .start-button:hover, .restart-button:hover {
+    transform: scale(1.1);
+    background-color: #ffa5b0;
+  }
+
+  .game-area {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    overflow: hidden;
+  }
+
+  /* Conejo con vibración */
+  .bunny {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    z-index: 3;
+    animation: bunnyVibrate 0.4s infinite ease-in-out;
+  }
+
+  @keyframes bunnyVibrate {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-4px); }
+  }
+
+  /* Huevo con brillo */
+  .egg {
+    position: absolute;
+    bottom: 125px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.5);
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+    color: #444;
+    cursor: grab;
+    user-select: none;
+    display: none;
+    z-index: 2;
+    animation: eggBlink 1s infinite alternate;
+  }
+
+  @keyframes eggBlink {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.3); }
+  }
+
+  /* Efecto  del huevo al abrir */
+  @keyframes eggPop {
+    0% { transform: translateX(-50%) scale(1); filter: brightness(1); }
+    50% { transform: translateX(-50%) scale(1.3); filter: brightness(1.5); }
+    100% { transform: translateX(-50%) scale(1); filter: brightness(1); }
+  }
+
+  /* Emociones arriba más grandes */
+  .targets {
+    position: absolute;
+    top: 5%;
+    width: 100%;
+    text-align: center;
+    z-index: 4;
+  }
+
+  .dropzone {
+    display: inline-block;
+    width: 128px;
+    height: 128px;
+    border-radius: 12%;
+    border: 4px dashed #ccc;
+    margin: 15px;
+    background-color: #ffffffcc;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .dropzone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0%;
+  }
+
+  .dropzone:hover {
+    transform: scale(1.1);
+  }
+
+  .dropzone.correct {
+    border-color: #7ae582;
+    background-color: #e3fcec;
+    animation: pop 0.5s ease;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .message {
+    text-align: center;
+    font-size: 24px;
+    color: #6a0572;
+    margin-top: 10px;
+  }
+/* Animación para todas las emociones */
+.emotion-animate {
+  animation: wiggleEmotion 1.2s infinite ease-in-out;
+}
+
+/* Movimiento “flotar” */
+@keyframes wiggleEmotion {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(2deg) scale(1.02); }
+  50% { transform: rotate(-2deg) scale(1.03); }
+  75% { transform: rotate(1.5deg) scale(1.02); }
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- 🐇 Start Screen -->
+<div class="start-screen" id="startScreen">
+  <h1> 🐰 Game of Emotions 🥕</h1>
+
+  <p style="font-size:1.2em;">Help Bunny learn emotions in English!</p>
+  <button class="start-button" onclick="startGame()">Start Game</button>
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<!-- Game Area -->
+<div class="game-area" id="gameArea">
+  <img src="conejo.png" class="bunny" id="bunny" alt="bunny">
+  <div class="egg" id="egg"></div>
+</div>
+
+<!-- Emotion Targets -->
+<!-- 🗒️ Instrucciones arriba del juego -->
+<div class="instructions-line" id="instructionsLine">
+  🐰 Click the carrot, read the word, and drag it to match the correct emotion! 🥕
+</div>
+<div class="targets" id="targetArea">
+  <div class="dropzone" data-match="angry"><img src="angry.png" alt="angry"class="emotion-animate"></div>
+  <div class="dropzone" data-match="excited"><img src="excited.png" alt="excited" class="emotion-animate"></div>
+  <div class="dropzone" data-match="happy"><img src="happy.png" alt="happy" class="emotion-animate"></div>
+  <div class="dropzone" data-match="sad"><img src="sad.png" alt="sad" class="emotion-animate"></div>
+  <div class="dropzone" data-match="scared"><img src="scared.png" alt="scared" class="emotion-animate"></div>
+</div>
+
+<div class="message" id="message"></div>
+
+<!-- End Screen -->
+<div class="end-screen" id="endScreen" style="display:none;">
+  <h1>🎉 Great Job! 🎉</h1>
+  <p id="finalScore" style="font-size:1.5em; color:#6a0572;"></p>
+  <button class="restart-button" onclick="location.reload()">Play Again</button>
+</div>
+
+<script>
+  let emotions = ["angry", "excited", "happy", "sad", "scared"];
+  const bunny = document.getElementById("bunny");
+  const egg = document.getElementById("egg");
+  const message = document.getElementById("message");
+  const zones = document.querySelectorAll(".dropzone");
+  const startScreen = document.getElementById("startScreen");
+  const endScreen = document.getElementById("endScreen");
+  const bgMusic = document.getElementById("bgMusic");
+
+  let score = 0;
+  let current = 0;
+  let draggingWord = "";
+
+  function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+  function startGame() {
+    startScreen.style.display = "none";
+    bgMusic.play();
+    emotions = shuffleArray(emotions); // Aleatorio
+    startRound();
+  }
+
+  function startRound() {
+    if (current >= emotions.length) {
+      showResult();
+      return;
+    }
+
+    const emotion = emotions[current];
+    message.textContent = "";
+    egg.textContent = "";
+    egg.style.display = "none";
+
+    setTimeout(() => {
+      showEgg(emotion);
+    }, 800);
+  }
+
+  // Huevo saliendo detrás del conejo, pequeño y creciendo
+function showEgg(emotion) {
+  egg.style.display = "flex";
+  egg.style.flexDirection = "column";
+  egg.style.alignItems = "center";
+  egg.style.justifyContent = "flex-end";
+  egg.style.paddingBottom = "10px";
+  egg.style.textAlign = "center";
+
+  egg.style.backgroundImage = 'url("zanahoria.png")';
+  egg.style.backgroundSize = "contain";
+  egg.style.backgroundRepeat = "no-repeat";
+  egg.style.backgroundPosition = "center";
+  egg.style.animation = "eggBlink 1.5s infinite ease-in-out";
+
+  egg.style.width = "80px";  // Tamaño mediano
+  egg.style.height = "110px";
+  egg.style.border = "4px solid gold"; // borde tipo marco
+  egg.style.borderRadius = "50% / 60%"; // óvalo vertical
+  egg.style.transform = "translate(-50%, -10px) rotate(-20deg)"; // inclinación
+  egg.style.opacity = "1";
+  egg.textContent = "";
+  egg.setAttribute("data-word", emotion);
+  egg.setAttribute("draggable", false);
+
+
+
+  // Efecto de salida desde atrás del conejo (crece de pequeño a mediano)
+  egg.animate(
+    [
+      { transform: "translate(-50%, 0) scale(0.1)", opacity: 0 },
+      { transform: "translate(-50%, -20px) scale(1)", opacity: 1 }
+
+    ],
+    { duration: 1000, easing: "ease-out", fill: "forwards" }
+  );
+
+  // Se abre con clic
+  egg.onclick = () => {
+    openEgg(emotion);
+  };
+}
+
+
+  // Efecto de “pop” brillante al abrir el huevo
+  function openEgg(emotion) {
+    egg.style.animation = "eggPop 0.6s ease";
+    egg.style.transform = "translate(-50%, -10px) scale(1.1) rotate(-20deg)";
+    egg.style.transition = "transform 0.3s ease";
+    //egg.style.backgroundColor = "#fff3b0";
+    egg.style.border = "3px solid #ffd166";
+    egg.textContent = emotion;
+    egg.style.display = "flex";
+    egg.style.alignItems = "center";  // mueve el texto hacia abajo
+    egg.style.justifyContent = "center"; // centrado horizontal
+    egg.style.paddingBottom = "25px";   // ajusta la distancia del borde        inferior
+    egg.style.textAlign = "center";
+    egg.setAttribute("draggable", true);
+    egg.addEventListener("dragstart", dragStart);
+  }
+
+  function dragStart(e) {
+    draggingWord = e.target.dataset.word;
+    e.dataTransfer.setData("text", draggingWord);
+  }
+
+  zones.forEach(zone => {
+    zone.addEventListener("dragover", e => e.preventDefault());
+    zone.addEventListener("drop", dropEgg);
+  });
+
+  function dropEgg(e) {
+    e.preventDefault();
+    const correctWord = e.target.closest(".dropzone").dataset.match;
+
+    if (draggingWord === correctWord) {
+      score++;
+      message.textContent = `✅ Correct! (${score}/${emotions.length})`;
+      message.style.color = "#00a86b";
+      e.target.closest(".dropzone").classList.add("correct");
+    } else {
+      message.textContent = `❌ Oops! Try again next time.`;
+      message.style.color = "#ff595e";
+    }
+
+    egg.style.display = "none";
+    current++;
+    setTimeout(startRound, 1500);
+  }
+
+  function showResult() {
+    document.getElementById("finalScore").textContent = `You got ${score}/${emotions.length} correct!`;
+    endScreen.style.display = "flex";
+  }
+</script>
+</body>
+</html>
