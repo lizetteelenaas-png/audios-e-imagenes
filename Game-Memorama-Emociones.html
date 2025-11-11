@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title> Emotions Memory Game</title>
+<style>
+  :root{
+    --accent:#0077b6;
+    --bg:url('paisaje3.jpg') no-repeat center center fixed;
+  }
+  body{
+    margin:0;
+    font-family:"Comic Sans MS", cursive;
+    background:var(--bg);
+    background-size: cover;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    min-height:100vh;
+    padding:18px;
+    box-sizing:border-box;
+  }
+  .cover, .final {
+    width:100%;
+    max-width:900px;
+    padding:24px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+    text-align:center;
+    background:linear-gradient(135deg,#caf0f8,#fde4cf);
+  }
+  h1{ color:var(--accent); margin:0; }
+  .game {
+    width:100%;
+    max-width:900px;
+    display:grid;
+    grid-template-columns:repeat(5,140px);
+    grid-gap:12px;
+    justify-content:center;
+    margin-bottom:12px;
+  }
+  .card {
+    width:140px;
+    height:160px;
+    border-radius:12px;
+    background:#fff;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    user-select:none;
+    position:relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-weight:700;
+    color:#000;
+    font-size:24px;
+    text-align:center;
+  }
+  .card img {
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    margin-bottom:6px;
+    border-radius:8px;
+  }
+  .card.flipped {
+    transform: scale(1.05);
+    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  }
+  .card.matched {
+    background:#caf0f8;
+    cursor:default;
+  }
+  .btn{ background:var(--accent); color:#fff; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; margin-bottom:12px; }
+  #finalMessage {
+    font-size:32px;
+    font-weight:700;
+    color:green;
+    margin-top:12px;
+    text-align:center;
+  }
+  @media(max-width:800px){
+    .game{ grid-template-columns:repeat(2,140px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="cover" id="cover">
+  <h1> Emotions Memory Game</h1>
+  <p>Find all the matching pairs of emotions.</p>
+  <button class="btn" onclick="startGame()">Start Game</button>
+</div>
+
+<!-- Game -->
+<div id="game" style="display:none; text-align:center;">
+  <button class="btn" onclick="giveHint()">💡 Hint</button>
+  <div class="game" id="board" aria-label="Memory board"></div>
+  <div id="message" style="display:none;">
+    <div id="finalMessage"></div>
+    <button class="btn" onclick="startGame()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+// List of emotions and their images
+const emotions = [
+  { name: "Excited", img: "excited1.png" },
+  { name: "Angry", img: "angry1.jpg" },
+  { name: "Happy", img: "happy1.jpg" },
+  { name: "Scared", img: "scared1.jpg" },
+  { name: "Worried", img: "worried1.jpg" },
+  { name: "Tired", img: "tired1.jpg" },
+  { name: "Sad", img: "sad1.jpg" },
+  { name: "Confused", img: "confused1.jpg" },
+  { name: "Surprised", img: "surprised.jpg" },
+  { name: "Glad", img: "glad1.jpg" }
+];
+
+let boardEl = document.getElementById('board');
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let matches = 0;
+let allCards = [];
+
+function startGame(){
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+  document.getElementById('message').style.display = 'none';
+  boardEl.innerHTML = '';
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+  matches = 0;
+
+  // Create pairs and shuffle
+  let cards = [];
+  emotions.forEach(e => { cards.push({...e}); cards.push({...e}); });
+  shuffle(cards);
+
+  allCards = [];
+  cards.forEach((cardData, index)=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.name = cardData.name;
+    card.dataset.img = cardData.img;
+    card.dataset.index = index;
+    // Show "?" before flipping
+    card.innerHTML = '?';
+    card.addEventListener('click', flipCard);
+    boardEl.appendChild(card);
+    allCards.push(card);
+  });
+}
+
+function flipCard(){
+  if(lockBoard) return;
+  if(this.classList.contains('flipped') || this.classList.contains('matched')) return;
+
+  this.classList.add('flipped');
+  // Replace "?" with image + word
+  this.innerHTML = `<img src="${this.dataset.img}" alt="${this.dataset.name}"><div>${this.dataset.name}</div>`;
+
+  if(!firstCard){
+    firstCard = this;
+    return;
+  }
+  secondCard = this;
+  checkMatch();
+}
+
+function checkMatch(){
+  if(firstCard.dataset.name === secondCard.dataset.name){
+    firstCard.classList.add('matched');
+    secondCard.classList.add('matched');
+    firstCard = null;
+    secondCard = null;
+    matches++;
+    if(matches === emotions.length){
+      showFinalMessage();
+    }
+  } else {
+    lockBoard = true;
+    setTimeout(()=>{
+      firstCard.classList.remove('flipped');
+      secondCard.classList.remove('flipped');
+      firstCard.innerHTML = '?';
+      secondCard.innerHTML = '?';
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    },1000);
+  }
+}
+
+// Fisher-Yates shuffle
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+}
+
+// Hint function: flip one unmatched card temporarily
+function giveHint(){
+  if(lockBoard) return;
+  const unflipped = allCards.filter(c => !c.classList.contains('flipped') && !c.classList.contains('matched'));
+  if(unflipped.length === 0) return;
+  const card = unflipped[Math.floor(Math.random()*unflipped.length)];
+  card.classList.add('flipped');
+  card.innerHTML = `<img src="${card.dataset.img}" alt="${card.dataset.name}"><div>${card.dataset.name}</div>`;
+  lockBoard = true;
+  setTimeout(()=>{
+    card.classList.remove('flipped');
+    card.innerHTML = '?';
+    lockBoard = false;
+  },1000);
+}
+
+function showFinalMessage(){
+  const msg = document.getElementById('message');
+  const finalText = document.getElementById('finalMessage');
+  finalText.textContent = '🎉 Congratulations! You completed the game!';
+  msg.style.display = 'block';
+}
+</script>
+</body>
+</html>

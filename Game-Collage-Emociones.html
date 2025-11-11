@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🖼️ Emotion Collage Game</title>
+<style>
+:root { --accent: #0077b6; --bg: url('paisaje2.jpg') no-repeat center center fixed; }
+body { margin:0; font-family:"Comic Sans MS", cursive; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; min-height:100vh; padding:18px; box-sizing:border-box; }
+h1 { color:var(--accent); margin:0 0 12px 0; text-align:center; }
+.cover, .final { width:100%; max-width:900px; padding:24px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.12); text-align:center; background:linear-gradient(135deg,#caf0f8,#fde4cf); margin-top:50px; }
+#game { display:none; width:100%; max-width:900px; text-align:center; margin-top:20px; }
+.emotionPrompt { font-size:24px; font-weight:bold; color:var(--accent); margin-bottom:12px; }
+.imagesGrid { display:flex; gap:12px; justify-content:center; margin-bottom:12px; flex-wrap:wrap; }
+.imagesGrid img { width:120px; height:120px; object-fit:cover; border-radius:8px; cursor:pointer; transition: transform 0.2s; }
+.collage { position:relative; width:600px; height:400px; margin:20px auto; border:2px solid #ccc; border-radius:12px; overflow:hidden; background:#fff; display:flex; flex-wrap:wrap; padding:8px; align-content:flex-start; }
+.collage img { width:120px; height:120px; object-fit:cover; border-radius:8px; margin:4px; transition: all 0.5s; }
+.btn{ background:var(--accent); color:#fff; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; margin-bottom:12px; font-size:16px; }
+#finalMessage { font-size:28px; font-weight:700; color:green; margin-top:12px; text-align:center; }
+</style>
+</head>
+<body>
+
+<!-- Cover Page -->
+<div class="cover" id="cover">
+  <h1>🖼️ Emotion Collage Game</h1>
+  <p>Select the image that best represents the emotion shown. Your choices will form a collage!</p>
+  <button class="btn" onclick="startGame()">Start Game</button>
+</div>
+
+<!-- Game Page -->
+<div id="game">
+  <div class="emotionPrompt" id="emotionPrompt"></div>
+  <div class="imagesGrid" id="imageChoices"></div>
+  <div class="collage" id="collage"></div>
+</div>
+
+<!-- Final Collage Page -->
+<div class="final" id="final" style="display:none;">
+  <h1>🎉 Congratulations!</h1>
+  <div class="collage" id="finalCollage"></div>
+  <div id="finalMessage">These are the images you selected that represent your emotions.</div>
+  <button class="btn" onclick="restart()">Play Again</button>
+</div>
+
+<script>
+// Emotions and images
+const emotions = [
+  {name:"Excited", img:"excited1.png"},
+  {name:"Angry", img:"angry1.jpg"},
+  {name:"Happy", img:"happy1.jpg"},
+  {name:"Scared", img:"scared1.jpg"},
+  {name:"Worried", img:"worried1.jpg"},
+  {name:"Tired", img:"tired1.jpg"},
+  {name:"Sad", img:"sad1.jpg"},
+  {name:"Confused", img:"confused1.jpg"},
+  {name:"Surprised", img:"surprised.jpg"},
+  {name:"Glad", img:"glad1.jpg"}
+];
+
+const allImages = emotions.map(e=>e.img);
+let currentIndex = 0;
+let collageImages = [];
+
+function startGame(){
+  document.getElementById('cover').style.display='none';
+  document.getElementById('final').style.display='none';
+  document.getElementById('game').style.display='block';
+
+  currentIndex = 0;
+  collageImages = [];
+  document.getElementById('collage').innerHTML='';
+  showNextEmotion();
+}
+
+function showNextEmotion(){
+  if(currentIndex >= emotions.length){
+    showFinal();
+    return;
+  }
+
+  const emotion = emotions[currentIndex];
+  document.getElementById('emotionPrompt').textContent = `Which image represents: ${emotion.name}?`;
+
+  const imageGrid = document.getElementById('imageChoices');
+  imageGrid.innerHTML='';
+
+  const distractors = allImages.filter(img=>img!==emotion.img);
+  shuffle(distractors);
+  const options = [emotion.img, distractors[0], distractors[1]];
+  shuffle(options);
+
+  options.forEach(url=>{
+    const img = document.createElement('img');
+    img.src = url;
+    img.addEventListener('click', ()=> selectImage(url));
+    imageGrid.appendChild(img);
+  });
+}
+
+function selectImage(url){
+  addToCollage(url);
+  currentIndex++;
+  showNextEmotion();
+}
+
+function addToCollage(url){
+  collageImages.push(url);
+  const collageEl = document.getElementById('collage');
+  const img = document.createElement('img');
+  img.src = url;
+  collageEl.appendChild(img);
+}
+
+function showFinal(){
+  document.getElementById('game').style.display='none';
+  const finalDiv = document.getElementById('final');
+  const finalCollage = document.getElementById('finalCollage');
+  finalCollage.innerHTML='';
+  
+  // Distribuir imágenes en rejilla clara
+  const cols = 5;
+  const rows = Math.ceil(collageImages.length / cols);
+  const cellWidth = 120 + 8; // image + margin
+  const cellHeight = 120 + 8;
+  
+  collageImages.forEach((url, i)=>{
+    const img = document.createElement('img');
+    img.src = url;
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    img.style.position='absolute';
+    img.style.top = row * cellHeight + 'px';
+    img.style.left = col * cellWidth + 'px';
+    img.style.transform = `rotate(${Math.random()*20-10}deg)`;
+    finalCollage.appendChild(img);
+  });
+
+  finalDiv.style.display='block';
+}
+
+function restart(){
+  document.getElementById('final').style.display='none';
+  startGame();
+}
+
+// Shuffle helper
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+}
+</script>
+
+</body>
+</html>
