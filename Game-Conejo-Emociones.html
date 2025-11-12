@@ -61,14 +61,14 @@
   .game-area {
     position: relative;
     width: 100%;
-    height: 70vh; /* un poco más pequeño para dejar espacio arriba */
+    height: 70vh;
     overflow: hidden;
     margin-top: 10px;
   }
 
   .bunny {
     position: absolute;
-    bottom: 10px; /* más abajo */
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     width: clamp(120px, 15vw, 180px);
@@ -96,7 +96,7 @@
 
   .egg {
     position: absolute;
-    bottom: 50px; /* más arriba que antes */
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%) scale(1);
     font-weight: bold;
@@ -106,7 +106,7 @@
     z-index: 5;
     width: clamp(70px,16vw,140px);
     height: clamp(90px,20vw,160px);
-    padding-top: 10px; /* espacio para la palabra */
+    padding-top: 10px;
     background-image: url("zanahoria.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -120,7 +120,7 @@
 
   .targets {
     position: absolute;
-    top: 15%; /* bajar las emociones */
+    top: 15%;
     width: 100%;
     text-align: center;
     z-index: 4;
@@ -159,11 +159,23 @@
     margin-top: 10px;
   }
 
+  /* Ajuste responsivo para teléfonos */
+  @media (max-width: 600px) {
+    .egg {
+      width: 120px;
+      height: 160px;
+      font-size: 28px;
+      padding-top: 15px;
+    }
+    .dropzone {
+      width: 100px;
+      height: 100px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- Start Screen -->
 <div class="start-screen" id="startScreen">
   <h1> 🐰 Game of Emotions 🥕</h1>
   <p>Help Bunny learn emotions in English!</p>
@@ -173,18 +185,15 @@
   </audio>
 </div>
 
-<!-- Instrucciones -->
 <div class="instructions-line" id="instructionsLine">
   🐰 Click the carrot, read the word, and drag it to match the correct emotion! 🥕
 </div>
 
-<!-- Game Area -->
 <div class="game-area" id="gameArea">
   <img src="conejo.png" class="bunny" id="bunny" alt="bunny">
   <div class="egg" id="egg"></div>
 </div>
 
-<!-- Dropzones -->
 <div class="targets" id="targetArea">
   <div class="dropzone" data-match="angry"><img src="angry.png" alt="angry"></div>
   <div class="dropzone" data-match="excited"><img src="excited.png" alt="excited"></div>
@@ -195,7 +204,6 @@
 
 <div class="message" id="message"></div>
 
-<!-- End Screen -->
 <div class="end-screen" id="endScreen" style="display:none;">
   <h1>🎉 Great Job! 🎉</h1>
   <p id="finalScore"></p>
@@ -239,40 +247,65 @@ function showEgg(emotion){
   egg.style.bottom="50px";
   egg.style.top="";
   egg.style.transform="translateX(-50%) scale(1)";
-  egg.textContent = emotion; // palabra visible
+  egg.textContent = emotion;
   egg.setAttribute("data-word",emotion);
 
-  // Touch para móviles: arrastre inmediato
-  egg.ontouchstart=function(e){
+  // Guardar posición inicial
+  const startLeft = egg.offsetLeft;
+  const startTop  = egg.offsetTop;
+
+  // Touch para móviles
+  egg.ontouchstart = function(e){
     e.preventDefault();
-    draggingWord=emotion;
-    const moveEgg=function(ev){
-      const touch=ev.touches[0];
-      egg.style.left=touch.clientX+"px";
-      egg.style.top=touch.clientY+"px";
+    draggingWord = emotion;
+    const startX = e.touches[0].clientX - egg.offsetLeft;
+    const startY = e.touches[0].clientY - egg.offsetTop;
+
+    const moveEgg = function(ev){
+      const touch = ev.touches[0];
+      egg.style.left = (touch.clientX - startX) + "px";
+      egg.style.top  = (touch.clientY - startY) + "px";
     };
-    document.ontouchmove=moveEgg;
-    document.ontouchend=function(ev){
-      document.ontouchmove=null;
-      document.ontouchend=null;
+
+    document.ontouchmove = moveEgg;
+
+    document.ontouchend = function(ev){
+      document.ontouchmove = null;
+      document.ontouchend = null;
+
+      let droppedOnZone = false;
+
       zones.forEach(zone=>{
-        const rect=zone.getBoundingClientRect();
-        if(ev.changedTouches[0].clientX>=rect.left && ev.changedTouches[0].clientX<=rect.right &&
-           ev.changedTouches[0].clientY>=rect.top && ev.changedTouches[0].clientY<=rect.bottom){
-          if(zone.dataset.match===draggingWord){
+        const rect = zone.getBoundingClientRect();
+        const eggRect = egg.getBoundingClientRect();
+        if(eggRect.left + eggRect.width/2 >= rect.left &&
+           eggRect.left + eggRect.width/2 <= rect.right &&
+           eggRect.top + eggRect.height/2 >= rect.top &&
+           eggRect.top + eggRect.height/2 <= rect.bottom){
+
+          droppedOnZone = true;
+
+          if(zone.dataset.match === draggingWord){
             score++;
-            message.textContent=`✅ Correct! (${score}/${emotions.length})`;
-            message.style.color="#00a86b";
+            message.textContent = `✅ Correct! (${score}/${emotions.length})`;
+            message.style.color = "#00a86b";
             zone.classList.add("correct");
-          }else{
-            message.textContent=`❌ Oops! Try again next time.`;
-            message.style.color="#ff595e";
+          } else {
+            message.textContent = `❌ Oops! Try again next time.`;
+            message.style.color = "#ff595e";
           }
-          egg.style.display="none";
+
+          egg.style.display = "none";
           current++;
           setTimeout(startRound,1000);
         }
       });
+
+      // Regresar a posición original si no cae en zona
+      if(!droppedOnZone){
+        egg.style.left = startLeft + "px";
+        egg.style.top  = startTop + "px";
+      }
     };
   };
 
@@ -294,7 +327,7 @@ zones.forEach(zone=>{
       message.textContent=`✅ Correct! (${score}/${emotions.length})`;
       message.style.color="#00a86b";
       zone.classList.add("correct");
-    }else{
+    } else {
       message.textContent=`❌ Oops! Try again next time.`;
       message.style.color="#ff595e";
     }
