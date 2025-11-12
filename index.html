@@ -23,16 +23,18 @@
     /* ==== ENCABEZADO CON IMAGEN ==== */
     header {
       width: 100%;
-      height: 30vh;
-      background: url("Bright Minds SB Covers Kinder.jpg") no-repeat center center;
-      background-size: cover;
+      height: 60vh; /* aumentamos la altura para mostrar más de la imagen */
+      background: url("Bright Minds SB Covers Kinder.jpg") no-repeat center top;
+      background-size: contain; /* para que se vea toda la parte de arriba sin recorte */
+      background-position: top center; /* enfoca más la parte superior */
+      background-repeat: no-repeat;
+      background-color: #ffb6c1; /* color de fondo detrás por si no llena toda la pantalla */
       display: flex;
       justify-content: center;
-      align-items: flex-end;
+      align-items: flex-end; /* para que el título quede en la parte baja del header */
       padding-bottom: 10px;
-      color: white;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     }
+
 
     header h1 {
       background: rgba(255,255,255,0.85);
