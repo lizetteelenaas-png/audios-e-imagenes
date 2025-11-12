@@ -74,14 +74,14 @@
   .game-area {
     position: relative;
     width: 100%;
-    height: calc(100% - 120px); /* deja espacio arriba para instrucciones */
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* conejo siempre abajo */
+    height: calc(100% - 120px); /* espacio para instrucciones */
   }
 
   .bunny {
-    position: relative;
+    position: absolute;
+    bottom: 10px; /* más cerca del borde inferior */
+    left: 50%;
+    transform: translateX(-50%);
     width: clamp(120px, 15vw, 180px);
     z-index: 3;
     animation: bunnyVibrate 0.4s infinite ease-in-out;
@@ -94,8 +94,8 @@
 
   .egg {
     position: absolute;
-    bottom: 20px;
-    left: 65%; /* a la derecha del conejo */
+    bottom: 15px; /* alineada con el conejo */
+    left: 60%; 
     transform: translateX(-50%) scale(1);
     font-weight: bold;
     font-size: clamp(16px,3.5vw,22px);
@@ -125,7 +125,7 @@
 
   .targets {
     position: absolute;
-    top: 100px; /* abajo de instrucciones */
+    top: 100px; /* debajo de instrucciones */
     width: 100%;
     text-align: center;
     z-index: 4;
@@ -240,8 +240,8 @@ function startRound(){
 
 function showEgg(emotion){
   egg.style.display="flex";
-  egg.style.left="65%";
-  egg.style.bottom="20px";
+  egg.style.left="60%";
+  egg.style.bottom="15px";
   egg.style.transform="translateX(-50%) scale(1)";
   egg.style.animation="bounceIn 0.6s";
   egg.textContent = emotion;
@@ -250,7 +250,6 @@ function showEgg(emotion){
   const startLeft = egg.offsetLeft;
   const startTop  = egg.offsetTop;
 
-  // Táctil
   egg.ontouchstart = function(e){
     e.preventDefault();
     draggingWord = emotion;
@@ -301,7 +300,6 @@ function showEgg(emotion){
     };
   };
 
-  // Ratón
   egg.setAttribute("draggable",true);
   egg.ondragstart=function(e){
     draggingWord=emotion;
