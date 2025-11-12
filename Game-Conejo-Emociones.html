@@ -5,170 +5,185 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game of Emotions</title>
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    font-family: "Comic Sans MS", cursive;
-    background: url("paisaje.jpg") no-repeat center center/cover;
-    height: 100%;
-    overflow: hidden;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Comic Sans MS", cursive;
+  background: url("paisaje.jpg") no-repeat center center/cover;
+  height: 100%;
+  overflow: hidden;
+}
 
-  .start-screen, .end-screen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(255,255,255,0.95);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    text-align: center;
-  }
+body.locked {
+  overflow: hidden;
+  touch-action: none;
+}
 
-  .start-screen h1 {
-    font-size: clamp(36px, 8vw, 64px);
-    color: #ff69b4;
-    text-shadow: 2px 2px #fff;
-    margin-bottom: 20px;
-  }
+.start-screen, .end-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  text-align: center;
+}
 
-  .start-screen p {
-    font-size: clamp(18px, 4vw, 26px);
-    margin-bottom: 20px;
-  }
+.start-screen h1 {
+  font-size: clamp(36px, 8vw, 64px);
+  color: #ff69b4;
+  text-shadow: 2px 2px #fff;
+  margin-bottom: 20px;
+}
 
-  .start-button, .restart-button {
-    background-color: #ffb6c1;
-    border: none;
-    color: white;
-    font-size: clamp(18px, 4vw, 28px);
-    padding: clamp(12px, 2vw, 20px) clamp(25px, 4vw, 50px);
-    border-radius: 40px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  }
+.start-screen p {
+  font-size: clamp(18px, 4vw, 26px);
+  margin-bottom: 20px;
+}
 
-  .start-button:hover, .restart-button:hover {
-    transform: scale(1.1);
-    background-color: #ffa5b0;
-  }
+.start-button, .restart-button {
+  background-color: #ffb6c1;
+  border: none;
+  color: white;
+  font-size: clamp(18px, 4vw, 28px);
+  padding: clamp(12px, 2vw, 20px) clamp(25px, 4vw, 50px);
+  border-radius: 40px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 
-  .instructions-line {
-    text-align: center;
-    background-color: #fff7ae;
-    border: 2px dashed #f8c537;
-    color: #6a0572;
-    font-size: clamp(18px,4vw,28px);
-    padding: 12px 15px;
-    margin: 10px auto;
-    width: 95%;
-    border-radius: 15px;
-    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
-    z-index: 9;
-  }
+.start-button:hover, .restart-button:hover {
+  transform: scale(1.1);
+  background-color: #ffa5b0;
+}
 
-  .game-area {
-    position: relative;
-    width: 100%;
-    height: calc(100% - 120px); /* espacio para instrucciones */
-  }
+.instructions-line {
+  text-align: center;
+  background-color: #fff7ae;
+  border: 2px dashed #f8c537;
+  color: #6a0572;
+  font-size: clamp(18px,4vw,28px);
+  padding: 12px 15px;
+  margin: 10px auto;
+  width: 95%;
+  border-radius: 15px;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+  z-index: 9;
+}
 
-  .bunny {
-    position: absolute;
-    bottom: 10px; /* más cerca del borde inferior */
-    left: 50%;
-    transform: translateX(-50%);
-    width: clamp(120px, 15vw, 180px);
-    z-index: 3;
-    animation: bunnyVibrate 0.4s infinite ease-in-out;
-  }
+.game-area {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 140px); /* espacio para instrucciones y dropzones */
+}
 
-  @keyframes bunnyVibrate {
-    0%,100%{ transform: translateY(0); }
-    50%{ transform: translateY(-4px); }
-  }
+.bunny {
+  position: absolute;
+  bottom: 10px; 
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(120px, 15vw, 180px);
+  z-index: 3;
+  animation: bunnyVibrate 0.4s infinite ease-in-out;
+}
 
-  .egg {
-    position: absolute;
-    bottom: 15px; /* alineada con el conejo */
-    left: 60%; 
-    transform: translateX(-50%) scale(1);
-    font-weight: bold;
-    font-size: clamp(16px,3.5vw,22px);
-    color: #000;
-    display: none;
-    z-index: 4;
-    width: clamp(25px, 6vw, 40px);
-    height: clamp(35px, 8vw, 55px);
-    background-image: url("zanahoria.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    border: 2px solid gold;
-    border-radius: 50% / 60%;
-    text-align: center;
-    line-height: 1.2;
-    cursor: grab;
-    padding-top: 5px;
-  }
+@keyframes bunnyVibrate {
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-4px); }
+}
 
-  @keyframes bounceIn {
-    0% { transform: translateX(-50%) translateY(20px) scale(0.3); opacity: 0; }
-    50% { transform: translateX(-50%) translateY(-5px) scale(1.1); opacity: 1; }
-    70% { transform: translateX(-50%) translateY(3px) scale(0.95); }
-    100% { transform: translateX(-50%) translateY(0) scale(1); }
-  }
+.egg {
+  position: absolute;
+  bottom: 15px;
+  left: 60%;
+  transform: translateX(-50%) scale(1);
+  font-weight: bold;
+  font-size: clamp(16px,3.5vw,22px);
+  color: #000;
+  display: none;
+  z-index: 4;
+  width: clamp(25px, 6vw, 40px);
+  height: clamp(35px, 8vw, 55px);
+  background-image: url("zanahoria.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  border: 2px solid gold;
+  border-radius: 50% / 60%;
+  text-align: center;
+  line-height: 1.2;
+  cursor: grab;
+  padding-top: 5px;
+}
 
-  .targets {
-    position: absolute;
-    top: 100px; /* debajo de instrucciones */
-    width: 100%;
-    text-align: center;
-    z-index: 4;
-  }
+@keyframes bounceIn {
+  0% { transform: translateX(-50%) translateY(20px) scale(0.3); opacity: 0; }
+  50% { transform: translateX(-50%) translateY(-5px) scale(1.1); opacity: 1; }
+  70% { transform: translateX(-50%) translateY(3px) scale(0.95); }
+  100% { transform: translateX(-50%) translateY(0) scale(1); }
+}
 
-  .dropzone {
-    display: inline-block;
-    width: clamp(70px, 12vw, 120px);
-    height: clamp(70px, 12vw, 120px);
-    border-radius: 12%;
-    border: 3px dashed #ccc;
-    margin: 10px;
-    background-color: #ffffffcc;
-    overflow: hidden;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-  }
+.targets {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  text-align: center;
+  z-index: 4;
+}
 
-  .dropzone img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.dropzone {
+  display: inline-block;
+  width: clamp(70px, 12vw, 120px);
+  height: clamp(70px, 12vw, 120px);
+  border-radius: 12%;
+  border: 3px dashed #ccc;
+  margin: 10px;
+  background-color: #ffffffcc;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
 
-  .dropzone.correct {
-    border-color: #7ae582;
-    background-color: #e3fcec;
-    animation: pop 0.5s ease;
-  }
+.dropzone img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  @keyframes pop {0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
+.dropzone.correct {
+  border-color: #7ae582;
+  background-color: #e3fcec;
+  animation: pop 0.5s ease;
+}
 
-  .message {
-    text-align: center;
-    font-size: clamp(18px, 4vw, 28px);
-    color: #6a0572;
-    margin-top: 10px;
-  }
+@keyframes pop {0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
 
-  @media (orientation: landscape) {
-    .targets { top: 60px; }
-    .egg { bottom: 15px; left: 60%; }
-    .bunny { width: clamp(100px, 12vw, 150px); }
-  }
+.message {
+  text-align: center;
+  font-size: clamp(18px, 4vw, 28px);
+  color: #6a0572;
+  margin-top: 10px;
+}
+
+/* Mensaje de pantalla bloqueada en horizontal */
+.lock-screen {
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:#000;
+  color:#fff;
+  font-size:3vw;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index: 9999;
+}
 </style>
 </head>
 <body>
@@ -207,6 +222,8 @@
   <button class="restart-button" onclick="location.reload()">Play Again</button>
 </div>
 
+<div class="lock-screen" id="lockScreen">📱 Please rotate your device to vertical orientation 📱</div>
+
 <script>
 let emotions=["angry","excited","happy","sad","scared"];
 const bunny=document.getElementById("bunny");
@@ -216,6 +233,7 @@ const zones=document.querySelectorAll(".dropzone");
 const startScreen=document.getElementById("startScreen");
 const endScreen=document.getElementById("endScreen");
 const bgMusic=document.getElementById("bgMusic");
+const lockScreen=document.getElementById("lockScreen");
 
 let score=0;
 let current=0;
@@ -331,6 +349,22 @@ function showResult(){
   document.getElementById("finalScore").textContent=`You got ${score}/${emotions.length} correct!`;
   endScreen.style.display="flex";
 }
+
+// Detect vertical orientation
+function checkOrientation(){
+  if(window.innerHeight < window.innerWidth){
+    document.body.classList.add("locked");
+    lockScreen.style.display="flex";
+  } else {
+    document.body.classList.remove("locked");
+    lockScreen.style.display="none";
+  }
+}
+
+window.addEventListener("resize", checkOrientation);
+window.addEventListener("orientationchange", checkOrientation);
+checkOrientation();
+
 </script>
 </body>
 </html>
