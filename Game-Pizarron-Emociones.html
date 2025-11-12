@@ -241,10 +241,6 @@
       <input type="color" id="colorPicker" value="#000000">
       <button onclick="clearCanvas()">🧽 Delete</button>
       <button onclick="saveDrawing()">💾 Save</button>
-    </div>
-
-    <div class="controls">
-      <button onclick="prevPage()">⬅️ Previous</button>
       <button onclick="nextPage()">Next ➡️</button>
     </div>
 
@@ -265,7 +261,7 @@ const emotions = [
   { name: "Sad", img: "sad.png", text: "Draw how you feel when you are sad 💙" },
   { name: "Angry", img: "angry.png", text: "Draw how you feel when you are angry ❤️" },
   { name: "Scared", img: "scared.png", text: "Draw how you feel when you are scared 💜" },
-  { name: "Excited", img: "excited.png", text: "Draw how you feel when you are Excited 💚" }
+  { name: "Excited", img: "Excited.png", text: "Draw how you feel when you are excited 💚" }
 ];
 
 let current = 0;
@@ -290,7 +286,6 @@ function showPage() {
   emotionName.textContent = e.name;
   emotionImage.src = e.img;
   instructions.innerHTML = `✏️ ${e.text}`;
-  // Restaurar dibujo si existe
   if(drawings[current]) {
     const img = new Image();
     img.src = drawings[current];
@@ -301,8 +296,14 @@ function showPage() {
   message.textContent = "";
 }
 
-function nextPage() { if(current < emotions.length-1){current++;showPage();}else{showFinalPage();} }
-function prevPage() { if(current>0){current--;showPage();} }
+function nextPage() { 
+  if(current < emotions.length-1){
+    current++;
+    showPage();
+  } else {
+    showFinalPage();
+  }
+}
 
 function clearCanvas() { ctx.clearRect(0,0,canvas.width,canvas.height); }
 
@@ -336,9 +337,14 @@ function showFinalPage() {
   finalMessage.textContent = compliments[Math.floor(Math.random()*compliments.length)];
 }
 
-function restartBook() { finalPage.style.display="none"; cover.style.display="flex"; drawings = new Array(emotions.length).fill(null); current=0; showPage(); }
+function restartBook() {
+  finalPage.style.display="none"; 
+  cover.style.display="flex"; 
+  drawings = new Array(emotions.length).fill(null); 
+  current=0; 
+  showPage(); 
+}
 
-// DIBUJO
 canvas.addEventListener("mousedown",()=>drawing=true);
 canvas.addEventListener("mouseup",()=>{drawing=false; ctx.lastX=null; ctx.lastY=null;});
 canvas.addEventListener("mouseout",()=>{drawing=false; ctx.lastX=null; ctx.lastY=null;});
@@ -366,7 +372,7 @@ function draw(e){
   ctx.lastY = y;
 }
 
-// Centrar la imagen del conejo verticalmente en PC
+// Centrar conejo en PC
 const emotionContainer = document.querySelector('.left-page');
 function centerEmotionImage() {
   if(window.innerWidth > 768) {
@@ -375,11 +381,9 @@ function centerEmotionImage() {
     emotionContainer.style.justifyContent = "flex-start";
   }
 }
-
 window.addEventListener("resize", centerEmotionImage);
 window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
 
 </body>
 </html>
-
