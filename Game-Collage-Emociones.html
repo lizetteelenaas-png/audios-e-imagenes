@@ -197,16 +197,16 @@ h1 {
 <script>
 // Emotions and images
 const emotions = [
-  {name:"Excited", img:"excited1.png"},
-  {name:"Angry", img:"angry1.jpg"},
-  {name:"Happy", img:"happy1.jpg"},
-  {name:"Scared", img:"scared1.jpg"},
-  {name:"Worried", img:"worried1.jpg"},
-  {name:"Tired", img:"tired1.jpg"},
-  {name:"Sad", img:"sad1.jpg"},
-  {name:"Confused", img:"confused1.jpg"},
-  {name:"Surprised", img:"surprised.jpg"},
-  {name:"Glad", img:"glad1.jpg"}
+  {name:"excited", img:"excited1.png"},
+  {name:"angry", img:"angry1.jpg"},
+  {name:"happy", img:"happy1.jpg"},
+  {name:"scared", img:"scared1.jpg"},
+  {name:"worried", img:"worried1.jpg"},
+  {name:"tired", img:"tired1.jpg"},
+  {name:"sad", img:"sad1.jpg"},
+  {name:"confused", img:"confused1.jpg"},
+  {name:"surprised", img:"surprised.jpg"},
+  {name:"glad", img:"glad1.jpg"}
 ];
 
 const allImages = emotions.map(e=>e.img);
@@ -231,7 +231,7 @@ function showNextEmotion(){
 
   const emotion = emotions[currentIndex];
   const promptEl = document.getElementById('emotionPrompt');
-  promptEl.innerHTML = `Which image represents: <span class="emotionWord">${emotion.name}</span>?`;
+  promptEl.innerHTML = `Which image represents: <span class="emotionWord">${emotion.name}</span>`;
 
   const imageGrid = document.getElementById('imageChoices');
   imageGrid.innerHTML='';
@@ -295,3 +295,4 @@ function shuffle(array){
 
 </body>
 </html>
+
