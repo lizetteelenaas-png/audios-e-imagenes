@@ -13,7 +13,6 @@
     height: 100vh;
   }
 
-  /* Pantalla de inicio */
   .start-screen, .end-screen {
     position: fixed;
     top: 0; left: 0;
@@ -57,7 +56,6 @@
     background-color: #ffa5b0;
   }
 
-  /* Área de juego */
   .game-area {
     position: relative;
     width: 100%;
@@ -96,16 +94,16 @@
 
   .egg {
     position: absolute;
-    bottom: 50px;
-    left: 50%;
+    bottom: 10px;
+    left: 65%; /* a la derecha del conejo */
     transform: translateX(-50%) scale(1);
     font-weight: bold;
     font-size: clamp(20px,5vw,36px);
     color: #000;
     display: none;
     z-index: 5;
-    width: clamp(70px,16vw,140px);
-    height: clamp(90px,20vw,160px);
+    width: clamp(70px,16vw,120px);
+    height: clamp(90px,20vw,150px);
     padding-top: 10px;
     background-image: url("zanahoria.png");
     background-size: contain;
@@ -120,7 +118,7 @@
 
   .targets {
     position: absolute;
-    top: 15%;
+    bottom: 80%;
     width: 100%;
     text-align: center;
     z-index: 4;
@@ -159,7 +157,6 @@
     margin-top: 10px;
   }
 
-  /* Ajuste responsivo para teléfonos */
   @media (max-width: 600px) {
     .egg {
       width: 120px;
@@ -186,7 +183,7 @@
 </div>
 
 <div class="instructions-line" id="instructionsLine">
-  🐰 Click the carrot, read the word, and drag it to match the correct emotion! 🥕
+  🐰 Drag the carrot to the matching bunny! 🥕
 </div>
 
 <div class="game-area" id="gameArea">
@@ -243,18 +240,15 @@ function startRound(){
 
 function showEgg(emotion){
   egg.style.display="flex";
-  egg.style.left="50%";
-  egg.style.bottom="50px";
-  egg.style.top="";
+  egg.style.left="65%";
+  egg.style.bottom="10px";
   egg.style.transform="translateX(-50%) scale(1)";
   egg.textContent = emotion;
   egg.setAttribute("data-word",emotion);
 
-  // Guardar posición inicial
   const startLeft = egg.offsetLeft;
   const startTop  = egg.offsetTop;
 
-  // Touch para móviles
   egg.ontouchstart = function(e){
     e.preventDefault();
     draggingWord = emotion;
@@ -278,10 +272,11 @@ function showEgg(emotion){
       zones.forEach(zone=>{
         const rect = zone.getBoundingClientRect();
         const eggRect = egg.getBoundingClientRect();
-        if(eggRect.left + eggRect.width/2 >= rect.left &&
-           eggRect.left + eggRect.width/2 <= rect.right &&
-           eggRect.top + eggRect.height/2 >= rect.top &&
-           eggRect.top + eggRect.height/2 <= rect.bottom){
+        const eggCenterX = eggRect.left + eggRect.width/2;
+        const eggCenterY = eggRect.top + eggRect.height/2;
+
+        if(eggCenterX >= rect.left && eggCenterX <= rect.right &&
+           eggCenterY >= rect.top && eggCenterY <= rect.bottom){
 
           droppedOnZone = true;
 
@@ -301,7 +296,6 @@ function showEgg(emotion){
         }
       });
 
-      // Regresar a posición original si no cae en zona
       if(!droppedOnZone){
         egg.style.left = startLeft + "px";
         egg.style.top  = startTop + "px";
