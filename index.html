@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juegos de Emociones</title>
   <style>
+    /* Reset básico */
     * {
       margin: 0;
       padding: 0;
@@ -13,114 +14,117 @@
 
     body {
       font-family: 'Comic Sans MS', sans-serif;
-      background: linear-gradient(180deg, #ff9ff3 0%, #feca57 100%);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      text-align: center;
+      background: linear-gradient(120deg, #ffe0e0, #e0f7ff);
+      line-height: 1.5;
     }
 
-    /* ==== ENCABEZADO CON IMAGEN ==== */
+    /* Header con imagen */
     header {
       width: 100%;
-      height: 60vh; /* aumentamos la altura para mostrar más de la imagen */
-      background: url("Bright Minds SB Covers Kinder.jpg") no-repeat center top;
-      background-size: contain; /* para que se vea toda la parte de arriba sin recorte */
-      background-position: top center; /* enfoca más la parte superior */
+      height: 45vh;
+      background-image: url("Bright Minds SB Covers Kinder.jpg");
+      background-size: cover;
+      background-position: top center;
       background-repeat: no-repeat;
-      background-color: #ffb6c1; /* color de fondo detrás por si no llena toda la pantalla */
+      position: relative;
       display: flex;
+      align-items: flex-end;
       justify-content: center;
-      align-items: flex-end; /* para que el título quede en la parte baja del header */
-      padding-bottom: 10px;
     }
 
-
+    /* Título dentro del header */
     header h1 {
-      background: rgba(255,255,255,0.85);
-      color: #d62828;
-      padding: 10px 20px;
-      border-radius: 20px;
       font-size: 6vw;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    /* ==== CONTENEDOR PRINCIPAL ==== */
-    main {
+      color: #fff;
+      text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.3);
       width: 100%;
-      max-width: 600px;
-      background: linear-gradient(180deg, #ffeaa7, #fab1a0);
-      border-radius: 20px 20px 0 0;
-      padding: 6vw;
-      text-align: center;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-      margin-top: -2vh;
+      padding: 1vw 0;
+      margin: 0;
     }
 
-    p {
-      font-size: 4.5vw;
-      color: #6d6875;
-      margin-bottom: 5vh;
-      font-weight: bold;
+    /* Contenedor principal del menú */
+    main {
+      padding: 5vw;
+      font-size: 5vw;
     }
 
-    /* ==== BOTONES ==== */
+    /* Estilo de los botones */
     a {
       display: block;
-      background: #ff9f1c;
-      color: white;
+      background-color: #ffd966;
+      color: #333;
       text-decoration: none;
-      font-size: 5.5vw;
-      font-weight: bold;
-      margin: 2vh 0;
-      padding: 3.5vw 0;
-      border-radius: 20px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-      transition: all 0.25s ease;
+      font-size: 6vw;
+      margin: 3vh 0;
+      padding: 4vw 0;
+      border-radius: 15px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s, background-color 0.2s;
     }
 
     a:hover {
       transform: scale(1.05);
-      background: #ffbf69;
+      background-color: #ffeb99;
     }
 
+    /* Emojis más grandes dentro de los botones */
     a span {
       font-size: 1.5em;
       margin-right: 10px;
     }
 
-    /* ==== RESPONSIVE ==== */
-    @media (min-width: 768px) {
+    /* Ajustes para pantallas pequeñas */
+    @media (max-width: 480px) {
+      header {
+        height: 35vh;
+      }
+      header h1 {
+        font-size: 8vw;
+        padding: 2vw 0;
+      }
+      main {
+        font-size: 6vw;
+        padding: 6vw;
+      }
+      a {
+        font-size: 7vw;
+        padding: 5vw 0;
+      }
+    }
+
+    /* Ajustes para tablets medianas */
+    @media (min-width: 481px) and (max-width: 768px) {
       header {
         height: 40vh;
       }
       header h1 {
-        font-size: 3vw;
+        font-size: 7vw;
       }
       main {
-        padding: 3vw;
+        font-size: 5.5vw;
       }
       a {
-        font-size: 2vw;
-      }
-      p {
-        font-size: 1.5vw;
+        font-size: 6.5vw;
+        padding: 4.5vw 0;
       }
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Juegos de Emociones</h1>
   </header>
 
   <main>
-    <p>Elige un juego para explorar tus emociones:</p>
     <a href="Game-Conejo-Emociones.html"><span>🐰</span>Conejo de Emociones</a>
     <a href="Game-Pizarron-Emociones.html"><span>🧠</span>Pizarrón de Emociones</a>
     <a href="Game-Rompecabezas-Emociones.html"><span>🧩</span>Rompecabezas de Emociones</a>
     <a href="Game-Collage-Emociones.html"><span>🎨</span>Collage de Emociones</a>
     <a href="Game-Memorama-Emociones.html"><span>🃏</span>Memorama de Emociones</a>
   </main>
+
 </body>
 </html>
