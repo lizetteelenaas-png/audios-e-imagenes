@@ -5,168 +5,50 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>🖼️ Emotion Collage Game</title>
 <style>
-:root { 
-  --accent: #0077b6; 
-  --bg: url('paisaje2.jpg') no-repeat center center fixed; 
+:root { --accent: #0077b6; --bg: url('paisaje2.jpg') no-repeat center center fixed; }
+body { margin:0; font-family:"Comic Sans MS", cursive; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; min-height:100vh; padding:18px; box-sizing:border-box; }
+h1 { color:var(--accent); margin:0 0 12px 0; text-align:center; }
+.cover, .final { width:100%; max-width:900px; padding:24px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.12); text-align:center; background:linear-gradient(135deg,#caf0f8,#fde4cf); margin-top:50px; }
+#game { display:none; width:100%; max-width:900px; text-align:center; margin-top:20px; }
+.emotionPrompt { font-size:24px; font-weight:bold; color:var(--accent); margin-bottom:12px; animation: colorPulse 2s infinite; }
+@keyframes colorPulse {
+  0% { color:#0077b6; }
+  25% { color:#ff6b6b; }
+  50% { color:#ffd93d; }
+  75% { color:#38b000; }
+  100% { color:#0077b6; }
 }
+.imagesGrid { display:flex; gap:12px; justify-content:center; margin-bottom:12px; flex-wrap:wrap; }
+.imagesGrid img { width:120px; height:120px; object-fit:cover; border-radius:8px; cursor:pointer; transition: transform 0.2s; }
+.collage {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  aspect-ratio: 3 / 2;
+  margin: 20px auto;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  overflow: auto;
+  background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 8px;
+  align-content: flex-start;
+}
+.collage img { width:120px; height:120px; object-fit:cover; border-radius:8px; margin:4px; transition: all 0.5s; }
+.btn{ background:var(--accent); color:#fff; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; margin-bottom:12px; font-size:16px; }
+#finalMessage { font-size:28px; font-weight:700; color:green; margin-top:12px; text-align:center; }
 
-body { 
-  margin:0; 
-  font-family:"Comic Sans MS", cursive; 
-  background:var(--bg); 
-  background-size:cover;
-  display:flex; 
-  flex-direction:column; 
-  align-items:center; 
-  justify-content:flex-start; 
-  min-height:100vh; 
-  padding:18px; 
-  box-sizing:border-box; 
-}
-
-h1 { 
-  color:var(--accent); 
-  margin:0 0 12px 0; 
-  text-align:center; 
-  font-size:2.2em;
-}
-
-.cover, .final { 
-  width:100%; 
-  max-width:900px; 
-  padding:24px; 
-  border-radius:12px; 
-  box-shadow:0 10px 30px rgba(0,0,0,0.12); 
-  text-align:center; 
-  background:linear-gradient(135deg,#caf0f8,#fde4cf); 
-  margin-top:50px; 
-}
-
-#game { 
-  display:none; 
-  width:100%; 
-  max-width:900px; 
-  text-align:center; 
-  margin-top:20px; 
-}
-
-.emotionPrompt { 
-  font-size:34px; 
-  font-weight:bold; 
-  color:var(--accent); 
-  margin-bottom:12px; 
-}
-
-.emotionWord {
-  animation: colorChange 2s infinite alternate ease-in-out, blink 1s infinite alternate;
-  display: inline-block;
-}
-
-@keyframes colorChange {
-  0% { color: #0077b6; }
-  25% { color: #ff7f50; }
-  50% { color: #ffd60a; }
-  75% { color: #90be6d; }
-  100% { color: #ff006e; }
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-}
-
-.instructions {
-  font-size: 20px;
-  color: #333;
-  margin: 12px auto;
-  max-width: 750px;
-}
-
-.imagesGrid { 
-  display:flex; 
-  gap:12px; 
-  justify-content:center; 
-  margin-bottom:12px; 
-  flex-wrap:wrap; 
-}
-
-.imagesGrid img { 
-  width:120px; 
-  height:120px; 
-  object-fit:cover; 
-  border-radius:8px; 
-  cursor:pointer; 
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: 3px solid transparent;
-}
-
-.imagesGrid img:hover { 
-  transform:scale(1.08); 
-  box-shadow:0 0 10px rgba(0,0,0,0.3);
-  border: 3px solid var(--accent);
-}
-
-.collage { 
-  position:relative; 
-  width:90%; 
-  max-width:600px; 
-  height:400px; 
-  margin:20px auto; 
-  border:2px solid #ccc; 
-  border-radius:12px; 
-  overflow:hidden; 
-  background:#fff; 
-  display:flex; 
-  flex-wrap:wrap; 
-  padding:8px; 
-  align-content:flex-start; 
-}
-
-.collage img { 
-  width:120px; 
-  height:120px; 
-  object-fit:cover; 
-  border-radius:8px; 
-  margin:4px; 
-  transition: all 0.5s; 
-}
-
-.btn{ 
-  background:var(--accent); 
-  color:#fff; 
-  border:none; 
-  padding:10px 18px; 
-  border-radius:10px; 
-  cursor:pointer; 
-  margin-bottom:12px; 
-  font-size:16px; 
-}
-
-.btn:hover {
-  background:#005b8f;
-  transform:scale(1.05);
-}
-
-#finalMessage { 
-  font-size:26px; 
-  font-weight:700; 
-  color:green; 
-  margin-top:12px; 
-  text-align:center; 
-}
-
-/* RESPONSIVE */
-@media(max-width:700px){
-  h1 { font-size:1.8em; }
-  .emotionPrompt { font-size:24px; }
-  .instructions { font-size:18px; padding:0 8px; }
-  .collage { height:300px; }
-  .imagesGrid img { width:100px; height:100px; }
-}
-@media(max-width:480px){
-  .emotionPrompt { font-size:22px; }
-  .collage { height:260px; }
-  .imagesGrid img { width:90px; height:90px; }
+@media (max-width: 600px) {
+  .collage img {
+    width: 80px;
+    height: 80px;
+  }
+  #finalCollage {
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>
 </head>
@@ -175,7 +57,7 @@ h1 {
 <!-- Cover Page -->
 <div class="cover" id="cover">
   <h1>🖼️ Emotion Collage Game</h1>
-  <p class="instructions">Select the image that best represents the emotion shown. Your choices will form a beautiful collage of feelings!</p>
+  <p>Select the image that best represents the emotion shown. Your choices will form a collage!</p>
   <button class="btn" onclick="startGame()">Start Game</button>
 </div>
 
@@ -197,16 +79,16 @@ h1 {
 <script>
 // Emotions and images
 const emotions = [
-  {name:"excited", img:"excited1.png"},
-  {name:"angry", img:"angry1.jpg"},
-  {name:"happy", img:"happy1.jpg"},
-  {name:"scared", img:"scared1.jpg"},
-  {name:"worried", img:"worried1.jpg"},
-  {name:"tired", img:"tired1.jpg"},
-  {name:"sad", img:"sad1.jpg"},
-  {name:"confused", img:"confused1.jpg"},
-  {name:"surprised", img:"surprised.jpg"},
-  {name:"glad", img:"glad1.jpg"}
+  {name:"Excited", img:"excited1.png"},
+  {name:"Angry", img:"angry1.jpg"},
+  {name:"Happy", img:"happy1.jpg"},
+  {name:"Scared", img:"scared1.jpg"},
+  {name:"Worried", img:"worried1.jpg"},
+  {name:"Tired", img:"tired1.jpg"},
+  {name:"Sad", img:"sad1.jpg"},
+  {name:"Confused", img:"confused1.jpg"},
+  {name:"Surprised", img:"surprised.jpg"},
+  {name:"Glad", img:"glad1.jpg"}
 ];
 
 const allImages = emotions.map(e=>e.img);
@@ -217,6 +99,7 @@ function startGame(){
   document.getElementById('cover').style.display='none';
   document.getElementById('final').style.display='none';
   document.getElementById('game').style.display='block';
+
   currentIndex = 0;
   collageImages = [];
   document.getElementById('collage').innerHTML='';
@@ -230,8 +113,7 @@ function showNextEmotion(){
   }
 
   const emotion = emotions[currentIndex];
-  const promptEl = document.getElementById('emotionPrompt');
-  promptEl.innerHTML = `Emotion: <span class="emotionWord">${emotion.name}</span>`;
+  document.getElementById('emotionPrompt').textContent = `Which image represents: ${emotion.name}?`;
 
   const imageGrid = document.getElementById('imageChoices');
   imageGrid.innerHTML='';
@@ -272,7 +154,6 @@ function showFinal(){
   collageImages.forEach((url)=>{
     const img = document.createElement('img');
     img.src = url;
-    img.style.position='relative';
     finalCollage.appendChild(img);
   });
 
@@ -295,5 +176,3 @@ function shuffle(array){
 
 </body>
 </html>
-
-
