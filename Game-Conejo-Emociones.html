@@ -5,18 +5,109 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game of Emotions</title>
 <style>
-  /* Ajustes para la zanahoria al lado del conejo */
+  body {
+    margin: 0;
+    font-family: "Comic Sans MS", cursive;
+    background: url("paisaje.jpg") no-repeat center center/cover;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* Pantalla de inicio */
+  .start-screen, .end-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    text-align: center;
+  }
+
+  .start-screen h1 {
+    font-size: clamp(36px, 8vw, 64px);
+    color: #ff69b4;
+    text-shadow: 2px 2px #fff;
+    margin-bottom: 20px;
+  }
+
+  .start-screen p {
+    font-size: clamp(18px, 4vw, 26px);
+    margin-bottom: 20px;
+  }
+
+  .start-button, .restart-button {
+    background-color: #ffb6c1;
+    border: none;
+    color: white;
+    font-size: clamp(18px, 4vw, 28px);
+    padding: clamp(12px, 2vw, 20px) clamp(25px, 4vw, 50px);
+    border-radius: 40px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .start-button:hover, .restart-button:hover {
+    transform: scale(1.1);
+    background-color: #ffa5b0;
+  }
+
+  /* Área de juego */
+  .game-area {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+
+  /* Conejo principal */
+  .bunny {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(120px, 15vw, 180px);
+    z-index: 3;
+    animation: bunnyVibrate 0.4s infinite ease-in-out;
+  }
+
+  @keyframes bunnyVibrate {
+    0%,100%{ transform: translateX(-50%) translateY(0); }
+    50%{ transform: translateX(-50%) translateY(-4px); }
+  }
+
+  /* Instrucciones */
+  .instructions-line {
+    text-align: center;
+    background-color: #fff7ae;
+    border: 2px dashed #f8c537;
+    color: #6a0572;
+    font-size: clamp(20px,4vw,28px);
+    padding: clamp(12px,2vw,20px);
+    margin: 10px auto;
+    width: 90%;
+    border-radius: 15px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+  }
+
+  /* Zanahoria al lado del conejo */
   .egg {
     position: absolute;
-    bottom: 10%; /* mismo nivel que el conejo */
-    left: 55%;   /* a la derecha del conejo */
-    transform: translateX(0) scale(1); /* no centrar en X */
+    bottom: 10%;
+    left: 55%;
+    transform: translateX(0) scale(1);
     font-weight: bold;
-    font-size: clamp(18px,4vw,28px); /* texto proporcional */
+    font-size: clamp(18px,4vw,28px);
     color: #000;
     display: none;
     z-index: 5;
-    width: clamp(50px,12vw,100px);   /* tamaño mediano zanahoria */
+    width: clamp(50px,12vw,100px);
     height: clamp(70px,16vw,120px);
     padding-top: 5px;
     background-image: url("zanahoria.png");
@@ -31,18 +122,129 @@
     transition: all 0.2s ease;
   }
 
-  /* Ajuste responsive para móvil */
+  /* Dropzones de emociones */
+  .targets {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    text-align: center;
+    z-index: 4;
+  }
+
+  .dropzone {
+    display: inline-block;
+    width: clamp(80px, 15vw, 128px);
+    height: clamp(80px, 15vw, 128px);
+    border-radius: 12%;
+    border: 4px dashed #ccc;
+    margin: clamp(10px,2vw,15px);
+    background-color: #ffffffcc;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    animation: bunnyVibrate 0.8s infinite ease-in-out;
+  }
+
+  .dropzone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .dropzone.correct {
+    border-color: #7ae582;
+    background-color: #e3fcec;
+    animation: pop 0.5s ease;
+  }
+
+  @keyframes pop {0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
+
+  .message {
+    text-align: center;
+    font-size: clamp(20px,5vw,30px);
+    color: #6a0572;
+    margin-top: 10px;
+  }
+
+  /* Ajuste responsive para teléfono */
   @media (max-width: 600px) {
     .egg {
-      left: 60%; /* un poco más a la derecha si es móvil */
+      left: 60%;
       width: 70px;
       height: 100px;
       font-size: 22px;
     }
+    .dropzone {
+      width: 100px;
+      height: 100px;
+    }
   }
 </style>
+</head>
+<body>
+
+<div class="start-screen" id="startScreen">
+  <h1> 🐰 Game of Emotions 🥕</h1>
+  <p>Help Bunny learn emotions in English!</p>
+  <button class="start-button" onclick="startGame()">Start Game</button>
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<div class="instructions-line" id="instructionsLine">
+  🐰 Click the carrot, read the word, and drag it to match the correct emotion! 🥕
+</div>
+
+<div class="game-area" id="gameArea">
+  <img src="conejo.png" class="bunny" id="bunny" alt="bunny">
+  <div class="egg" id="egg"></div>
+</div>
+
+<div class="targets" id="targetArea">
+  <div class="dropzone" data-match="angry"><img src="angry.png" alt="angry"></div>
+  <div class="dropzone" data-match="excited"><img src="excited.png" alt="excited"></div>
+  <div class="dropzone" data-match="happy"><img src="happy.png" alt="happy"></div>
+  <div class="dropzone" data-match="sad"><img src="sad.png" alt="sad"></div>
+  <div class="dropzone" data-match="scared"><img src="scared.png" alt="scared"></div>
+</div>
+
+<div class="message" id="message"></div>
+
+<div class="end-screen" id="endScreen" style="display:none;">
+  <h1>🎉 Great Job! 🎉</h1>
+  <p id="finalScore"></p>
+  <button class="restart-button" onclick="location.reload()">Play Again</button>
+</div>
 
 <script>
+let emotions=["angry","excited","happy","sad","scared"];
+const bunny=document.getElementById("bunny");
+const egg=document.getElementById("egg");
+const message=document.getElementById("message");
+const zones=document.querySelectorAll(".dropzone");
+const startScreen=document.getElementById("startScreen");
+const endScreen=document.getElementById("endScreen");
+const bgMusic=document.getElementById("bgMusic");
+
+let score=0,current=0,draggingWord="";
+
+function shuffleArray(array){return array.sort(()=>Math.random()-0.5);}
+
+function startGame(){
+  startScreen.style.display="none";
+  bgMusic.play();
+  emotions=shuffleArray(emotions);
+  startRound();
+}
+
+function startRound(){
+  if(current>=emotions.length){ showResult(); return; }
+  const emotion=emotions[current];
+  message.textContent="";
+  egg.style.display="none";
+  setTimeout(()=>{ showEgg(emotion); },500);
+}
+
 function showEgg(emotion){
   egg.style.display="flex";
   egg.textContent = emotion;
@@ -51,16 +253,14 @@ function showEgg(emotion){
   // Posición inicial al lado del conejo
   function positionEgg() {
     const bunnyRect = bunny.getBoundingClientRect();
-    egg.style.left = (bunnyRect.right + 10) + "px"; // 10px a la derecha del conejo
-    egg.style.bottom = "10%"; // mismo nivel que conejo
+    egg.style.left = (bunnyRect.right + 10) + "px";
+    egg.style.bottom = "10%";
   }
   positionEgg();
 
-  // Ajustar si se rota o cambia tamaño de pantalla
   window.addEventListener("resize", positionEgg);
   window.addEventListener("orientationchange", positionEgg);
 
-  // Guardar posición inicial
   const startLeft = egg.offsetLeft;
   const startTop  = egg.offsetTop;
 
@@ -78,6 +278,7 @@ function showEgg(emotion){
     };
 
     document.ontouchmove = moveEgg;
+
     document.ontouchend = function(){
       document.ontouchmove = null;
       document.ontouchend = null;
@@ -122,7 +323,31 @@ function showEgg(emotion){
     e.dataTransfer.setData("text", draggingWord);
   };
 }
+
+zones.forEach(zone=>{
+  zone.addEventListener("dragover", e=> e.preventDefault());
+  zone.addEventListener("drop", e=>{
+    e.preventDefault();
+    const correctWord=zone.dataset.match;
+    if(draggingWord===correctWord){
+      score++;
+      message.textContent=`✅ Correct! (${score}/${emotions.length})`;
+      message.style.color="#00a86b";
+      zone.classList.add("correct");
+    } else {
+      message.textContent=`❌ Oops! Try again next time.`;
+      message.style.color="#ff595e";
+    }
+    egg.style.display="none";
+    current++;
+    setTimeout(startRound,1000);
+  });
+});
+
+function showResult(){
+  document.getElementById("finalScore").textContent=`You got ${score}/${emotions.length} correct!`;
+  endScreen.style.display="flex";
+}
 </script>
 </body>
 </html>
-
