@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game of Emotions</title>
 <style>
-  body {
+  html, body {
     margin: 0;
+    padding: 0;
     font-family: "Comic Sans MS", cursive;
     background: url("paisaje.jpg") no-repeat center center/cover;
+    height: 100%;
     overflow: hidden;
-    height: 100vh;
   }
 
   .start-screen, .end-screen {
@@ -56,17 +57,29 @@
     background-color: #ffa5b0;
   }
 
+  .instructions-line {
+    text-align: center;
+    background-color: #fff7ae;
+    border: 2px dashed #f8c537;
+    color: #6a0572;
+    font-size: clamp(18px,4vw,28px);
+    padding: 12px 15px;
+    margin: 10px auto;
+    width: 95%;
+    border-radius: 15px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+    z-index: 9;
+  }
+
   .game-area {
     position: relative;
     width: 100%;
-    height: 70vh;
-    overflow: hidden;
-    margin-top: 10px;
+    height: calc(100% - 120px); /* espacio para instrucciones */
   }
 
   .bunny {
     position: absolute;
-    bottom: 10px;
+    bottom: 10px; /* más cerca del borde inferior */
     left: 50%;
     transform: translateX(-50%);
     width: clamp(120px, 15vw, 180px);
@@ -75,50 +88,44 @@
   }
 
   @keyframes bunnyVibrate {
-    0%,100%{ transform: translateX(-50%) translateY(0); }
-    50%{ transform: translateX(-50%) translateY(-4px); }
-  }
-
-  .instructions-line {
-    text-align: center;
-    background-color: #fff7ae;
-    border: 2px dashed #f8c537;
-    color: #6a0572;
-    font-size: clamp(20px,4vw,28px);
-    padding: clamp(12px,2vw,20px);
-    margin: 10px auto;
-    width: 90%;
-    border-radius: 15px;
-    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-4px); }
   }
 
   .egg {
     position: absolute;
-    bottom: 10px;
-    left: 65%; /* a la derecha del conejo */
+    bottom: 15px; /* alineada con el conejo */
+    left: 60%; 
     transform: translateX(-50%) scale(1);
     font-weight: bold;
-    font-size: clamp(20px,5vw,36px);
+    font-size: clamp(16px,3.5vw,22px);
     color: #000;
     display: none;
-    z-index: 5;
-    width: clamp(70px,16vw,120px);
-    height: clamp(90px,20vw,150px);
-    padding-top: 10px;
+    z-index: 4;
+    width: clamp(25px, 6vw, 40px);
+    height: clamp(35px, 8vw, 55px);
     background-image: url("zanahoria.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
-    border: 4px solid gold;
+    border: 2px solid gold;
     border-radius: 50% / 60%;
     text-align: center;
     line-height: 1.2;
     cursor: grab;
+    padding-top: 5px;
+  }
+
+  @keyframes bounceIn {
+    0% { transform: translateX(-50%) translateY(20px) scale(0.3); opacity: 0; }
+    50% { transform: translateX(-50%) translateY(-5px) scale(1.1); opacity: 1; }
+    70% { transform: translateX(-50%) translateY(3px) scale(0.95); }
+    100% { transform: translateX(-50%) translateY(0) scale(1); }
   }
 
   .targets {
     position: absolute;
-    bottom: 80%;
+    top: 100px; /* debajo de instrucciones */
     width: 100%;
     text-align: center;
     z-index: 4;
@@ -126,11 +133,11 @@
 
   .dropzone {
     display: inline-block;
-    width: clamp(80px, 15vw, 128px);
-    height: clamp(80px, 15vw, 128px);
+    width: clamp(70px, 12vw, 120px);
+    height: clamp(70px, 12vw, 120px);
     border-radius: 12%;
-    border: 4px dashed #ccc;
-    margin: clamp(10px,2vw,15px);
+    border: 3px dashed #ccc;
+    margin: 10px;
     background-color: #ffffffcc;
     overflow: hidden;
     transition: transform 0.3s ease, border-color 0.3s ease;
@@ -152,22 +159,15 @@
 
   .message {
     text-align: center;
-    font-size: clamp(20px,5vw,30px);
+    font-size: clamp(18px, 4vw, 28px);
     color: #6a0572;
     margin-top: 10px;
   }
 
-  @media (max-width: 600px) {
-    .egg {
-      width: 120px;
-      height: 160px;
-      font-size: 28px;
-      padding-top: 15px;
-    }
-    .dropzone {
-      width: 100px;
-      height: 100px;
-    }
+  @media (orientation: landscape) {
+    .targets { top: 60px; }
+    .egg { bottom: 15px; left: 60%; }
+    .bunny { width: clamp(100px, 12vw, 150px); }
   }
 </style>
 </head>
@@ -240,9 +240,10 @@ function startRound(){
 
 function showEgg(emotion){
   egg.style.display="flex";
-  egg.style.left="65%";
-  egg.style.bottom="10px";
+  egg.style.left="60%";
+  egg.style.bottom="15px";
   egg.style.transform="translateX(-50%) scale(1)";
+  egg.style.animation="bounceIn 0.6s";
   egg.textContent = emotion;
   egg.setAttribute("data-word",emotion);
 
@@ -266,7 +267,6 @@ function showEgg(emotion){
     document.ontouchend = function(ev){
       document.ontouchmove = null;
       document.ontouchend = null;
-
       let droppedOnZone = false;
 
       zones.forEach(zone=>{
@@ -277,9 +277,7 @@ function showEgg(emotion){
 
         if(eggCenterX >= rect.left && eggCenterX <= rect.right &&
            eggCenterY >= rect.top && eggCenterY <= rect.bottom){
-
           droppedOnZone = true;
-
           if(zone.dataset.match === draggingWord){
             score++;
             message.textContent = `✅ Correct! (${score}/${emotions.length})`;
@@ -289,7 +287,6 @@ function showEgg(emotion){
             message.textContent = `❌ Oops! Try again next time.`;
             message.style.color = "#ff595e";
           }
-
           egg.style.display = "none";
           current++;
           setTimeout(startRound,1000);
@@ -303,7 +300,6 @@ function showEgg(emotion){
     };
   };
 
-  // Desktop drag & drop
   egg.setAttribute("draggable",true);
   egg.ondragstart=function(e){
     draggingWord=emotion;
