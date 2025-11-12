@@ -5,58 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juegos de Emociones</title>
   <style>
-    /* Fuente base y diseño general */
-    body { 
-      font-family: sans-serif; 
-      text-align: center; 
-      padding: 5vw; /* Padding proporcional a la pantalla */
-      background-color: #f0f0f0; 
-      font-size: 4vw; /* Tamaño de letra relativo al ancho de la pantalla */
-      line-height: 1.6; 
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* Título grande y adaptable */
-    h1 { 
-      color: #333; 
-      font-size: 8vw; /* Tamaño proporcional */
-      margin-bottom: 5vh; /* Margen proporcional a la altura de la pantalla */
+    body {
+      font-family: 'Comic Sans MS', sans-serif;
+      text-align: center;
+      padding: 5vw;
+      background: linear-gradient(120deg, #ffe0e0, #e0f7ff);
+      font-size: 5vw; /* Tamaño base de texto adaptable */
+      line-height: 1.5;
     }
 
-    /* Enlaces grandes, espacios y animación */
-    a { 
-      display: block; 
-      margin: 3vh 0; 
-      font-size: 5vw; 
-      color: #0077cc; 
-      text-decoration: none; 
-      transition: transform 0.2s;
+    h1 {
+      font-size: 10vw; /* Título grande proporcional */
+      color: #ff4d6d;
+      margin-bottom: 6vh;
+      text-shadow: 2px 2px #fff;
     }
 
-    a:hover { 
-      text-decoration: underline; 
-      transform: scale(1.05); 
+    /* Estilo de los botones */
+    a {
+      display: block;
+      background-color: #ffd966;
+      color: #333;
+      text-decoration: none;
+      font-size: 6vw; /* Texto grande para tocar fácilmente */
+      margin: 3vh 0;
+      padding: 4vw 0;
+      border-radius: 15px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s, background-color 0.2s;
     }
 
-    /* Ajustes para pantallas muy pequeñas */
+    a:hover {
+      transform: scale(1.05);
+      background-color: #ffeb99;
+    }
+
+    /* Emojis más grandes dentro de los botones */
+    a span {
+      font-size: 1.5em;
+      margin-right: 10px;
+    }
+
+    /* Ajustes para pantallas pequeñas */
     @media (max-width: 480px) {
       body {
-        font-size: 5vw;
+        font-size: 6vw;
+        padding: 6vw;
       }
       h1 {
-        font-size: 10vw;
+        font-size: 12vw;
       }
       a {
-        font-size: 6vw;
+        font-size: 7vw;
+        padding: 5vw 0;
+      }
+    }
+
+    /* Ajustes para tablets medianas */
+    @media (min-width: 481px) and (max-width: 768px) {
+      body {
+        font-size: 5.5vw;
+      }
+      h1 {
+        font-size: 11vw;
+      }
+      a {
+        font-size: 6.5vw;
+        padding: 4.5vw 0;
       }
     }
   </style>
 </head>
 <body>
   <h1>Juegos de Emociones</h1>
-  <a href="Game-Conejo-Emociones.html">🐰 Conejo de Emociones</a>
-  <a href="Game-Pizarron-Emociones.html">🧠 Pizarrón de Emociones</a>
-  <a href="Game-Rompecabezas-Emociones.html">🧩 Rompecabezas de Emociones</a>
-  <a href="Game-Collage-Emociones.html">🎨 Collage de Emociones</a>
-  <a href="Game-Memorama-Emociones.html">🃏 Memorama de Emociones</a>
+  <a href="Game-Conejo-Emociones.html"><span>🐰</span>Conejo de Emociones</a>
+  <a href="Game-Pizarron-Emociones.html"><span>🧠</span>Pizarrón de Emociones</a>
+  <a href="Game-Rompecabezas-Emociones.html"><span>🧩</span>Rompecabezas de Emociones</a>
+  <a href="Game-Collage-Emociones.html"><span>🎨</span>Collage de Emociones</a>
+  <a href="Game-Memorama-Emociones.html"><span>🃏</span>Memorama de Emociones</a>
 </body>
 </html>
