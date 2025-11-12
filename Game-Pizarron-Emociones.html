@@ -81,7 +81,8 @@
     background: white;
     cursor: crosshair;
     width: 100%;
-    height: auto;
+    max-width: 350px;
+    height: 300px;
   }
 
   .instructions {
@@ -224,6 +225,36 @@
     background: #8cc3ae;
     transform: scale(1.05);
   }
+
+  /* AJUSTE PARA TELÉFONOS */
+  @media (max-width: 600px) {
+    .left-page, .right-page {
+      padding: 15px;
+    }
+
+    .emotion-img {
+      width: 180px;
+      height: 180px;
+    }
+
+    canvas {
+      height: 200px;
+    }
+
+    .instructions {
+      font-size: 0.9em;
+    }
+
+    .controls button {
+      font-size: 0.9em;
+      padding: 6px 12px;
+    }
+
+    input[type="color"] {
+      width: 30px;
+      height: 30px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -247,11 +278,11 @@
       ✏️ Draw how you feel when you are <b>happy</b>. Use any colors you like!
     </div>
 
-    <canvas id="drawArea"></canvas>
+    <canvas id="drawArea" width="350" height="300"></canvas>
 
     <div class="controls">
       <input type="color" id="colorPicker" value="#000000">
-      <button onclick="clearCanvas()">🧽 Delete</button>
+      <button onclick="clearCanvas()">🧽 Delte</button>
       <button onclick="saveDrawing()">💾 Save</button>
     </div>
 
@@ -273,167 +304,163 @@
 </div>
 
 <script>
-const emotions = [
-  { name: "Happy", img: "happy.png", text: "Draw how you feel when you are happy 💛" },
-  { name: "Sad", img: "sad.png", text: "Draw how you feel when you are sad 💙" },
-  { name: "Angry", img: "angry.png", text: "Draw how you feel when you are angry ❤️" },
-  { name: "Scared", img: "scared.png", text: "Draw how you feel when you are scared 💜" },
-  { name: "Excited", img: "Excited.png", text: "Draw how you feel when you are Excited 💚" }
-];
-
-let current = 0;
-let drawings = [];
-const cover = document.getElementById("cover");
-const emotionName = document.getElementById("emotionName");
-const emotionImage = document.getElementById("emotionImage");
-const instructions = document.getElementById("instructions");
-const canvas = document.getElementById("drawArea");
-const ctx = canvas.getContext("2d");
-const colorPicker = document.getElementById("colorPicker");
-const message = document.getElementById("message");
-const finalPage = document.getElementById("finalPage");
-const gallery = document.getElementById("gallery");
-const finalMessage = document.getElementById("finalMessage");
-let drawing = false;
-let lastX = 0;
-let lastY = 0;
-
-function openBook() {
-  cover.style.display = "none";
-}
-
-// Ajusta canvas responsive
-function resizeCanvas() {
-  const containerWidth = canvas.parentElement.clientWidth;
-  canvas.width = containerWidth * 0.9;
-  canvas.height = containerWidth * 0.7;
-  clearCanvas();
-}
-
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-function showPage() {
-  const e = emotions[current];
-  emotionName.textContent = e.name;
-  emotionImage.src = e.img;
-  instructions.innerHTML = `✏️ ${e.text}`;
-  clearCanvas();
-  message.textContent = "";
-}
-
-function nextPage() {
-  if (current < emotions.length - 1) {
-    current++;
-    showPage();
-  } else {
-    showFinalPage();
-  }
-}
-
-function prevPage() {
-  if (current > 0) {
-    current--;
-    showPage();
-  }
-}
-
-function clearCanvas() {
-  ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.strokeStyle = colorPicker.value;
-  ctx.lineWidth = 4;
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-}
-
-function saveDrawing() {
-  const imgData = canvas.toDataURL("image/png");
-  drawings[current] = imgData;
-  const praises = [
-    "🌟 Excellent work!",
-    "🎉 Great job!",
-    "💖 So creative!",
-    "😊 Beautiful drawing!",
-    "👏 Keep it up!"
+  const emotions = [
+    { name: "Happy", img: "happy.png", text: "Draw how you feel when you are happy 💛" },
+    { name: "Sad", img: "sad.png", text: "Draw how you feel when you are sad 💙" },
+    { name: "Angry", img: "angry.png", text: "Draw how you feel when you are angry ❤️" },
+    { name: "Scared", img: "scared.png", text: "Draw how you feel when you are scared 💜" },
+    { name: "Excited", img: "Excited.png", text: "Draw how you feel when you are Excited 💚" }
   ];
-  message.textContent = praises[Math.floor(Math.random() * praises.length)];
-}
 
-function showFinalPage() {
-  finalPage.style.display = "block";
-  gallery.innerHTML = "";
-  drawings.forEach((img, i) => {
-    const image = document.createElement("img");
-    image.src = img;
-    image.alt = emotions[i].name;
-    gallery.appendChild(image);
-  });
-  const compliments = [
-    "🌈 Your feelings shine through every drawing!",
-    "💫 What a wonderful artist you are!",
-    "🌻 Your emotions look beautiful!",
-    "🐰 Your book is full of magic!",
-    "💕 Amazing job, little artist!"
-  ];
-  finalMessage.textContent = compliments[Math.floor(Math.random() * compliments.length)];
-}
+  let current = 0;
+  let drawings = [];
+  const cover = document.getElementById("cover");
+  const emotionName = document.getElementById("emotionName");
+  const emotionImage = document.getElementById("emotionImage");
+  const instructions = document.getElementById("instructions");
+  const canvas = document.getElementById("drawArea");
+  const ctx = canvas.getContext("2d");
+  const colorPicker = document.getElementById("colorPicker");
+  const message = document.getElementById("message");
+  const finalPage = document.getElementById("finalPage");
+  const gallery = document.getElementById("gallery");
+  const finalMessage = document.getElementById("finalMessage");
+  let drawing = false;
 
-function restartBook() {
-  finalPage.style.display = "none";
-  cover.style.display = "flex";
-  drawings = [];
-  current = 0;
+  function openBook() {
+    cover.style.display = "none";
+  }
+
+  function showPage() {
+    const e = emotions[current];
+    emotionName.textContent = e.name;
+    emotionImage.src = e.img;
+    instructions.innerHTML = `✏️ ${e.text}`;
+    clearCanvas();
+    message.textContent = "";
+  }
+
+  function nextPage() {
+    if (current < emotions.length - 1) {
+      current++;
+      showPage();
+    } else {
+      showFinalPage();
+    }
+  }
+
+  function prevPage() {
+    if (current > 0) {
+      current--;
+      showPage();
+    }
+  }
+
+  function clearCanvas() {
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function saveDrawing() {
+    const imgData = canvas.toDataURL("image/png");
+    drawings[current] = imgData;
+    const praises = [
+      "🌟 Excellent work!",
+      "🎉 Great job!",
+      "💖 So creative!",
+      "😊 Beautiful drawing!",
+      "👏 Keep it up!"
+    ];
+    message.textContent = praises[Math.floor(Math.random() * praises.length)];
+  }
+
+  function showFinalPage() {
+    finalPage.style.display = "block";
+    gallery.innerHTML = "";
+    drawings.forEach((img, i) => {
+      const image = document.createElement("img");
+      image.src = img;
+      image.alt = emotions[i].name;
+      gallery.appendChild(image);
+    });
+    const compliments = [
+      "🌈 Your feelings shine through every drawing!",
+      "💫 What a wonderful artist you are!",
+      "🌻 Your emotions look beautiful!",
+      "🐰 Your book is full of magic!",
+      "💕 Amazing job, little artist!"
+    ];
+    finalMessage.textContent = compliments[Math.floor(Math.random() * compliments.length)];
+  }
+
+  function restartBook() {
+    finalPage.style.display = "none";
+    cover.style.display = "flex";
+    drawings = [];
+    current = 0;
+    showPage();
+  }
+
+  // MOUSE Y TOUCH PARA DIBUJAR LÍNEA LISA
+  let lastX = 0;
+  let lastY = 0;
+
+  function startDrawing(e) {
+    drawing = true;
+    const rect = canvas.getBoundingClientRect();
+    if(e.touches){
+      lastX = e.touches[0].clientX - rect.left;
+      lastY = e.touches[0].clientY - rect.top;
+    } else {
+      lastX = e.offsetX;
+      lastY = e.offsetY;
+    }
+  }
+
+  function endDrawing() {
+    drawing = false;
+    ctx.beginPath();
+  }
+
+  function draw(e) {
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    let x, y;
+    if(e.touches){
+      x = e.touches[0].clientX - rect.left;
+      y = e.touches[0].clientY - rect.top;
+    } else {
+      x = e.offsetX;
+      y = e.offsetY;
+    }
+
+    ctx.strokeStyle = colorPicker.value;
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.closePath();
+
+    lastX = x;
+    lastY = y;
+  }
+
+  // Eventos
+  canvas.addEventListener("mousedown", startDrawing);
+  canvas.addEventListener("mouseup", endDrawing);
+  canvas.addEventListener("mouseout", endDrawing);
+  canvas.addEventListener("mousemove", draw);
+
+  canvas.addEventListener("touchstart", startDrawing);
+  canvas.addEventListener("touchmove", draw);
+  canvas.addEventListener("touchend", endDrawing);
+  canvas.addEventListener("touchcancel", endDrawing);
+
   showPage();
-}
-
-// Dibujo con mouse
-canvas.addEventListener("mousedown", (e) => {
-  drawing = true;
-  const rect = canvas.getBoundingClientRect();
-  lastX = e.clientX - rect.left;
-  lastY = e.clientY - rect.top;
-});
-canvas.addEventListener("mousemove", draw);
-canvas.addEventListener("mouseup", () => drawing = false);
-canvas.addEventListener("mouseout", () => drawing = false);
-
-// Dibujo con touch
-canvas.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  drawing = true;
-  const rect = canvas.getBoundingClientRect();
-  lastX = e.touches[0].clientX - rect.left;
-  lastY = e.touches[0].clientY - rect.top;
-});
-canvas.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-  draw(e.touches[0]);
-});
-canvas.addEventListener("touchend", () => drawing = false);
-
-function draw(e) {
-  if (!drawing) return;
-  const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-
-  ctx.strokeStyle = colorPicker.value;
-  ctx.lineWidth = 4;
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-
-  ctx.beginPath();
-  ctx.moveTo(lastX, lastY);
-  ctx.lineTo(x, y);
-  ctx.stroke();
-
-  lastX = x;
-  lastY = y;
-}
-
-// Inicializa la primera página
-showPage();
 </script>
 
 </body>
