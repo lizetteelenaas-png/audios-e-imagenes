@@ -5,170 +5,164 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game of Emotions</title>
 <style>
-  body {
-    margin: 0;
-    font-family: "Comic Sans MS", cursive;
-    background: url("paisaje.jpg") no-repeat center center/cover;
-    overflow: hidden;
-    height: 100vh;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Comic Sans MS", cursive;
+  background: url("paisaje.jpg") no-repeat center center/cover;
+  height: 100%;
+  overflow: hidden;
+}
 
-  .start-screen, .end-screen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(255,255,255,0.95);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    text-align: center;
-  }
+/* Pantalla inicio/fin */
+.start-screen, .end-screen {
+  position: fixed; top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(255,255,255,0.95);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 10; text-align: center;
+}
 
-  .start-screen h1 {
-    font-size: clamp(36px, 8vw, 64px);
-    color: #ff69b4;
-    text-shadow: 2px 2px #fff;
-    margin-bottom: 20px;
-  }
+.start-screen h1 {
+  font-size: clamp(36px,8vw,64px);
+  color: #ff69b4; text-shadow:2px 2px #fff;
+  margin-bottom: 20px;
+}
 
-  .start-screen p {
-    font-size: clamp(18px, 4vw, 26px);
-    margin-bottom: 20px;
-  }
+.start-screen p {
+  font-size: clamp(18px,4vw,26px);
+  margin-bottom: 20px;
+}
 
-  .start-button, .restart-button {
-    background-color: #ffb6c1;
-    border: none;
-    color: white;
-    font-size: clamp(18px, 4vw, 28px);
-    padding: clamp(12px, 2vw, 20px) clamp(25px, 4vw, 50px);
-    border-radius: 40px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  }
+.start-button, .restart-button {
+  background-color: #ffb6c1;
+  border: none;
+  color: white;
+  font-size: clamp(18px,4vw,28px);
+  padding: clamp(12px,2vw,20px) clamp(25px,4vw,50px);
+  border-radius: 40px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.start-button:hover, .restart-button:hover { transform: scale(1.1); background-color: #ffa5b0; }
 
-  .start-button:hover, .restart-button:hover {
-    transform: scale(1.1);
-    background-color: #ffa5b0;
-  }
+/* Instrucciones */
+.instructions-line {
+  text-align:center;
+  background-color:#fff7ae;
+  border:2px dashed #f8c537;
+  color:#6a0572;
+  font-size: clamp(18px,4vw,28px);
+  padding:12px 15px;
+  margin:10px auto;
+  width:95%;
+  border-radius:15px;
+  box-shadow:0 3px 5px rgba(0,0,0,0.1);
+  z-index:9;
+}
 
-  .game-area {
-    position: relative;
-    width: 100%;
-    height: 70vh;
-    overflow: hidden;
-    margin-top: 10px;
-  }
+/* Área de juego */
+.game-area {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 20px;
+}
 
-  .bunny {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: clamp(120px, 15vw, 180px);
-    z-index: 3;
-    animation: bunnyVibrate 0.4s infinite ease-in-out;
-  }
+/* Conejo principal */
+.bunny {
+  width: clamp(120px, 15vw, 180px);
+  z-index:2;
+  position: relative;
+  animation: bunnyVibrate 0.4s infinite ease-in-out;
+}
+@keyframes bunnyVibrate {0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
 
-  @keyframes bunnyVibrate {
-    0%,100%{ transform: translateX(-50%) translateY(0); }
-    50%{ transform: translateX(-50%) translateY(-4px); }
-  }
+/* Zanahoria */
+.egg {
+  position: absolute;
+  bottom: 20px;
+  width: var(--egg-width, 40px);  /* tamaño zanahoria */
+  height: var(--egg-height, 55px);
+  background-image: url("zanahoria.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: grab;
+  z-index:3;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  font-size:14px; /* tamaño texto dentro de zanahoria */
+  font-weight:bold;
+  color:#000;
+  text-align:center;
+  padding-bottom:5px;
+}
 
-  .instructions-line {
-    text-align: center;
-    background-color: #fff7ae;
-    border: 2px dashed #f8c537;
-    color: #6a0572;
-    font-size: clamp(20px,4vw,28px);
-    padding: clamp(12px,2vw,20px);
-    margin: 10px auto;
-    width: 90%;
-    border-radius: 15px;
-    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
-  }
+/* Dropzones de emociones */
+.targets {
+  position:absolute;
+  top:120px;
+  width:100%;
+  text-align:center;
+  z-index:4;
+}
 
-  .egg {
-    position: absolute;
-    bottom: 10px;
-    left: 65%; /* a la derecha del conejo */
-    transform: translateX(-50%) scale(1);
-    font-weight: bold;
-    font-size: clamp(20px,5vw,36px);
-    color: #000;
-    display: none;
-    z-index: 5;
-    width: clamp(70px,16vw,120px);
-    height: clamp(90px,20vw,150px);
-    padding-top: 10px;
-    background-image: url("zanahoria.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    border: 4px solid gold;
-    border-radius: 50% / 60%;
-    text-align: center;
-    line-height: 1.2;
-    cursor: grab;
-  }
+.dropzone {
+  display:inline-block;
+  width: clamp(70px,12vw,120px);
+  height: clamp(70px,12vw,120px);
+  border-radius:12%;
+  border:3px dashed #ccc;
+  margin:10px;
+  background-color:#ffffffcc;
+  overflow:hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  animation: bunnyVibrate 0.8s infinite ease-in-out; /* animación vibrar */
+}
+.dropzone img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.dropzone.correct {
+  border-color:#7ae582;
+  background-color:#e3fcec;
+  animation: pop 0.5s ease;
+}
+@keyframes pop {0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
 
-  .targets {
-    position: absolute;
-    bottom: 80%;
-    width: 100%;
-    text-align: center;
-    z-index: 4;
-  }
-
-  .dropzone {
-    display: inline-block;
-    width: clamp(80px, 15vw, 128px);
-    height: clamp(80px, 15vw, 128px);
-    border-radius: 12%;
-    border: 4px dashed #ccc;
-    margin: clamp(10px,2vw,15px);
-    background-color: #ffffffcc;
-    overflow: hidden;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-  }
-
-  .dropzone img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .dropzone.correct {
-    border-color: #7ae582;
-    background-color: #e3fcec;
-    animation: pop 0.5s ease;
-  }
-
-  @keyframes pop {0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
-
-  .message {
-    text-align: center;
-    font-size: clamp(20px,5vw,30px);
-    color: #6a0572;
-    margin-top: 10px;
-  }
-
-  @media (max-width: 600px) {
-    .egg {
-      width: 120px;
-      height: 160px;
-      font-size: 28px;
-      padding-top: 15px;
-    }
-    .dropzone {
-      width: 100px;
-      height: 100px;
-    }
-  }
+/* Mensaje central animado */
+.message {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: clamp(24px,6vw,48px);
+  font-weight:bold;
+  color:#6a0572;
+  text-align:center;
+  pointer-events:none;
+  z-index:20;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity:0;
+}
+.message.show {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity:1;
+  animation: bounceMessage 0.6s ease forwards;
+}
+@keyframes bounceMessage {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity:0; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity:1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity:1; }
+}
 </style>
 </head>
 <body>
@@ -217,124 +211,111 @@ const startScreen=document.getElementById("startScreen");
 const endScreen=document.getElementById("endScreen");
 const bgMusic=document.getElementById("bgMusic");
 
-let score=0;
-let current=0;
-let draggingWord="";
+let score=0,current=0,draggingWord="";
 
 function shuffleArray(array){return array.sort(()=>Math.random()-0.5);}
+function startGame(){startScreen.style.display="none"; bgMusic.play(); emotions=shuffleArray(emotions); startRound();}
 
-function startGame(){
-  startScreen.style.display="none";
-  bgMusic.play();
-  emotions=shuffleArray(emotions);
-  startRound();
+function showMessage(text,color){
+  message.textContent=text;
+  message.style.color=color;
+  message.classList.add("show");
+  setTimeout(()=>{ message.classList.remove("show"); message.textContent=""; },1200);
 }
 
 function startRound(){
   if(current>=emotions.length){ showResult(); return; }
   const emotion=emotions[current];
   message.textContent="";
-  egg.style.display="none";
-  setTimeout(()=>{ showEgg(emotion); },500);
+  showEgg(emotion);
 }
 
 function showEgg(emotion){
   egg.style.display="flex";
-  egg.style.left="65%";
-  egg.style.bottom="10px";
-  egg.style.transform="translateX(-50%) scale(1)";
-  egg.textContent = emotion;
+  egg.textContent=emotion;
   egg.setAttribute("data-word",emotion);
+  resetEgg();
 
-  const startLeft = egg.offsetLeft;
-  const startTop  = egg.offsetTop;
-
-  egg.ontouchstart = function(e){
+  // Touch drag
+  egg.ontouchstart=function(e){
     e.preventDefault();
-    draggingWord = emotion;
-    const startX = e.touches[0].clientX - egg.offsetLeft;
-    const startY = e.touches[0].clientY - egg.offsetTop;
-
-    const moveEgg = function(ev){
-      const touch = ev.touches[0];
-      egg.style.left = (touch.clientX - startX) + "px";
-      egg.style.top  = (touch.clientY - startY) + "px";
-    };
-
-    document.ontouchmove = moveEgg;
-
-    document.ontouchend = function(ev){
-      document.ontouchmove = null;
-      document.ontouchend = null;
-
-      let droppedOnZone = false;
-
-      zones.forEach(zone=>{
-        const rect = zone.getBoundingClientRect();
-        const eggRect = egg.getBoundingClientRect();
-        const eggCenterX = eggRect.left + eggRect.width/2;
-        const eggCenterY = eggRect.top + eggRect.height/2;
-
-        if(eggCenterX >= rect.left && eggCenterX <= rect.right &&
-           eggCenterY >= rect.top && eggCenterY <= rect.bottom){
-
-          droppedOnZone = true;
-
-          if(zone.dataset.match === draggingWord){
-            score++;
-            message.textContent = `✅ Correct! (${score}/${emotions.length})`;
-            message.style.color = "#00a86b";
-            zone.classList.add("correct");
-          } else {
-            message.textContent = `❌ Oops! Try again next time.`;
-            message.style.color = "#ff595e";
-          }
-
-          egg.style.display = "none";
-          current++;
-          setTimeout(startRound,1000);
-        }
-      });
-
-      if(!droppedOnZone){
-        egg.style.left = startLeft + "px";
-        egg.style.top  = startTop + "px";
-      }
-    };
-  };
-
-  // Desktop drag & drop
-  egg.setAttribute("draggable",true);
-  egg.ondragstart=function(e){
     draggingWord=emotion;
-    e.dataTransfer.setData("text",draggingWord);
+    const startX=e.touches[0].clientX-egg.offsetLeft;
+    const startY=e.touches[0].clientY-egg.offsetTop;
+    const moveEgg=function(ev){
+      const touch=ev.touches[0];
+      egg.style.left=(touch.clientX-startX)+"px";
+      egg.style.top=(touch.clientY-startY)+"px";
+    };
+    document.ontouchmove=moveEgg;
+    document.ontouchend=function(){
+      document.ontouchmove=null;
+      document.ontouchend=null;
+      checkDrop();
+    };
   };
+
+  // Mouse drag
+  egg.setAttribute("draggable",true);
+  egg.ondragstart=function(e){ draggingWord=emotion; e.dataTransfer.setData("text",draggingWord); };
+}
+
+function resetEgg(){
+  egg.style.left=(window.innerWidth/2+bunny.offsetWidth/2+20)+"px";
+  egg.style.top=(window.innerHeight*0.7 - egg.offsetHeight)+"px";
+}
+
+function checkDrop(){
+  let dropped=false;
+  zones.forEach(zone=>{
+    const rect=zone.getBoundingClientRect();
+    const eggRect=egg.getBoundingClientRect();
+    const centerX=eggRect.left+eggRect.width/2;
+    const centerY=eggRect.top+eggRect.height/2;
+    if(centerX>=rect.left && centerX<=rect.right && centerY>=rect.top && centerY<=rect.bottom){
+      dropped=true;
+      draggingWord===zone.dataset.match ? correctDrop(zone) : wrongDrop();
+    }
+  });
+  if(!dropped){ resetEgg(); }
 }
 
 zones.forEach(zone=>{
-  zone.addEventListener("dragover",e=> e.preventDefault());
-  zone.addEventListener("drop",e=>{
+  zone.addEventListener("dragover", e=>e.preventDefault());
+  zone.addEventListener("drop", e=>{
     e.preventDefault();
-    const correctWord=zone.dataset.match;
-    if(draggingWord===correctWord){
-      score++;
-      message.textContent=`✅ Correct! (${score}/${emotions.length})`;
-      message.style.color="#00a86b";
-      zone.classList.add("correct");
-    } else {
-      message.textContent=`❌ Oops! Try again next time.`;
-      message.style.color="#ff595e";
-    }
-    egg.style.display="none";
-    current++;
-    setTimeout(startRound,1000);
+    draggingWord===zone.dataset.match ? correctDrop(zone) : wrongDrop();
   });
 });
+
+function correctDrop(zone){
+  score++;
+  showMessage(`✅ Correct! (${score}/${emotions.length})`,"#00a86b");
+  zone.classList.add("correct");
+  egg.style.display="none";
+  current++;
+  setTimeout(startRound,800);
+}
+
+function wrongDrop(){
+  showMessage(`❌ Oops! Try again!`,"#ff595e");
+  egg.style.display="none";
+  current++;
+  setTimeout(startRound,800);
+}
 
 function showResult(){
   document.getElementById("finalScore").textContent=`You got ${score}/${emotions.length} correct!`;
   endScreen.style.display="flex";
 }
+
+// Ajuste responsive
+function adjustLayout(){
+  resetEgg();
+}
+window.addEventListener("resize",adjustLayout);
+window.addEventListener("orientationchange",adjustLayout);
+adjustLayout();
 </script>
 </body>
 </html>
