@@ -66,7 +66,6 @@
     margin-top: 10px;
   }
 
-  /* Conejo principal */
   .bunny {
     position: absolute;
     bottom: 10px;
@@ -82,7 +81,6 @@
     50%{ transform: translateX(-50%) translateY(-4px); }
   }
 
-  /* Instrucciones */
   .instructions-line {
     text-align: center;
     background-color: #fff7ae;
@@ -96,33 +94,30 @@
     box-shadow: 0 3px 5px rgba(0,0,0,0.1);
   }
 
-  /* Zanahoria al lado del conejo */
   .egg {
     position: absolute;
-    bottom: 10%;
-    left: 55%;
-    transform: translateX(0) scale(1);
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%) scale(1);
     font-weight: bold;
-    font-size: clamp(18px,4vw,28px);
+    font-size: clamp(20px,5vw,36px);
     color: #000;
     display: none;
     z-index: 5;
-    width: clamp(50px,12vw,100px);
-    height: clamp(70px,16vw,120px);
-    padding-top: 5px;
+    width: clamp(70px,16vw,140px);
+    height: clamp(90px,20vw,160px);
+    padding-top: 10px;
     background-image: url("zanahoria.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
-    border: 3px solid gold;
+    border: 4px solid gold;
     border-radius: 50% / 60%;
     text-align: center;
     line-height: 1.2;
     cursor: grab;
-    transition: all 0.2s ease;
   }
 
-  /* Dropzones de emociones */
   .targets {
     position: absolute;
     top: 15%;
@@ -141,7 +136,6 @@
     background-color: #ffffffcc;
     overflow: hidden;
     transition: transform 0.3s ease, border-color 0.3s ease;
-    animation: bunnyVibrate 0.8s infinite ease-in-out;
   }
 
   .dropzone img {
@@ -165,13 +159,13 @@
     margin-top: 10px;
   }
 
-  /* Ajuste responsive para teléfono */
+  /* Ajuste responsivo para teléfonos */
   @media (max-width: 600px) {
     .egg {
-      left: 60%;
-      width: 70px;
-      height: 100px;
-      font-size: 22px;
+      width: 120px;
+      height: 160px;
+      font-size: 28px;
+      padding-top: 15px;
     }
     .dropzone {
       width: 100px;
@@ -226,7 +220,9 @@ const startScreen=document.getElementById("startScreen");
 const endScreen=document.getElementById("endScreen");
 const bgMusic=document.getElementById("bgMusic");
 
-let score=0,current=0,draggingWord="";
+let score=0;
+let current=0;
+let draggingWord="";
 
 function shuffleArray(array){return array.sort(()=>Math.random()-0.5);}
 
@@ -247,20 +243,14 @@ function startRound(){
 
 function showEgg(emotion){
   egg.style.display="flex";
+  egg.style.left="50%";
+  egg.style.bottom="50px";
+  egg.style.top="";
+  egg.style.transform="translateX(-50%) scale(1)";
   egg.textContent = emotion;
-  egg.setAttribute("data-word", emotion);
+  egg.setAttribute("data-word",emotion);
 
-  // Posición inicial al lado del conejo
-  function positionEgg() {
-    const bunnyRect = bunny.getBoundingClientRect();
-    egg.style.left = (bunnyRect.right + 10) + "px";
-    egg.style.bottom = "10%";
-  }
-  positionEgg();
-
-  window.addEventListener("resize", positionEgg);
-  window.addEventListener("orientationchange", positionEgg);
-
+  // Guardar posición inicial
   const startLeft = egg.offsetLeft;
   const startTop  = egg.offsetTop;
 
@@ -279,7 +269,7 @@ function showEgg(emotion){
 
     document.ontouchmove = moveEgg;
 
-    document.ontouchend = function(){
+    document.ontouchend = function(ev){
       document.ontouchmove = null;
       document.ontouchend = null;
 
@@ -288,12 +278,13 @@ function showEgg(emotion){
       zones.forEach(zone=>{
         const rect = zone.getBoundingClientRect();
         const eggRect = egg.getBoundingClientRect();
-        const centerX = eggRect.left + eggRect.width/2;
-        const centerY = eggRect.top + eggRect.height/2;
+        if(eggRect.left + eggRect.width/2 >= rect.left &&
+           eggRect.left + eggRect.width/2 <= rect.right &&
+           eggRect.top + eggRect.height/2 >= rect.top &&
+           eggRect.top + eggRect.height/2 <= rect.bottom){
 
-        if(centerX >= rect.left && centerX <= rect.right &&
-           centerY >= rect.top && centerY <= rect.bottom){
           droppedOnZone = true;
+
           if(zone.dataset.match === draggingWord){
             score++;
             message.textContent = `✅ Correct! (${score}/${emotions.length})`;
@@ -303,12 +294,14 @@ function showEgg(emotion){
             message.textContent = `❌ Oops! Try again next time.`;
             message.style.color = "#ff595e";
           }
+
           egg.style.display = "none";
           current++;
-          setTimeout(startRound, 1000);
+          setTimeout(startRound,1000);
         }
       });
 
+      // Regresar a posición original si no cae en zona
       if(!droppedOnZone){
         egg.style.left = startLeft + "px";
         egg.style.top  = startTop + "px";
@@ -318,15 +311,15 @@ function showEgg(emotion){
 
   // Desktop drag & drop
   egg.setAttribute("draggable",true);
-  egg.ondragstart = function(e){
-    draggingWord = emotion;
-    e.dataTransfer.setData("text", draggingWord);
+  egg.ondragstart=function(e){
+    draggingWord=emotion;
+    e.dataTransfer.setData("text",draggingWord);
   };
 }
 
 zones.forEach(zone=>{
-  zone.addEventListener("dragover", e=> e.preventDefault());
-  zone.addEventListener("drop", e=>{
+  zone.addEventListener("dragover",e=> e.preventDefault());
+  zone.addEventListener("drop",e=>{
     e.preventDefault();
     const correctWord=zone.dataset.match;
     if(draggingWord===correctWord){
