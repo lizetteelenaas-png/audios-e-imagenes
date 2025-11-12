@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juegos de Emociones</title>
   <style>
-    /* Reset básico */
     * {
       margin: 0;
       padding: 0;
@@ -17,36 +16,33 @@
       text-align: center;
       background: linear-gradient(120deg, #ffe0e0, #e0f7ff);
       line-height: 1.5;
+      overflow-x: hidden;
     }
 
-    /* Imagen del encabezado */
+    /* ---- PORTADA SUPERIOR ---- */
     header {
       width: 100%;
-      height: auto;
+      height: 45vh; /* visible solo el pedacito superior */
+      background-image: url('c40c544c-17a3-4961-8c23-cdb3feaa665d.png');
+      background-size: cover;
+      background-position: top center; /* se enfoca en la parte del título */
+      background-repeat: no-repeat;
+      border-bottom: 6px solid #ffd966;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
 
-    header img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain; /* Muestra toda la imagen sin recortarla */
-    }
-
-    /* Título debajo de la imagen */
-    h1 {
-      font-size: 6vw;
-      color: #ff4d6d;
-      text-shadow: 2px 2px #fff;
-      margin: 2vh 0 4vh;
-    }
-
-    /* Contenedor principal */
+    /* ---- CONTENIDO ---- */
     main {
       padding: 5vw;
-      font-size: 5vw;
     }
 
-    /* Botones */
+    h1 {
+      font-size: 9vw;
+      color: #ff4d6d;
+      margin-bottom: 5vh;
+      text-shadow: 2px 2px #fff;
+    }
+
     a {
       display: block;
       background-color: #ffd966;
@@ -70,68 +66,31 @@
       margin-right: 10px;
     }
 
-    /* Ajustes para celular */
+    /* ---- Ajustes para pantallas pequeñas ---- */
     @media (max-width: 480px) {
-      h1 {
-        font-size: 9vw;
-        margin: 2vh 0 3vh;
-      }
-      main {
-        font-size: 6vw;
-        padding: 6vw;
-      }
-      a {
-        font-size: 7vw;
-        padding: 5vw 0;
-      }
+      header { height: 35vh; }
+      main { padding: 6vw; }
+      h1 { font-size: 10vw; }
+      a { font-size: 7vw; padding: 5vw 0; }
     }
 
-    /* Ajustes para tablets */
-    @media (min-width: 481px) and (max-width: 1024px) {
-      h1 {
-        font-size: 7vw;
-      }
-      main {
-        font-size: 5.5vw;
-      }
-      a {
-        font-size: 6.5vw;
-        padding: 4.5vw 0;
-      }
-    }
-
-    /* Ajustes para pantallas grandes */
-    @media (min-width: 1025px) {
-      h1 {
-        font-size: 3vw;
-      }
-      main {
-        font-size: 1.5vw;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-      a {
-        font-size: 2vw;
-        padding: 1.5vw 0;
-      }
+    /* ---- Ajustes para pantallas medianas ---- */
+    @media (min-width: 481px) and (max-width: 900px) {
+      header { height: 40vh; }
+      h1 { font-size: 8vw; }
+      a { font-size: 6.5vw; padding: 4.5vw 0; }
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <img src="Bright Minds SB Covers Kinder.jpg" alt="Portada Juegos de Emociones">
-  </header>
-
-  <h1>Juegos de Emociones</h1>
-
+  <header></header>
   <main>
+    <h1>Juegos de Emociones</h1>
     <a href="Game-Conejo-Emociones.html"><span>🐰</span>Conejo de Emociones</a>
     <a href="Game-Pizarron-Emociones.html"><span>🧠</span>Pizarrón de Emociones</a>
     <a href="Game-Rompecabezas-Emociones.html"><span>🧩</span>Rompecabezas de Emociones</a>
     <a href="Game-Collage-Emociones.html"><span>🎨</span>Collage de Emociones</a>
     <a href="Game-Memorama-Emociones.html"><span>🃏</span>Memorama de Emociones</a>
   </main>
-
 </body>
 </html>
