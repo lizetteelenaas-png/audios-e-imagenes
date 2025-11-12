@@ -36,7 +36,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .left-page {
@@ -269,7 +269,7 @@ const emotions = [
 ];
 
 let current = 0;
-let drawings = [];
+let drawings = new Array(emotions.length).fill(null);
 const cover = document.getElementById("cover");
 const emotionName = document.getElementById("emotionName");
 const emotionImage = document.getElementById("emotionImage");
@@ -290,7 +290,14 @@ function showPage() {
   emotionName.textContent = e.name;
   emotionImage.src = e.img;
   instructions.innerHTML = `✏️ ${e.text}`;
-  clearCanvas();
+  // Restaurar dibujo si existe
+  if(drawings[current]) {
+    const img = new Image();
+    img.src = drawings[current];
+    img.onload = () => ctx.drawImage(img,0,0,canvas.width,canvas.height);
+  } else {
+    clearCanvas();
+  }
   message.textContent = "";
 }
 
@@ -318,17 +325,20 @@ function showFinalPage() {
   finalPage.style.display = "block";
   gallery.innerHTML = "";
   drawings.forEach((img,i)=>{
-    const image=document.createElement("img");
-    image.src=img;
-    image.alt=emotions[i].name;
-    gallery.appendChild(image);
+    if(img){
+      const image=document.createElement("img");
+      image.src=img;
+      image.alt=emotions[i].name;
+      gallery.appendChild(image);
+    }
   });
   const compliments = ["🌈 Your feelings shine through every drawing!","💫 What a wonderful artist you are!","🌻 Your emotions look beautiful!","🐰 Your book is full of magic!","💕 Amazing job, little artist!"];
   finalMessage.textContent = compliments[Math.floor(Math.random()*compliments.length)];
 }
 
-function restartBook() { finalPage.style.display="none"; cover.style.display="flex"; drawings=[]; current=0; showPage(); }
+function restartBook() { finalPage.style.display="none"; cover.style.display="flex"; drawings = new Array(emotions.length).fill(null); current=0; showPage(); }
 
+// DIBUJO
 canvas.addEventListener("mousedown",()=>drawing=true);
 canvas.addEventListener("mouseup",()=>{drawing=false; ctx.lastX=null; ctx.lastY=null;});
 canvas.addEventListener("mouseout",()=>{drawing=false; ctx.lastX=null; ctx.lastY=null;});
@@ -340,21 +350,35 @@ canvas.addEventListener("touchend",()=>{drawing=false; ctx.lastX=null; ctx.lastY
 
 function draw(e){
   if(!drawing) return;
-  const rect=canvas.getBoundingClientRect();
-  ctx.strokeStyle=colorPicker.value;
-  ctx.lineWidth=4;
-  ctx.lineCap="round";
-  ctx.lineJoin="round";
-  if(!ctx.lastX){ ctx.lastX=e.clientX-rect.left; ctx.lastY=e.clientY-rect.top; }
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  ctx.strokeStyle = colorPicker.value;
+  ctx.lineWidth = 4;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  if(!ctx.lastX){ ctx.lastX=x; ctx.lastY=y; }
   ctx.beginPath();
   ctx.moveTo(ctx.lastX,ctx.lastY);
-  ctx.lineTo(e.clientX-rect.left,e.clientY-rect.top);
+  ctx.lineTo(x,y);
   ctx.stroke();
-  ctx.lastX=e.clientX-rect.left;
-  ctx.lastY=e.clientY-rect.top;
+  ctx.lastX = x;
+  ctx.lastY = y;
 }
 
-showPage();
+// Centrar la imagen del conejo verticalmente en PC
+const emotionContainer = document.querySelector('.left-page');
+function centerEmotionImage() {
+  if(window.innerWidth > 768) {
+    emotionContainer.style.justifyContent = "center";
+  } else {
+    emotionContainer.style.justifyContent = "flex-start";
+  }
+}
+
+window.addEventListener("resize", centerEmotionImage);
+window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
+
 </body>
 </html>
