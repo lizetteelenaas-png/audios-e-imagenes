@@ -2,32 +2,52 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juegos de Emociones</title>
   <style>
+    /* Fuente base y diseño general */
     body { 
       font-family: sans-serif; 
       text-align: center; 
-      padding: 40px; 
+      padding: 5vw; /* Padding proporcional a la pantalla */
       background-color: #f0f0f0; 
-      font-size: 28px; /* Tamaño base más grande */
-      line-height: 1.6; /* Mejor lectura */
+      font-size: 4vw; /* Tamaño de letra relativo al ancho de la pantalla */
+      line-height: 1.6; 
     }
+
+    /* Título grande y adaptable */
     h1 { 
       color: #333; 
-      font-size: 64px; /* Título muy grande */
-      margin-bottom: 50px;
+      font-size: 8vw; /* Tamaño proporcional */
+      margin-bottom: 5vh; /* Margen proporcional a la altura de la pantalla */
     }
+
+    /* Enlaces grandes, espacios y animación */
     a { 
       display: block; 
-      margin: 25px; 
-      font-size: 36px; /* Enlaces grandes y llamativos */
+      margin: 3vh 0; 
+      font-size: 5vw; 
       color: #0077cc; 
       text-decoration: none; 
-      transition: transform 0.2s; /* Animación ligera al pasar el mouse */
+      transition: transform 0.2s;
     }
+
     a:hover { 
       text-decoration: underline; 
-      transform: scale(1.1); /* Leve aumento al pasar el mouse */
+      transform: scale(1.05); 
+    }
+
+    /* Ajustes para pantallas muy pequeñas */
+    @media (max-width: 480px) {
+      body {
+        font-size: 5vw;
+      }
+      h1 {
+        font-size: 10vw;
+      }
+      a {
+        font-size: 6vw;
+      }
     }
   </style>
 </head>
