@@ -3,103 +3,148 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title> Emotions Memory Game</title>
+<title>Emotions Memory Game</title>
 <style>
-  :root{
-    --accent:#0077b6;
-    --bg:url('paisaje3.jpg') no-repeat center center fixed;
-  }
-  body{
-    margin:0;
-    font-family:"Comic Sans MS", cursive;
-    background:var(--bg);
-    background-size: cover;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:12px;
-    min-height:100vh;
-    padding:18px;
-    box-sizing:border-box;
-  }
-  .cover, .final {
-    width:100%;
-    max-width:900px;
-    padding:24px;
-    border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.12);
-    text-align:center;
-    background:linear-gradient(135deg,#caf0f8,#fde4cf);
-  }
-  h1{ color:var(--accent); margin:0; }
-  .game {
-    width:100%;
-    max-width:900px;
-    display:grid;
-    grid-template-columns:repeat(5,140px);
-    grid-gap:12px;
-    justify-content:center;
-    margin-bottom:12px;
-  }
+:root {
+  --accent:#0077b6;
+  --bg:url('paisaje3.jpg') no-repeat center center fixed;
+}
+body {
+  margin:0;
+  font-family:"Comic Sans MS", cursive;
+  background:var(--bg);
+  background-size: cover;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  min-height:100vh;
+  padding:18px;
+  box-sizing:border-box;
+  overflow-x:hidden;
+}
+.cover, .final {
+  width:100%;
+  max-width:900px;
+  padding:24px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.12);
+  text-align:center;
+  background:linear-gradient(135deg,#caf0f8,#fde4cf);
+  margin-top:40px;
+}
+h1 { color:var(--accent); margin:0 0 12px 0; }
+.game {
+  width:100%;
+  max-width:900px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
+  gap:10px;
+  justify-items:center;
+  margin-bottom:12px;
+}
+.card {
+  width:110px;
+  height:130px;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  user-select:none;
+  position:relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-weight:700;
+  color:#000;
+  font-size:20px;
+  text-align:center;
+}
+.card img {
+  width:80px;
+  height:80px;
+  object-fit:cover;
+  margin-bottom:6px;
+  border-radius:8px;
+}
+.card.flipped {
+  transform: scale(1.05);
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+}
+.card.matched {
+  background:#caf0f8;
+  cursor:default;
+}
+.btn {
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:14px 22px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:18px;
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+#finalMessage {
+  font-size:32px;
+  font-weight:700;
+  color:green;
+  margin-top:12px;
+  text-align:center;
+}
+.hintText {
+  font-size:18px;
+  color:#333;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+@keyframes pulse {
+  0% { transform:scale(1); box-shadow:0 0 0 rgba(255,255,255,0.7); }
+  50% { transform:scale(1.1); box-shadow:0 0 15px rgba(255,255,255,0.7); }
+  100% { transform:scale(1); box-shadow:0 0 0 rgba(255,255,255,0.7); }
+}
+.hintAnimate {
+  animation:pulse 1s ease-in-out;
+}
+@media(max-width:600px){
   .card {
-    width:140px;
-    height:160px;
-    border-radius:12px;
-    background:#fff;
-    box-shadow:0 6px 18px rgba(0,0,0,0.12);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    user-select:none;
-    position:relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    font-weight:700;
-    color:#000;
-    font-size:24px;
-    text-align:center;
+    width:90px;
+    height:110px;
+    font-size:16px;
   }
   .card img {
-    width:100px;
-    height:100px;
-    object-fit:cover;
-    margin-bottom:6px;
-    border-radius:8px;
+    width:60px;
+    height:60px;
   }
-  .card.flipped {
-    transform: scale(1.05);
-    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  .btn {
+    font-size:16px;
+    padding:10px 18px;
   }
-  .card.matched {
-    background:#caf0f8;
-    cursor:default;
-  }
-  .btn{ background:var(--accent); color:#fff; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; margin-bottom:12px; }
   #finalMessage {
-    font-size:32px;
-    font-weight:700;
-    color:green;
-    margin-top:12px;
-    text-align:center;
+    font-size:24px;
   }
-  @media(max-width:800px){
-    .game{ grid-template-columns:repeat(2,140px); }
-  }
+}
 </style>
 </head>
 <body>
 
 <!-- Cover -->
 <div class="cover" id="cover">
-  <h1> Emotions Memory Game</h1>
+  <h1>Emotions Memory Game</h1>
   <p>Find all the matching pairs of emotions.</p>
   <button class="btn" onclick="startGame()">Start Game</button>
 </div>
 
 <!-- Game -->
 <div id="game" style="display:none; text-align:center;">
-  <button class="btn" onclick="giveHint()">💡 Hint</button>
+  <div class="hintText">If you need help, press the lightbulb button for a hint!</div>
+  <button class="btn" id="hintButton" onclick="giveHint()">💡 Hint</button>
   <div class="game" id="board" aria-label="Memory board"></div>
   <div id="message" style="display:none;">
     <div id="finalMessage"></div>
@@ -151,12 +196,13 @@ function startGame(){
     card.dataset.name = cardData.name;
     card.dataset.img = cardData.img;
     card.dataset.index = index;
-    // Show "?" before flipping
     card.innerHTML = '?';
     card.addEventListener('click', flipCard);
     boardEl.appendChild(card);
     allCards.push(card);
   });
+
+  startHintPulse();
 }
 
 function flipCard(){
@@ -164,7 +210,6 @@ function flipCard(){
   if(this.classList.contains('flipped') || this.classList.contains('matched')) return;
 
   this.classList.add('flipped');
-  // Replace "?" with image + word
   this.innerHTML = `<img src="${this.dataset.img}" alt="${this.dataset.name}"><div>${this.dataset.name}</div>`;
 
   if(!firstCard){
@@ -199,7 +244,6 @@ function checkMatch(){
   }
 }
 
-// Fisher-Yates shuffle
 function shuffle(array){
   for(let i=array.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
@@ -207,7 +251,6 @@ function shuffle(array){
   }
 }
 
-// Hint function: flip one unmatched card temporarily
 function giveHint(){
   if(lockBoard) return;
   const unflipped = allCards.filter(c => !c.classList.contains('flipped') && !c.classList.contains('matched'));
@@ -228,6 +271,15 @@ function showFinalMessage(){
   const finalText = document.getElementById('finalMessage');
   finalText.textContent = '🎉 Congratulations! You completed the game!';
   msg.style.display = 'block';
+}
+
+// make hint button pulse every few seconds
+function startHintPulse(){
+  const hintBtn = document.getElementById('hintButton');
+  setInterval(()=>{
+    hintBtn.classList.add('hintAnimate');
+    setTimeout(()=>hintBtn.classList.remove('hintAnimate'),1000);
+  },6000);
 }
 </script>
 </body>
