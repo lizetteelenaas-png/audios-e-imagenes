@@ -17,9 +17,9 @@
   }
 
   .book {
-    width: 90%;
-    max-width: 950px;
-    height: 80vh;
+    width: 95%;
+    max-width: 1000px;
+    height: 90vh;
     background: #faf9f4;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.25);
@@ -42,12 +42,12 @@
 
   .left-page, .right-page {
     width: 50%;
-    padding: 25px;
+    padding: 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .left-page {
@@ -66,8 +66,9 @@
   }
 
   .emotion-img {
-    width: 280px;
-    height: 280px;
+    width: 80%;
+    max-width: 300px;
+    height: auto;
     border-radius: 15%;
     border: 5px solid #97c1a9;
     background: #fff;
@@ -81,8 +82,8 @@
     background: white;
     cursor: crosshair;
     width: 100%;
-    max-width: 350px;
-    height: 300px;
+    height: 40vh; /* Se adapta a pantalla */
+    touch-action: none; /* Para evitar scroll al dibujar */
   }
 
   .instructions {
@@ -226,33 +227,31 @@
     transform: scale(1.05);
   }
 
-  /* AJUSTE PARA TELÉFONOS */
   @media (max-width: 600px) {
     .left-page, .right-page {
-      padding: 15px;
+      width: 100%;
+      padding: 10px;
+    }
+
+    .book {
+      flex-direction: column;
+      height: 95vh;
+    }
+
+    .left-page, .right-page {
+      justify-content: flex-start;
+      align-items: center;
     }
 
     .emotion-img {
-      width: 180px;
-      height: 180px;
+      width: 60%;
+      height: auto;
+      max-width: 200px;
+      margin-bottom: 15px;
     }
 
     canvas {
-      height: 200px;
-    }
-
-    .instructions {
-      font-size: 0.9em;
-    }
-
-    .controls button {
-      font-size: 0.9em;
-      padding: 6px 12px;
-    }
-
-    input[type="color"] {
-      width: 30px;
-      height: 30px;
+      height: 250px;
     }
   }
 </style>
@@ -278,7 +277,7 @@
       ✏️ Draw how you feel when you are <b>happy</b>. Use any colors you like!
     </div>
 
-    <canvas id="drawArea" width="350" height="300"></canvas>
+    <canvas id="drawArea"></canvas>
 
     <div class="controls">
       <input type="color" id="colorPicker" value="#000000">
@@ -326,6 +325,14 @@
   const gallery = document.getElementById("gallery");
   const finalMessage = document.getElementById("finalMessage");
   let drawing = false;
+
+  // Ajustar tamaño del canvas según contenedor
+  function resizeCanvas() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
   function openBook() {
     cover.style.display = "none";
