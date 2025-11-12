@@ -66,6 +66,7 @@
     margin-top: 10px;
   }
 
+  /* Conejo principal - sin animación */
   .bunny {
     position: absolute;
     bottom: 10px;
@@ -73,13 +74,7 @@
     transform: translateX(-50%);
     width: clamp(120px, 15vw, 180px);
     z-index: 3;
-    //animation: bunnyVibrate 0.4s infinite ease-in-out;
   }
-
-  /*@keyframes bunnyVibrate {
-    0%,100%{ transform: translateX(-50%) translateY(0); }
-    50%{ transform: translateX(-50%) translateY(-4px); }
-  }*/
 
   .instructions-line {
     text-align: center;
@@ -94,25 +89,23 @@
     box-shadow: 0 3px 5px rgba(0,0,0,0.1);
   }
 
+  /* Zanahoria */
   .egg {
     position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%) scale(1);
     font-weight: bold;
-    font-size: (20px,6vw,30px);
+    font-size: clamp(18px,4vw,28px);
     color: #000;
     display: none;
     z-index: 5;
-    width: clamp(50px,12vw,100px);  
-    height: clamp(70px,16vw,120px);
+    width: clamp(50px,12vw,100px);   /* ancho */
+    height: clamp(70px,16vw,120px);  /* alto */
     padding-top: 10px;
     background-image: url("zanahoria.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
-    /*border: 4px solid gold;
-    border-radius: 50% / 60%;*/
+    /* border: 4px solid gold;  <- quitado */
+    /* border-radius: 50% / 60%; <- quitado */
     text-align: center;
     line-height: 1.2;
     cursor: grab;
@@ -162,10 +155,9 @@
   /* Ajuste responsivo para teléfonos */
   @media (max-width: 600px) {
     .egg {
-      width: 120px;
-      height: 160px;
-      font-size: 28px;
-      padding-top: 15px;
+      width: 80px;
+      height: 100px;
+      font-size: 20px;
     }
     .dropzone {
       width: 100px;
@@ -243,14 +235,17 @@ function startRound(){
 
 function showEgg(emotion){
   egg.style.display="flex";
-  egg.style.left="50%";
-  egg.style.bottom="50px";
-  egg.style.top="";
-  egg.style.transform="translateX(-50%) scale(1)";
+
+  // Posicionar a la derecha del conejo
+  const bunnyRect = bunny.getBoundingClientRect();
+  egg.style.left = (bunnyRect.right + 10) + "px";  // 10px a la derecha
+  egg.style.bottom = "10%";
+  egg.style.top = "auto";
+  egg.style.transform = "translateX(0) scale(1)";
+
   egg.textContent = emotion;
   egg.setAttribute("data-word",emotion);
 
-  // Guardar posición inicial
   const startLeft = egg.offsetLeft;
   const startTop  = egg.offsetTop;
 
@@ -301,7 +296,6 @@ function showEgg(emotion){
         }
       });
 
-      // Regresar a posición original si no cae en zona
       if(!droppedOnZone){
         egg.style.left = startLeft + "px";
         egg.style.top  = startTop + "px";
@@ -344,7 +338,3 @@ function showResult(){
 </script>
 </body>
 </html>
-
-
-
-
