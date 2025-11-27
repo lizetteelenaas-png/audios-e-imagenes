@@ -69,7 +69,7 @@
   /* Conejo principal - sin animación */
   .bunny {
     position: absolute;
-    bottom: 5px;
+    bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
     width: clamp(120px, 15vw, 180px);
@@ -245,7 +245,7 @@ function showEgg(emotion){
   // Posicionar a la derecha del conejo
   const bunnyRect = bunny.getBoundingClientRect();
   egg.style.left = (bunnyRect.right + 10) + "px";  // 10px a la derecha
-  egg.style.bottom = "10%";
+  egg.style.bottom = "2%";
   egg.style.top = "auto";
   egg.style.transform = "translateX(0) scale(1)";
 
@@ -344,6 +344,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
