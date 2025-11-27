@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Color by Number</title>
+
+<style>
+    body{
+        font-family: "Comic Sans MS", sans-serif;
+        background: #eef8ff;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1{
+        font-size: 40px;
+        margin-top: 20px;
+        color: #333;
+    }
+
+    /* Pantalla de inicio */
+    #start-screen{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #eef8ff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
+
+    #start-screen h1{
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+
+    #start-btn{
+        font-size: 28px;
+        padding: 15px 35px;
+        border: none;
+        background: #4CAF50;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    #start-btn:hover{
+        transform: scale(1.1);
+        background: #45a049;
+    }
+
+    .svg-box{
+        width: 750px;
+        height: 750px;
+        margin: 20px auto;
+        border: 4px dashed #999;
+        border-radius: 20px;
+        background: white;
+        display: none; /* oculto al iniciar */
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    svg{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .palette{
+        margin-top: 20px;
+        display: none; /* oculto al iniciar */
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .color-btn{
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 5px solid #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        cursor: pointer;
+        color: black;
+        font-weight: bold;
+        transition: transform .2s;
+    }
+
+    .color-btn:hover{
+        transform: scale(1.1);
+    }
+
+    svg [data-num] {
+        cursor: pointer;
+        transition: fill 0.25s ease;
+    }
+</style>
+
+</head>
+<body>
+
+<!-- 🟢 PANTALLA DE INICIO -->
+<div id="start-screen">
+    <h1>🎨 Color by Number</h1>
+    <button id="start-btn">Start Game</button>
+</div>
+
+<h1 id="title" style="display:none;">🎨 Color the Picture</h1>
+
+<div class="svg-box">
+    <!-- TODO tu SVG gigante aquí (no lo repito para no hacerlo más largo)
+         simplemente déjalo tal cual -->
+    <!-- PEGAR AQUÍ EL SVG COMPLETO QUE ME DISTE -->
+</div>
+
+<!-- 🎨 PALETA (Ejemplo de colores — agrega los tuyos) -->
+<div class="palette">
+    <div class="color-btn" style="background:#ff6666;" data-color="1">1</div>
+    <div class="color-btn" style="background:#66cc66;" data-color="2">2</div>
+    <div class="color-btn" style="background:#66a3ff;" data-color="3">3</div>
+    <div class="color-btn" style="background:#ffcc66;" data-color="6">6</div>
+</div>
+
+<script>
+// 🎮 Mostrar juego al presionar Start
+document.getElementById("start-btn").onclick = function(){
+    document.getElementById("start-screen").style.display = "none";
+    document.querySelector(".svg-box").style.display = "flex";
+    document.querySelector(".palette").style.display = "flex";
+    document.getElementById("title").style.display = "block";
+};
+
+// 🎨 Sistema de coloreo
+let selectedColor = null;
+
+document.querySelectorAll(".color-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+        selectedColor = btn.getAttribute("data-color");
+    });
+});
+
+document.querySelectorAll("[data-num]").forEach(area=>{
+    area.addEventListener("click", ()=>{
+        if(selectedColor && area.getAttribute("data-num") === selectedColor){
+            area.style.fill = btnColor(selectedColor);
+        }
+    });
+});
+
+// Colores reales según número
+function btnColor(n){
+    const c = {
+        1:"#ff6666",
+        2:"#66cc66",
+        3:"#66a3ff",
+        6:"#ffcc66"
+    };
+    return c[n];
+}
+</script>
+
+</body>
+</html>
