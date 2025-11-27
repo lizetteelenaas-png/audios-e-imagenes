@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📖 My Book of Emotions</title>
+<title>📖 My Book of Imagination</title>
 <style>
   body {
     margin: 0;
@@ -220,7 +220,7 @@
 
 <div class="book" id="book">
   <div class="cover" id="cover">
-    <h1>📖 My Book of Emotions</h1>
+    <h1>📖 My Book of Imagination</h1>
     <p style="color:#2c3e50;">Click to start your creative journey 🎨✨</p>
     <button onclick="openBook()">Start Game</button>
   </div>
@@ -248,7 +248,7 @@
   </div>
 
   <div class="final-page" id="finalPage" style="display:none;">
-    <h2>🎉 Your Feelings Book!</h2>
+    <h2>🎉 Your book of imagination!</h2>
     <p id="finalMessage" style="color:#2c3e50; font-size:1.2em; margin-bottom:15px;"></p>
     <div class="gallery" id="gallery"></div>
     <button class="play-again" onclick="restartBook()">🔄 Play Again</button>
@@ -261,7 +261,7 @@ const emotions = [
   { name: "bed", img: "bed2.jpg", text: "Draw what you imagine a bed looks like. 💙" },
   { name: "chair", img: "chair.jpg", text: "Draw what you imagine a chair looks like. ❤️" },
   { name: "lamp", img: "lamp2.jpg", text: "Draw what you imagine a lamp looks like. 💜" },
-  { name: "mat", img: "mat2", text: "Draw what you imagine a mat looks like. 💚" }
+  { name: "mat", img: "mat2.jpg", text: "Draw what you imagine a mat looks like. 💚" }
 ];
 
 let current = 0;
@@ -333,7 +333,7 @@ function showFinalPage() {
       gallery.appendChild(image);
     }
   });
-  const compliments = ["🌈 Your feelings shine through every drawing!","💫 What a wonderful artist you are!","🌻 Your emotions look beautiful!","🐰 Your book is full of magic!","💕 Amazing job, little artist!"];
+  const compliments = ["🌈 Your thoughts shine through in every drawing!","💫 What a wonderful artist you are!🌻 Your drawings look beautiful!🐰 Your book is full of magic!💕 Amazing work, little artist!"];
   finalMessage.textContent = compliments[Math.floor(Math.random()*compliments.length)];
 }
 
@@ -387,5 +387,6 @@ window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 
 </body>
 </html>
+
 
 
