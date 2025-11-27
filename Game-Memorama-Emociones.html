@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Emotions Memory Game</title>
+<title> Memory Game</title>
 <style>
   :root {
     --accent: #0077b6;
@@ -143,7 +143,7 @@
 <!-- Cover -->
 <div class="cover" id="cover">
   <h1>Emotions Memory Game</h1>
-  <p>Find all the matching pairs of emotions.</p>
+  <p>Find all the matching pairs of images</p>
   <p><strong>If you need help, press the hint button 💡</strong></p>
   <button class="btn" onclick="startGame()">Start Game</button>
 </div>
@@ -160,16 +160,16 @@
 
 <script>
 const emotions = [
-  { name: "Excited", img: "excited1.png" },
-  { name: "Angry", img: "angry1.jpg" },
-  { name: "Happy", img: "happy1.jpg" },
-  { name: "Scared", img: "scared1.jpg" },
-  { name: "Worried", img: "worried1.jpg" },
-  { name: "Tired", img: "tired1.jpg" },
-  { name: "Sad", img: "sad1.jpg" },
-  { name: "Confused", img: "confused1.jpg" },
-  { name: "Surprised", img: "surprised.jpg" },
-  { name: "Glad", img: "glad1.jpg" }
+  { name: "bedroom", img: "bed.jpg" },
+  { name: "bed", img: "bed5.jpg" },
+  { name: "chair", img: "chair5.jpg" },
+  { name: "lamp", img: "lamp5.jpg" },
+  { name: "mat", img: "mat5.jpg" },
+  { name: "pillow", img: "pillow5.jpg" },
+  { name: "table", img: "table5.jpg" },
+  { name: "share", img: "share5.jpg" },
+  { name: "teddy bear", img: "teddy5.jpg" },
+  { name: "toys", img: "toys5.jpg" }
 ];
 
 let boardEl = document.getElementById('board');
@@ -277,3 +277,4 @@ function showFinalMessage(){
 </script>
 </body>
 </html>
+
