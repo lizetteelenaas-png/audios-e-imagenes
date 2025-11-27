@@ -1,389 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Color by Number</title>
+<title>Juego para Colorear</title>
 
 <style>
-    body{
-        font-family: "Comic Sans MS", sans-serif;
-        background: #eef8ff;
+    body {
+        font-family: Arial, sans-serif;
         text-align: center;
-        margin: 0;
-        padding: 0;
+        background: #f5f5f5;
     }
 
-    h1{
-        font-size: 40px;
-        margin-top: 20px;
-        color: #333;
+    #start-screen {
+        margin-top: 50px;
     }
 
-    /* Pantalla de inicio */
-    #start-screen{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #eef8ff;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-    }
-
-    #start-screen h1{
-        font-size: 50px;
-        margin-bottom: 20px;
-    }
-
-    #start-btn{
-        font-size: 28px;
-        padding: 15px 35px;
+    #start-btn, #play-again {
+        padding: 15px 30px;
+        font-size: 22px;
         border: none;
         background: #4CAF50;
         color: white;
         border-radius: 10px;
         cursor: pointer;
-        transition: .2s;
+        margin-top: 20px;
     }
 
-    #start-btn:hover{
-        transform: scale(1.1);
-        background: #45a049;
-    }
-
-    .svg-box{
-        width: 750px;
-        height: 750px;
-        margin: 20px auto;
-        border: 4px dashed #999;
-        border-radius: 20px;
-        background: white;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-    }
-
-    svg{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .palette{
+    .palette {
         margin-top: 20px;
         display: none;
         justify-content: center;
-        gap: 20px;
+        gap: 10px;
     }
 
-    .color-btn{
-        width: 70px;
-        height: 70px;
+    .color-circle {
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
-        border: 5px solid #333;
-        display: flex;
+        border: 2px solid #333;
+        cursor: pointer;
+    }
+
+    .svg-box {
+        margin-top: 20px;
+        display: none;
         justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        cursor: pointer;
-        color: black;
-        font-weight: bold;
-        transition: transform .2s;
-    }
-
-    .color-btn:hover{
-        transform: scale(1.1);
-    }
-
-    svg [data-num] {
-        cursor: pointer;
-        transition: fill 0.25s ease;
     }
 </style>
 
 </head>
 <body>
 
-<!-- 🟢 PANTALLA DE INICIO -->
+<h1 id="title" style="display:none;">Colorea el Dibujo</h1>
+
+<!-- PANTALLA DE INICIO -->
 <div id="start-screen">
-    <h1>🎨 Color by Number</h1>
-    <button id="start-btn">Start Game</button>
+    <button id="start-btn">Comenzar</button>
 </div>
 
-<h1 id="title" style="display:none;">🎨 Color the Picture</h1>
-
-<!-- 🔳 CAJA DONDE VA EL SVG -->
-<div class="svg-box">
-<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 612 792" enable-background="new 0 0 612 792" xml:space="preserve">
-<polygon data-num="6" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="236.24,625.04 
-	236.24,636.72 238.57,655.41 243.23,671.77 248.81,697.01 256.73,718.5 267.9,747.01 272.55,748.88 289.78,750.75 294.9,750.75 
-	301.88,750.75 311.19,747.94 314.35,740.46 316.31,727.38 316.31,715.7 316.31,700.28 316.31,683.45 316.31,679.25 323.3,681.12 
-	328.88,680.18 336.8,680.65 339.59,680.18 342.38,705.42 344.71,727.38 346.57,747.01 351.23,750.75 357.74,750.75 370.31,750.75 
-	381.49,750.75 388,750.75 393.59,740.46 401.97,717.1 411.28,687.89 416.87,662.42 419.66,644.2 421.99,625.04 "/>
-<g id="cara">
-	<polygon data-num="3" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="158.84,358.89 151.86,360.69 
-		143.01,360.69 136.49,359.79 130.44,356.19 122.06,350.33 112.75,341.32 105.3,331.86 101.11,323.76 101.11,310.24 105.3,298.98 
-		109.49,292.68 117.87,285.47 119.74,285.47 120.05,284.57 122.06,283.52 125.32,282.47 129.98,281.12 133.55,280.37 138.05,280.37 
-		141.46,280.37 144.87,281.27 147.51,282.47 151.24,284.87 154.18,289.67 156.2,296.73 157.44,303.19 158.84,309.79 161.94,301.24 
-		168.46,280.37 173.58,267.75 178.08,258.3 184.44,250.94 193.44,241.03 203.68,230.37 215.32,223.91 223.08,220.91 238.29,216.86 
-		254.12,214.61 276.3,211.45 296.48,208.15 308.12,205.75 320.84,201.99 331.86,197.34 339.77,191.79 345.82,185.78 350.01,179.62 
-		343.96,193.89 337.29,208.3 327.36,228.27 321.62,237.88 311.37,255.44 321.93,250.34 333.41,238.78 343.18,231.27 354.98,215.06 
-		365.06,201.09 372.67,189.68 378.1,180.38 384.46,167.91 387.1,162.51 391.75,175.12 399.36,190.28 408.51,201.39 415.5,208.15 
-		428.06,221.06 443.43,233.97 465.77,254.09 496.34,281.42 503.79,279.32 509.69,279.17 515.12,279.32 521.01,280.67 528.46,283.67 
-		532.81,286.37 538.7,292.53 542.12,297.78 545.06,306.64 545.06,312.95 545.06,320.6 543.82,326.46 540.88,332.31 535.13,340.42 
-		530.01,346.28 525.51,350.63 520.24,354.23 516.51,355.74 508.6,357.24 501.31,358.59 494.01,358.44 489.36,356.19 487.96,359.94 
-		484.55,370.75 476.01,386.36 471.98,392.67 465.31,401.98 458.17,410.54 453.2,415.49 433.5,428.4 426.82,431.85 421.55,434.26 
-		409.6,438.76 402.46,441.01 387.87,444.47 372.98,446.42 366.15,447.62 359.48,448.97 353.74,448.97 347.99,448.97 347.68,457.98 
-		347.06,458.88 371.12,460.23 363.05,465.49 356.06,471.64 352.81,474.79 341.48,478.7 330.93,480.35 316.49,477.8 306.87,474.34 
-		295.86,466.09 291.51,460.23 311.99,459.78 312.15,447.92 301.91,448.52 294.3,448.07 283.6,447.47 274.44,446.42 264.51,444.92 
-		257.06,442.96 246.82,440.56 236.43,437.56 228.67,434.41 218.74,430.05 203.37,420.74 192.05,410.23 183.36,400.93 174.67,389.52 
-		166.75,377.35 163.03,368.2 160.08,361.29 	"/>
-	<path fill="none" stroke="#CA9E67" stroke-width="2" stroke-miterlimit="10" d="M307.81,355.06c-0.25-9,6.45-16.51,14.66-17.57
-		c9.39-1.2,18.89,6.28,19.32,16.67"/>
-	<polyline fill="none" stroke="#CA9E67" stroke-width="2" stroke-miterlimit="10" points="118.57,325.23 126.25,325.23 
-		132.07,325.23 136.49,325.23 141.15,325.23 145.34,325.23 146.5,326.23 149.06,330.74 144.64,322.86 140.22,318.02 136.49,314.75 
-		132.3,312.05 128.11,309.12 122.3,306.19 	"/>
-	<polyline fill="none" stroke="#CA9E67" stroke-width="2" stroke-miterlimit="10" points="524.27,323.98 516.59,323.98 
-		509.84,323.98 503.32,323.98 498.2,323.98 495.18,324.88 493.78,329.16 497.97,320.38 503.09,316.32 507.05,312.5 511,309.79 
-		513.8,307.54 520.31,304.99 	"/>
-</g>
-<path fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M703.88,389.24"/>
-<polygon data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="228.33,238.63 238.26,245.53 
-	243.85,247.64 250.37,250.04 259.05,253.34 264.64,255.44 271.47,258.75 277.99,260.25 282.95,260.25 285.74,259.05 288.54,256.04 
-	290.4,251.24 289.16,246.74 284.19,238.63 278.92,235.63 273.95,232.02 268.99,229.32 263.09,226.62 256.57,224.52 251.61,223.31 
-	244.78,223.31 240.43,223.31 235.16,224.82 229.88,226.92 228.33,230.82 226.78,235.02 "/>
-<polygon data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="364.88,251.54 364.88,244.93 
-	367.99,238.93 373.88,234.42 378.54,231.72 384.43,229.62 395.61,225.72 406.78,225.72 415.47,225.72 421.37,225.72 424.78,229.02 
-	427.26,232.32 427.26,238.63 424.78,241.78 419.81,244.03 412.37,247.94 402.12,251.54 394.68,253.94 388.47,255.44 381.33,258.15 
-	377.3,258.15 369.54,258.15 364.88,255.44 "/>
-<path fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M263.09,276.16
-	c-4.22-3.45-13.81-11.08-28.24-12.01c-17.67-1.14-30.15,8.55-33.83,11.41c-20.86,16.2-20.82,41.13-20.79,42.64
-	c0.07,3.66,0.92,26.87,21.41,41.14c15.02,10.46,34.93,12.16,50.9,5.1c13.96-6.17,20.7-17.19,22.97-21.02
-	c8.65-14.61,7.38-28.72,6.83-33.03C281.94,307.38,279.33,289.45,263.09,276.16z"/>
-<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M217.04,314.86
-	c1.51-7.01,5.16-11.47,5.94-12.39c0.26-0.31,1.44-1.69,3.26-3.27c1.41-1.22,5.14-4.37,10.82-6.19c8.3-2.65,15.46-0.77,16.99-0.34
-	c1.22,0.34,7.55,2.22,13.15,7.99c5.95,6.14,7.41,12.92,7.91,15.43c0.48,2.41,1.64,8.57-0.93,15.88c-2.03,5.76-5.42,9.51-7.22,11.26
-	c-5.68,5.54-11.95,7.23-13.15,7.54c-1.58,0.41-8.16,1.96-16.06-0.45c-1.6-0.49-7.75-2.51-13.15-8.22
-	c-6.38-6.75-7.57-14.27-7.91-16.67C215.99,320.53,216.66,316.61,217.04,314.86z"/>
-<path fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M266.5,322.29c1.7-2.31,1.28-4.89,1.16-5.52
-	c-0.12-0.68-0.59-3.04-2.79-4.62c-2.3-1.65-5.61-1.81-8.03-0.34c-2.26,1.37-2.9,3.64-3.14,4.5c-0.26,0.91-0.93,3.31,0.47,5.63
-	c1.28,2.12,3.48,2.83,4.31,3.04C261.28,325.7,264.67,324.78,266.5,322.29z"/>
-<path fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M378.85,283.97
-	c10.29-13.21,24.97-17.01,27.93-17.72c21.06-5.04,37.65,5.18,40.35,6.91c18.49,11.81,22.17,30.93,22.97,36.33
-	c0.53,3.61,3.58,27.29-14.59,44.44c-13.44,12.69-29.89,13.68-33.52,13.81c-1.93,0.07-23.43,0.53-39.1-15.31
-	C364.63,333.98,363.92,303.15,378.85,283.97z"/>
-<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M382.26,294.78
-	c11.38-8.6,25.2-5,27-4.5c2.13,0.59,9.5,2.75,15.21,9.61c10.38,12.49,4.98,28.23,4.66,29.13c-1.28,3.52-5.34,12.66-15.83,17.42
-	c-1.56,0.71-13.72,5.98-26.07-0.3c-12.25-6.23-14.7-18.74-15.21-21.32C371.73,323.33,368.49,305.19,382.26,294.78z"/>
-<path fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M378.23,315.5c1.57-2.69,4.74-3.93,7.45-3.9
-	c0.73,0.01,3.47,0.07,5.59,2.1c2.38,2.28,2.83,5.94,1.55,8.71c-1.71,3.71-6.75,6.3-11.17,4.2
-	C377.23,324.52,376.15,319.05,378.23,315.5z"/>
-<path data-num="2" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M192.49,383.66
-	c-0.48-1.27-1.02-3.33-0.47-5.63c1.39-5.76,8.49-8.06,10.01-8.56c12.83-4.17,24.78,7.3,25.37,7.88c3.49,3.45,4.04,6.01,4.19,7.21
-	c0.03,0.22,0.6,5.49-3.26,8.78c-2.64,2.25-5.79,2.25-9.54,2.25c-1.4,0-6.65-0.1-13.27-2.93
-	C199.56,390.12,195.3,386.56,192.49,383.66z"/>
-<path data-num="2" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M418.26,383.21
-	c0.98-5.61,7.11-8.26,10.94-9.91c3.82-1.65,7.04-1.96,10.01-2.25c7.03-0.69,11.33,0.69,12.57,1.13c2.32,0.81,4.4,1.57,5.59,3.6
-	c1.32,2.27,0.75,4.81,0.47,6.08c-0.12,0.55-0.7,2.92-3.03,5.63c-3.12,3.63-6.98,5.07-9.78,6.08c-5.38,1.94-9.9,1.86-12.34,1.8
-	c-5.09-0.13-7.88-0.2-10.47-2.25C419.35,390.86,417.62,386.89,418.26,383.21z"/>
-<polygon fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="293.97,384.11 295.83,383.13 
-	298.62,382.08 304.68,382.08 307.93,383.1 312.12,384.11 316.31,385.01 319.42,385.91 326.56,385.91 333.07,385.91 339.82,385.91 
-	345.64,385.01 350.3,384 355.65,384 359.14,384 363.33,385.91 366.36,390.87 368.36,395.39 368.36,400.78 368.36,405.28 
-	368.36,410.91 365.66,414.06 363.33,416.54 360.54,417.67 354.02,417.67 348.67,416.32 341.45,414.96 336.56,413.84 331.16,413.39 
-	327.49,413.84 322.83,414.29 316.78,416.32 311.66,419.24 305.84,420.37 300.72,420.37 295.6,418.57 292.57,415.41 290.01,407.08 
-	290.01,400.1 290.01,395.39 291.18,390.42 "/>
-<g>
-	<path fill="none" stroke="#CA9E67" stroke-width="2" stroke-miterlimit="10" d="M296.3,402.35c4.21-1.81,9.11-3.5,14.66-4.73
-		c19.3-4.26,35.93-0.53,45.39,2.48"/>
-	<line fill="none" stroke="#CA9E67" stroke-width="2" stroke-miterlimit="10" x1="311.43" y1="391.99" x2="311.43" y2="404.6"/>
-	<line fill="none" stroke="#CA9E67" stroke-width="2" stroke-miterlimit="10" x1="322.6" y1="391.99" x2="322.6" y2="402.35"/>
-	<line fill="none" stroke="#CA9E67" stroke-width="2" stroke-miterlimit="10" x1="334" y1="391.99" x2="334" y2="402.35"/>
-	<line fill="none" stroke="#CA9E67" stroke-width="2" stroke-miterlimit="10" x1="347.74" y1="391.99" x2="347.74" y2="403.48"/>
-</g>
-<polyline fill="none" stroke="#683C11" stroke-width="5" stroke-miterlimit="10" points="68.19,146.74 83.09,172.87 32.81,176.47 
-	67.26,195.39 38.4,209.8 69.12,223.31 39.33,260.25 73.78,258.15 53.3,295.38 83.09,304.99 "/>
-<polyline fill="none" stroke="#683C11" stroke-width="5" stroke-miterlimit="10" points="559.78,113.41 546.36,142.24 
-	595.16,142.24 565.37,162.51 588.64,175.57 560.71,190.88 589.57,225.72 557.92,225.87 577.47,264.06 551.4,271.06 "/>
-<g id="manoD">
-	<polygon data-num="3"  fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="447.36,474.98 446.66,462.82 
-		446.66,446.94 447.36,438.05 450.03,431.97 453.64,426.79 458.53,423.07 462.49,421.16 467.26,418.68 473.43,416.43 476.45,416.43 
-		478.55,416.43 479.48,417.89 480.02,419.02 480.02,421.27 479.36,423.86 478.66,424.76 481.69,424.2 483.9,424.09 485.53,424.65 
-		486.46,425.55 486.93,426.9 486.93,428.25 486.93,429.38 486.93,431.4 486.11,432.31 485.53,433.54 487.62,432.64 489.02,432.19 
-		490.3,432.76 491.35,433.21 492.28,433.77 492.98,434.44 492.98,435.23 492.98,436.36 492.98,437.48 492.51,438.72 492.05,439.85 
-		491.58,441.31 490.53,442.1 489.6,443.23 491.93,443.11 492.98,443.68 493.56,444.8 494.26,446.83 494.26,448.97 494.26,450.43 
-		494.26,453.59 493.56,457.53 492.51,461.58 490.19,465.3 488.44,468 485.65,471.72 483.55,474.98 481.34,477.57 478.55,480.35 	"/>
-	<path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M464.81,423.07l3.14,1.13l3.03,2.25l2.68,2.14
-		l1.75,1.91l2.56,2.36l2.06,2.14l1.32,1.8v2.14l-0.7,1.69l-2.33,0.79h-3.03h-2.79l-2.04-1.35l-1.8-0.68l-2.09-1.46l-3.38-2.36
-		l-2.56-3.32l1.98,5.46l2.56,3.72l1.51,2.25l1.4,3.04l0.81,1.67l0.23,2.16c0,0,0.12,3.27-0.12,3.72s0.23,2.93-0.12,3.04
-		s-0.47,3.15-0.47,3.15l-0.7,5.18l-0.23,1.46"/>
-	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="467.26,439.96 466.56,440.86 
-		466.91,442.33 467.84,443.45 468.66,444.47 469.94,445.09 471.45,445.09 473.89,445.09 475.87,443.9 475.29,445.59 474.71,446.38 
-		474.71,448.39 474.82,449.31 475.99,450.66 476.92,451.22 478.66,451.79 480.41,451.79 482.85,449.98 484.6,448.39 487.39,445.09 
-		487.97,444.13 480.53,452.46 479.01,453.59 478.55,455.39 478.78,456.51 480.02,457.75 482.27,457.75 484.72,457.08 486.58,455.5 
-		488.56,453.59 490.42,452.24 492.05,450.32 494.26,448.39 494.26,446.83 492.98,443.68 489.6,443.23 492.05,439.85 492.98,437.48 
-		492.98,434.44 490.3,432.76 487.62,432.64 485.53,433.54 482.62,436.13 481.34,436.81 475.41,430.5 473.66,428.59 478.66,424.76 
-		480.02,421.27 480.02,419.02 478.55,416.43 473.43,416.43 467.26,418.68 462.49,421.16 467.96,424.2 	"/>
-</g>
-<g id="manoI">
-	<polygon data-num="3" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="172,487.14 202.38,476.78 
-		202.38,463.95 202.38,455.16 201.21,448.86 199.12,440.98 195.98,434.89 190.62,430.28 179.68,426.22 174.21,423.52 172,423.07 
-		168.74,423.07 166.77,424.42 165.6,425.44 164.55,427.01 165.6,430.17 166.3,431.4 167.35,432.42 164.55,431.63 162.92,432.31 
-		160.95,433.54 159.67,435.12 159.67,436.36 160.25,438.84 161.41,440.98 160.25,440.64 157.92,440.64 156.76,441.31 155.24,442.89 
-		154.43,444.47 153.85,445.7 153.85,446.94 154.89,448.07 155.48,448.97 156.64,449.98 158.27,451.56 157.22,452.12 156.17,452.12 
-		155.13,452.69 153.85,453.02 152.68,454.04 152.22,455.11 152.22,456.63 152.8,460.01 153.73,462.6 154.89,465.52 156.64,469.24 
-		159.08,473.63 161.99,477.12 164.9,480.35 	"/>
-	<path fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M182.01,428.14l-5.94,4.28l-3.03,3.27
-		l-2.56,2.93l-2.44,2.59l-2.21,2.82v2.36l1.28,1.46l1.63,0.79h1.51h1.98l3.61-0.79l3.49-1.91l2.68-2.7l2.68-3.83l1.28-1.01
-		l-1.75,4.28l-1.4,2.25l-1.05,2.25l-0.58,1.91l-0.7,2.25l-0.58,2.7v2.25c0,0,0.7,3.94,0.7,4.28s0,3.27,0.12,3.6
-		c0.12,0.34,1.28,4.05,1.28,4.05l0.35,1.69"/>
-	<path fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M153.96,460.68l2.91,0.9c0,0,1.63-0.45,1.98,0
-		s1.86,0.56,1.86,0.56l1.16,0.56l1.51,1.13l2.91,0.79h2.44l1.51-1.46v-1.58l-1.51-2.93l-1.75-1.58l-3.38-1.97l-2.91-2.76l-2.44-0.79
-		"/>
-	<polyline fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="169.56,458.77 170.96,458.77 
-		172.58,458.09 173.75,457.08 174.56,455.73 174.56,454.15 173.17,452.12 171.07,449.87 165.83,446.38 161.41,440.98 	"/>
-	<polyline fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="174.56,452.8 175.9,452.8 177.3,452.8 
-		178.29,452.8 179.57,452.12 179.57,450.66 180.15,449.03 179.68,447.39 179.33,445.93 	"/>
-</g>
-<polygon data-num="3" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="274.07,750.07 274.07,755.02 
-	282.1,755.02 284.54,756.71 285.82,757.84 286.75,759.75 287.68,761.44 287.68,762.01 287.68,762.68 293.15,762.68 297.69,762.68 
-	303.28,762.68 306.89,762.12 309.33,761.22 309.33,750.07 "/>
-<polygon data-num="4" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="308.52,762.68 
-	308.52,768.2 308.52,770.79 306.89,772.93 305.49,774.39 303.05,775.29 300.49,775.29 294.2,775.97 289.2,776.75 285.36,776.75 
-	276.28,776.75 269.65,776.75 266.74,776.19 263.48,775.07 260.57,772.37 259.4,770.34 259.4,767.64 261.27,766.06 262.78,765.16 
-	265.22,763.7 268.6,762.12 273.37,760.65 275.23,760.09 270.11,756.38 272.44,755.36 273.14,756.38 275.7,756.38 281.52,756.38 
-	284.77,758.52 286.4,762.12 287.22,763.58 "/>
-<path data-num="3" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M349.83,750.75
-	c0,2.7,0,10.36,0,10.36l7.33,0.68l5.59,0.56h5.47h2.79l1.51-3.49l1.63-1.69l1.16-0.62l2.56-1.41l2.68-0.56l2.91-0.23l1.63,0.11
-	v-3.27L349.83,750.75z"/>
-<polygon data-num="4" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="385.09,755.36 
-	387.19,755.36 387.65,755.93 386.37,757.61 385.68,758.85 385.09,759.64 383.93,760.65 388.47,762.34 391.26,763.58 393.82,764.48 
-	396.38,765.95 398.83,767.75 399.87,769.1 400.34,770.68 399.41,773.38 398.01,774.05 396.5,775.07 392.66,776.75 389.17,777.32 
-	385.09,777.32 378.93,777.32 365.54,776.75 358.56,775.63 354.14,774.28 350.41,772.82 350.41,770.79 349.83,768.65 349.83,762.34 
-	370.43,763.7 372.18,763.81 373.11,760.54 375.09,758.29 377.3,756.54 379.39,756.54 "/>
-<g id="sueter">
-	<polygon data-num="4" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="289.78,460.33 246.02,471.59 
-		219.49,508.52 204.12,476.55 168.74,488.71 177.59,528.79 186.9,555.37 193.88,567.53 201.33,573.83 211.57,577.44 221.81,577.44 
-		226.93,574.74 233.45,568.88 233.45,628.33 424.31,626.53 421.99,566.63 421.99,560.17 424.31,568.28 431.61,574.28 437.19,575.79 
-		443.71,576.99 450.54,575.19 456.75,572.18 463.26,566.48 468.54,558.97 472.26,548.46 476.3,535.55 478.47,521.14 480.02,504.32 
-		480.02,480.9 445.26,474.59 432.85,500.12 410.81,470.69 372.02,460.33 361.47,467.09 353.09,474.59 340.37,479.1 329.12,480.9 
-		314.35,477.9 305.61,474.59 298.78,470.09 293.81,466.49 	"/>
-	<line fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="233.45" y1="568.88" x2="244.62" y2="495.91"/>
-	<polyline fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="424.31,626.53 421.99,563.93 
-		411.75,495.91 	"/>
-</g>
-<polygon data-num="5" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="233.45,584.09 
-	421.99,584.09 424.31,608.87 233.45,608.87 "/>
-<polygon data-num="5" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="237.57,540.85 
-	416.8,540.85 420.99,565.18 235.24,565.18 "/>
-<polygon data-num="5" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="244.62,497.16 
-	411.75,497.16 413.61,522.39 240.9,522.39 "/>
-<text transform="matrix(1.4932 0 0 1 253.3101 244.0342)" font-family="'MyriadPro-Regular'" font-size="15.0137px">1</text>
-<text transform="matrix(1.2758 0 0 1 390.3291 244.0342)" font-family="'MyriadPro-Regular'" font-size="16.5332px">1</text>
-<text transform="matrix(1.2362 0 0 1 233.4517 330.7373)" font-family="'MyriadPro-Regular'" font-size="22.3339px">1</text>
-<text transform="matrix(1.2362 0 0 1 405.249 329.1611)" font-family="'MyriadPro-Regular'" font-size="22.3339px">1</text>
-<text transform="matrix(1.2758 0 0 1 208.1792 388.0625)" font-family="'MyriadPro-Regular'" font-size="16.5332px">2</text>
-<text transform="matrix(1.2758 0 0 1 430.8164 388.0625)" font-family="'MyriadPro-Regular'" font-size="16.5332px">2</text>
-<text transform="matrix(1.0335 0 0 1 319.417 310.8125)" font-family="'MyriadPro-Regular'" font-size="15.0137px">3</text>
-<text transform="matrix(1.0335 0 0 1 442.4688 526.8916)" font-family="'MyriadPro-Regular'" font-size="15.0137px">4</text>
-<text transform="matrix(1.0335 0 0 1 360.5869 558.0195)" font-family="'MyriadPro-Regular'" font-size="15.0137px">5</text>
-<text transform="matrix(1.0335 0 0 1 309.3301 513.5293)" font-family="'MyriadPro-Regular'" font-size="15.0137px">5</text>
-<text transform="matrix(1.0335 0 0 1 305.0786 601.0732)" font-family="'MyriadPro-Regular'" font-size="15.0137px">5</text>
-<text transform="matrix(1.0335 0 0 1 283.9595 669.3379)" font-family="'MyriadPro-Regular'" font-size="15.0137px">6</text>
-<text transform="matrix(0.9883 0 0 1 294.6733 759.0332)" font-family="'MyriadPro-Regular'" font-size="9.4887px">3</text>
-<text transform="matrix(1.1065 0 0 1 361.3174 759.1377)" font-family="'MyriadPro-Regular'" font-size="9.0207px">3</text>
-<text transform="matrix(1.143 0 0 1 375.084 771.3076)" font-family="'MyriadPro-Regular'" font-size="10.2369px">4</text>
-<text transform="matrix(1.1289 0 0 1 277.8696 771.3076)" font-family="'MyriadPro-Regular'" font-size="10.7315px">4</text>
-<text transform="matrix(1.3185 0 0 1 170.2573 478.2773)" font-family="'MyriadPro-Regular'" font-size="11.5607px">3</text>
-<text transform="matrix(0.9497 0 0 1 455.9697 458.6914)" font-family="'MyriadPro-Regular'" font-size="11.5612px">3</text>
-<g id="cabello">
-	<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M354.33,170.87l-9.93,14.41l-11.48,10.51
-		l-13.34,6.01l-16.45,4.5l-19.86,3.6l-31.34,4.5l-14.28,1.8l-13.97,3.6l-14.59,5.71l-8.07,5.71l-14.59,15.31l-11.48,13.51
-		l-7.45,17.12l-9,28.83l-1.86-9.61l-2.17-6.91l-2.48-4.2l-4.97-3.3l-5.9-2.1h-4.34l-5.28,0.3l-9.31,2.4l-3.41,1.8l-6.21-23.42
-		l-2.79-19.22l-3.72-31.83l-1.55-46.84v-32.43l1.24-21.62l1.86-7.21l2.17-3.9l2.79,1.8l3.1,8.71l-0.31,14.71l0.31,8.71l2.79-10.51
-		l8.07-17.72l9.31-16.21l11.79-14.71l11.48-11.11h1.55l-1.24,8.71l-4.97,10.51L150.74,97l0.93,2.1l1.55-1.8l7.45-6.91l20.79-24.02
-		l15.21-17.72l13.97-11.11l1.24,2.1l-0.62,4.8l-3.1,7.51l-1.55,7.81l16.14-9.01l20.48-6.91l25.76-7.51l15.21-3l22.66-1.5l12.72-1.2
-		h18.93l9.62,2.7l1.86,1.8l-2.17,2.7l-9,3.9l-11.79,4.8l13.66,1.2l8.69,2.1l9.31,1.5l14.9,4.2l15.21,4.5V36.64l2.17-8.41h1.55
-		l2.48,5.71l1.55,11.41l1.24,10.51l12.1-23.12l4.03-7.81l5.59-8.11l4.66-3.73l1.55,1.33v3.9l-2.79,6.61l-2.79,6.31l-3.41,8.41
-		l-2.48,7.21l-1.86,7.21l-0.93,11.41l10.55-2.1l7.76-0.6l11.17,1.5l7.14,0.9l6.83,1.2l8.38,3l8.38,5.1l9.93,5.71l6.52,5.71
-		c0,0,5.9,7.21,6.83,8.41c0.93,1.2,8.07,11.71,8.07,11.71l3.1,9.61v3.9V100.6v-8.41l1.86-2.7l5.28,6.31l8.07,17.12l4.03,9.61
-		l4.97,21.32l2.17,26.72l1.86,33.93v29.13v22.22l-3.41,17.12l-3.41,10.21l-7.76-3.3l-5.28-1.2h-6.52l-5.28,0.3l-5.9,2.1
-		l-12.41-11.41l-9.62-8.41l-12.72-11.11l-10.24-9.31l-9.62-9.01l-9.93-7.51l-6.52-6.61l-4.97-5.4l-9.93-9.31l-5.9-7.51l-7.14-9.31
-		l-5.28-11.41l-3.72-8.41l-2.48-6.82l-8.07,17.03l-5.59,9.61l-9.62,15.31l-11.79,15.31l-10.24,14.41l-7.14,5.71l-6.52,6.01
-		l-6.52,6.91l-6.47,3.3l7.71-12.31l5.59-9.31l4.03-9.01l4.34-8.71l4.34-9.91l2.79-6.31l3.72-7.21l3.1-7.81L354.33,170.87z"/>
-	<path fill="none" stroke="#7D4E24" stroke-width="2" stroke-miterlimit="10" d="M259.37,163.36c40.99-10.22,66.3-28.48,81.93-44.14
-		c1.39-1.39,2.73-2.79,4.03-4.2"/>
-	<path fill="none" stroke="#7D4E24" stroke-width="2" stroke-miterlimit="10" d="M222.12,203.6c9.01-1.78,21.78-4.56,36.93-8.71
-		c15.25-4.18,24.33-6.67,33.83-10.81c10.86-4.74,27.14-13.77,43.76-31.83"/>
-	<path fill="none" stroke="#7D4E24" stroke-width="2" stroke-miterlimit="10" d="M402.12,132.73c2.79,16.48,9.44,39.62,26.38,61.86
-		c3.85,5.06,7.84,9.54,11.79,13.51"/>
-	<path fill="none" stroke="#7D4E24" stroke-width="2" stroke-miterlimit="10" d="M464.5,170.57c13.59,14.89,31.93,39.78,39.41,74.17
-		c1.73,7.96,2.68,15.51,3.1,22.52"/>
-	<path fill="none" stroke="#7D4E24" stroke-width="2" stroke-miterlimit="10" d="M490.88,142.64c9.48,13.97,22.69,37.91,26.07,69.66
-		c1.21,11.41,0.94,21.74,0,30.63"/>
-	<path fill="none" stroke="#7D4E24" stroke-width="2" stroke-miterlimit="10" d="M199.16,107.51
-		c-13.01,11.26-49.43,45.8-58.35,101.49c-4.31,26.93-0.74,49.75,3.1,64.86"/>
-</g>
-<text transform="matrix(1.2362 0 0 1 282.7378 117.7393)" font-family="'MyriadPro-Regular'" font-size="22.3339px">1</text>
-</svg>
-
-    
-    
-    
-</div>
-
-<!-- 🎨 PALETA -->
+<!-- PALETA DE COLORES (TÚ LA EDITAS LIBREMENTE) -->
 <div class="palette" id="palette">
-        <div class="color-circle" style="background:#5c3b1e" data-num="1"></div>
-        <div class="color-circle" style="background:#ff8fd1" data-num="2"></div>
-        <div class="color-circle" style="background:#ffdab9" data-num="3"></div>
-        <div class="color-circle" style="background:#3b6cff" data-num="4"></div>
-        <div class="color-circle" style="background:#ffe600" data-num="5"></div>
-        <div class="color-circle" style="background:#b347ff" data-num="6"></div>
-    </div>
+    <div class="color-circle" style="background:#ff0000" data-color="#ff0000"></div>
+    <div class="color-circle" style="background:#00ff00" data-color="#00ff00"></div>
+    <div class="color-circle" style="background:#0000ff" data-color="#0000ff"></div>
+    <div class="color-circle" style="background:#ffff00" data-color="#ffff00"></div>
 </div>
+
+<!-- BOTÓN VOLVER A JUGAR -->
+<button id="play-again" style="display:none;">Volver a jugar</button>
+
+<!-- CONTENEDOR DONDE VA EL SVG -->
+<div class="svg-box">
+    <div id="svg-container"></div>
+</div>
+
 
 <script>
+// ------------------------------------------------------
+// 🔹 🔹 🔹   AQUI PEGAS TUS 3 SVG COMPLETOS   🔹 🔹 🔹
+// ------------------------------------------------------
+
+const svg1 = `
+<!-- SVG 1 AQUÍ -->
+`;
+
+const svg2 = `
+<!-- SVG 2 AQUÍ -->
+`;
+
+const svg3 = `
+<!-- SVG 3 AQUÍ -->
+`;
+
+const svgList = [svg1, svg2, svg3];
+
+
+// ---------------------------------------------
+//   FUNCIÓN PARA CARGAR UN SVG AL AZAR
+// ---------------------------------------------
+let selectedColor = "#000";
+
+function loadRandomSVG() {
+    const randomIndex = Math.floor(Math.random() * svgList.length);
+    document.getElementById("svg-container").innerHTML = svgList[randomIndex];
+
+    // asignar eventos a cada pieza con el atributo "data-colorable"
+    document.querySelectorAll("[data-colorable]").forEach(part => {
+        part.addEventListener("click", function() {
+            this.setAttribute("fill", selectedColor);
+        });
+    });
+}
+
+
+// ---------------------------------------------
+//   INICIO DEL JUEGO
+// ---------------------------------------------
 document.getElementById("start-btn").addEventListener("click", () => {
     document.getElementById("start-screen").style.display = "none";
-    document.querySelector(".svg-box").style.display = "flex";
-    document.querySelector(".palette").style.display = "flex";
     document.getElementById("title").style.display = "block";
+    document.querySelector(".palette").style.display = "flex";
+    document.querySelector(".svg-box").style.display = "flex";
+    document.getElementById("play-again").style.display = "inline-block";
+
+    loadRandomSVG();
 });
 
-/* 🎨 Crear paleta automáticamente según números del SVG */
 
-
-window.onload = () => {
-    const nums = new Set();
-    document.querySelectorAll("[data-num]").forEach(el => nums.add(el.dataset.num));
-
-    const palette = document.getElementById("palette");
-
-    nums.forEach(n => {
-        const btn = document.createElement("div");
-        btn.className = "color-btn";
-        btn.dataset.num = n;
-        btn.dataset.color = ["#ff9999","#99ff99","#9999ff","#ffff99","#ffcc99","#cc99ff"][n-1] || "#ccc";
-        btn.style.background = btn.dataset.color;
-        btn.textContent = n;
-
-        btn.addEventListener("click", () => {
-            document.querySelectorAll(".color-btn").forEach(b=>b.classList.remove("selected"));
-            btn.classList.add("selected");
-        });
-
-        palette.appendChild(btn);
+// ---------------------------------------------
+//   SELECCIÓN DE COLOR
+// ---------------------------------------------
+document.querySelectorAll(".color-circle").forEach(circle => {
+    circle.addEventListener("click", function() {
+        selectedColor = this.getAttribute("data-color");
     });
-};
+});
+
+
+// ---------------------------------------------
+//   VOLVER A JUGAR
+// ---------------------------------------------
+document.getElementById("play-again").addEventListener("click", () => {
+    loadRandomSVG();
+});
+
 </script>
 
 </body>
 </html>
-
-
