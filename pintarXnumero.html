@@ -1,126 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Color by Number</title>
-
+<title>Juego de Colorear por Números</title>
 <style>
-    body{
-        font-family: "Comic Sans MS", sans-serif;
-        background: #eef8ff;
+    body {
+        font-family: Arial, sans-serif;
         text-align: center;
+        background: #f4f4f4;
         margin: 0;
         padding: 0;
     }
 
-    h1{
-        font-size: 40px;
-        margin-top: 20px;
-        color: #333;
-    }
-
-    /* Pantalla de inicio */
-    #start-screen{
+    #startScreen, #endScreen {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #eef8ff;
+        inset: 0;
+        background: white;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        flex-direction: column;
         z-index: 10;
     }
 
-    #start-screen h1{
-        font-size: 50px;
+    #startScreen h1, #endScreen h1 {
+        font-size: 32px;
         margin-bottom: 20px;
     }
 
-    #start-btn{
-        font-size: 28px;
-        padding: 15px 35px;
-        border: none;
+    #startBtn, #restartBtn {
+        padding: 12px 25px;
+        font-size: 20px;
         background: #4CAF50;
         color: white;
+        border: none;
         border-radius: 10px;
         cursor: pointer;
-        transition: .2s;
     }
 
-    #start-btn:hover{
-        transform: scale(1.1);
-        background: #45a049;
-    }
-
-    .svg-box{
-        width: 750px;
-        height: 750px;
-        margin: 20px auto;
-        border: 4px dashed #999;
-        border-radius: 20px;
-        background: white;
-        display: none; /* oculto al iniciar */
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-    }
-
-    svg{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .palette{
+    .container {
         margin-top: 20px;
-        display: none; /* oculto al iniciar */
-        justify-content: center;
-        gap: 20px;
+        display: none;
     }
 
-    .color-btn{
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        border: 5px solid #333;
+    .palette {
         display: flex;
         justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        cursor: pointer;
-        color: black;
-        font-weight: bold;
-        transition: transform .2s;
+        gap: 12px;
+        margin-bottom: 20px;
     }
 
-    .color-btn:hover{
-        transform: scale(1.1);
+    .color-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #444;
+        cursor: pointer;
     }
 
-    svg [data-num] {
+    #drawingArea {
+        width: 500px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    svg {
+        width: 100%;
+        height: auto;
         cursor: pointer;
-        transition: fill 0.25s ease;
+    }
+
+    .hidden {
+        display: none;
     }
 </style>
-
 </head>
 <body>
 
-<!-- 🟢 PANTALLA DE INICIO -->
-<div id="start-screen">
-    <h1>🎨 Color by Number</h1>
-    <button id="start-btn">Start Game</button>
+<!-- 🔵 PANTALLA DE INICIO -->
+<div id="startScreen">
+    <h1>Juego de Colorear por Números</h1>
+    <button id="startBtn">Iniciar</button>
 </div>
 
-<h1 id="title" style="display:none;">🎨 Color the Picture</h1>
+<!-- 🔵 PANTALLA DE FINAL -->
+<div id="endScreen" class="hidden">
+    <h1>¡Felicidades! Terminaste el dibujo 🎉</h1>
+    <button id="restartBtn">Volver a jugar</button>
+</div>
 
-<div class="svg-box">
-    <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<!-- 🔵 CONTENEDOR DEL JUEGO -->
+<div class="container" id="gameContainer">
+
+    <!-- Paleta -->
+    <div class="palette">
+        <div class="color-circle" style="background:#5c3b1e" data-num="1"></div>
+        <div class="color-circle" style="background:#ff8fd1" data-num="2"></div>
+        <div class="color-circle" style="background:#ffdab9" data-num="3"></div>
+        <div class="color-circle" style="background:#3b6cff" data-num="4"></div>
+        <div class="color-circle" style="background:#ffe600" data-num="5"></div>
+        <div class="color-circle" style="background:#b347ff" data-num="6"></div>
+    </div>
+
+    <div id="drawingArea">
+
+        <!-- 🔵 AQUÍ PEGARÁS LOS SVG -->
+
+        <div id="svg1" class="svg-img hidden">
+            <svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 612 792" enable-background="new 0 0 612 792" xml:space="preserve">
 <polygon data-num="6" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="236.24,625.04 
 	236.24,636.72 238.57,655.41 243.23,671.77 248.81,697.01 256.73,718.5 267.9,747.01 272.55,748.88 289.78,750.75 294.9,750.75 
@@ -331,60 +318,90 @@
 		c-13.01,11.26-49.43,45.8-58.35,101.49c-4.31,26.93-0.74,49.75,3.1,64.86"/>
 </g>
 <text transform="matrix(1.2362 0 0 1 282.7378 117.7393)" font-family="'MyriadPro-Regular'" font-size="22.3339px">1</text>
-</div>
+</svg>
+        </div>
 
-<!-- 🎨 PALETA (Ejemplo de colores — agrega los tuyos) -->
-<div class="palette">
-    <div class="color-btn" data-color="1" style="background:#8B4513;">1</div>
-    <div class="color-btn" data-color="2" style="background:#ff9ac9;">2</div>
-    <div class="color-btn" data-color="3" style="background:#ffddb3;">3</div>
-    <div class="color-btn" data-color="4" style="background:#6aa6ff;">4</div>
-    <div class="color-btn" data-color="5" style="background:#ffe169;">5</div>
-    <div class="color-btn" data-color="6" style="background:#b573ff;">6</div>
+        <div id="svg2" class="svg-img hidden">
+            <!-- 🔻 Pega AQUÍ tu SVG #2 -->
+        </div>
+
+        <div id="svg3" class="svg-img hidden">
+            <!-- 🔻 Pega AQUÍ tu SVG #3 -->
+        </div>
+
+    </div>
 
 </div>
 
 <script>
-// 🎮 Mostrar juego al presionar Start
-document.getElementById("start-btn").onclick = function(){
-    document.getElementById("start-screen").style.display = "none";
-    document.querySelector(".svg-box").style.display = "flex";
-    document.querySelector(".palette").style.display = "flex";
-    document.getElementById("title").style.display = "block";
+let selectedColorNumber = null;
+let totalZones = 0;
+let paintedZones = 0;
+
+const svgs = ["svg1", "svg2", "svg3"];
+
+function loadRandomSVG() {
+    // Ocultar todos
+    svgs.forEach(id => {
+        document.getElementById(id).classList.add("hidden");
+    });
+
+    // Elegir uno aleatorio
+    const random = svgs[Math.floor(Math.random() * svgs.length)];
+    const svgBox = document.getElementById(random);
+    svgBox.classList.remove("hidden");
+
+    // Contar zonas
+    totalZones = svgBox.querySelectorAll("[data-num]").length;
+    paintedZones = 0;
+
+    // Activar click en zonas
+    svgBox.querySelectorAll("[data-num]").forEach(zone => {
+        zone.addEventListener("click", () => {
+            if (!selectedColorNumber) return;
+
+            if (zone.getAttribute("data-num") == selectedColorNumber) {
+                zone.style.fill = selectedColorHex;
+                zone.style.stroke = selectedColorHex;
+                zone.classList.add("painted");
+                paintedZones++;
+
+                if (paintedZones === totalZones) {
+                    endGame();
+                }
+            }
+        });
+    });
+}
+
+// Selección de color
+let selectedColorHex = null;
+
+document.querySelectorAll(".color-circle").forEach(c => {
+    c.addEventListener("click", () => {
+        selectedColorNumber = c.getAttribute("data-num");
+        selectedColorHex = c.style.background;
+    });
+});
+
+// Iniciar juego
+document.getElementById("startBtn").onclick = () => {
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("gameContainer").style.display = "block";
+    loadRandomSVG();
 };
 
-// 🎨 Sistema de coloreo
-let selectedColor = null;
-
-document.querySelectorAll(".color-btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-        selectedColor = btn.getAttribute("data-color");
-    });
-});
-
-document.querySelectorAll("[data-num]").forEach(area=>{
-    area.addEventListener("click", ()=>{
-        if(selectedColor && area.getAttribute("data-num") === selectedColor){
-            area.style.fill = btnColor(selectedColor);
-        }
-    });
-});
-
-// Colores reales según número
-function btnColor(n){
-    const c = {
-    1: "#8B4513",   // café
-    2: "#ff9ac9",   // rosa
-    3: "#ffddb3",   // carne
-    4: "#6aa6ff",   // azul
-    5: "#ffe169",   // amarillo
-    6: "#b573ff"    // morado
-
-    };
-    return c[n];
+// Terminar
+function endGame() {
+    document.getElementById("endScreen").classList.remove("hidden");
 }
+
+// Reiniciar
+document.getElementById("restartBtn").onclick = () => {
+    document.getElementById("endScreen").classList.add("hidden");
+    loadRandomSVG();
+};
 </script>
 
 </body>
 </html>
-
