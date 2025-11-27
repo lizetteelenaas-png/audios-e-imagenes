@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>🧩 Emotion Puzzle Game</title>
+<title>🧩 Puzzle Game</title>
 <style>
   :root{
     --accent:#0077b6;
@@ -160,8 +160,8 @@
 
 <!-- Cover -->
 <div class="cover" id="cover">
-  <h1>🧩 Emotion Puzzle Game</h1>
-  <p>Complete each emotion puzzle by dragging the pieces to the correct place. </p>
+  <h1>🧩 Puzzle Game</h1>
+  <p>Complete each puzzle by dragging the pieces to the correct place. </p>
   <button class="btn" onclick="startGame()">Start Game</button>
 </div>
 
@@ -194,11 +194,17 @@
 
 <script>
 const emotions = [
-  { name: "Happy", img: "happy.png" },
-  { name: "Sad", img: "sad.png" },
-  { name: "Angry", img: "angry.png" },
-  { name: "Scared", img: "scared.png" },
-  { name: "Excited", img: "excited.png" }
+  { name: "bedroom", img: "bedroom3.jpg" },
+  { name: "bed", img: "bed3.jpg" },
+  { name: "chair", img: "chair3.jpg" },
+  { name: "lamp", img: "lamp3.jpg" },
+  { name: "mat", img: "mat3.jpg" }
+  
+  { name: "pillow", img: "pillow.jpg" },
+  { name: "table", img: "table2.jpg" },
+  { name: "share", img: "share3.jpg" },
+  { name: "teddy bear", img: "teddy2.jpg" },
+  { name: "toys", img: "toys3.jpg" }
 ];
 
 const SIZE = 3;
@@ -368,4 +374,5 @@ function shuffle(a){
 </script>
 </body>
 </html>
+
 
