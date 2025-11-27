@@ -37,7 +37,7 @@
     width: 100%;
     max-width: 900px;
     display: grid;
-    grid-template-columns: repeat(5, 140px);
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     grid-gap: 12px;
     justify-content: center;
     margin-bottom: 12px;
@@ -64,9 +64,10 @@
   .card img {
     width: 100px;
     height: 100px;
-    object-fit: cover;
+    object-fit: contain;
     margin-bottom: 6px;
     border-radius: 8px;
+    background: white;
   }
   .card.flipped {
     transform: scale(1.05);
@@ -277,5 +278,6 @@ function showFinalMessage(){
 </script>
 </body>
 </html>
+
 
 
