@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🖼️ Emotion Collage Game</title>
+<title>🖼️ Collage Game</title>
 <style>
 :root { --accent: #0077b6; --bg: url('paisaje2.jpg') no-repeat center center fixed; }
 body { margin:0; font-family:"Comic Sans MS", cursive; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; min-height:100vh; padding:18px; box-sizing:border-box; }
@@ -56,8 +56,8 @@ h1 { color:var(--accent); margin:0 0 12px 0; text-align:center; }
 
 <!-- Cover Page -->
 <div class="cover" id="cover">
-  <h1>🖼️ Emotion Collage Game</h1>
-  <p>Select the image that best represents the emotion shown. Your choices will form a collage!</p>
+  <h1>🖼️ Collage Game</h1>
+  <p>Select the image that best represents the displayed word. Your choices will form a collage!</p>
   <button class="btn" onclick="startGame()">Start Game</button>
 </div>
 
@@ -72,23 +72,23 @@ h1 { color:var(--accent); margin:0 0 12px 0; text-align:center; }
 <div class="final" id="final" style="display:none;">
   <h1>🎉 Congratulations!</h1>
   <div class="collage" id="finalCollage"></div>
-  <div id="finalMessage">These are the images you selected that represent your emotions.</div>
+  <div id="finalMessage">These are the images you selected. </div>
   <button class="btn" onclick="restart()">Play Again</button>
 </div>
 
 <script>
 // Emotions and images
 const emotions = [
-  {name:"Excited", img:"excited1.png"},
-  {name:"Angry", img:"angry1.jpg"},
-  {name:"Happy", img:"happy1.jpg"},
-  {name:"Scared", img:"scared1.jpg"},
-  {name:"Worried", img:"worried1.jpg"},
-  {name:"Tired", img:"tired1.jpg"},
-  {name:"Sad", img:"sad1.jpg"},
-  {name:"Confused", img:"confused1.jpg"},
-  {name:"Surprised", img:"surprised.jpg"},
-  {name:"Glad", img:"glad1.jpg"}
+  {name:"bedroom", img:"bedroom.jpg"},
+  {name:"bed", img:"bed4.jpg"},
+  {name:"chair", img:"chair4.jpg"},
+  {name:"lamp", img:"lamp4.jpg"},
+  {name:"mat", img:"mat4.jpg"},
+  {name:"pillow", img:"pillow4.jpg"},
+  {name:"table", img:"table4.jpg"},
+  {name:"share", img:"share4.jpg"},
+  {name:"teddy bear", img:"teddy4.jpg"},
+  {name:"toys", img:"toys4.jpg"}
 ];
 
 const allImages = emotions.map(e=>e.img);
@@ -176,5 +176,6 @@ function shuffle(array){
 
 </body>
 </html>
+
 
 
