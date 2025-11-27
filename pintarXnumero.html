@@ -339,7 +339,13 @@
 
 <!-- 🎨 PALETA -->
 <div class="palette" id="palette">
-    
+        <div class="color-circle" style="background:#5c3b1e" data-num="1"></div>
+        <div class="color-circle" style="background:#ff8fd1" data-num="2"></div>
+        <div class="color-circle" style="background:#ffdab9" data-num="3"></div>
+        <div class="color-circle" style="background:#3b6cff" data-num="4"></div>
+        <div class="color-circle" style="background:#ffe600" data-num="5"></div>
+        <div class="color-circle" style="background:#b347ff" data-num="6"></div>
+    </div>
 </div>
 
 <script>
@@ -351,21 +357,7 @@ document.getElementById("start-btn").addEventListener("click", () => {
 });
 
 /* 🎨 Crear paleta automáticamente según números del SVG */
-const svgBox = document.querySelector(".svg-box");
 
-svgBox.addEventListener("click", (e) => {
-    const target = e.target;
-    if (!target.dataset.num) return;
-
-    const selected = document.querySelector(".color-btn.selected");
-    if (!selected) return;
-
-    const color = selected.dataset.color;
-
-    if (selected.dataset.num === target.dataset.num) {
-        target.style.fill = color;
-    }
-});
 
 window.onload = () => {
     const nums = new Set();
@@ -393,4 +385,5 @@ window.onload = () => {
 
 </body>
 </html>
+
 
