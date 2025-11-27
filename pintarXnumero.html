@@ -355,36 +355,11 @@ document.getElementById("start-btn").addEventListener("click", () => {
     document.querySelector(".palette").style.display = "flex";
     document.getElementById("title").style.display = "block";
 });
-
-/* 🎨 Crear paleta automáticamente según números del SVG */
-
-
-window.onload = () => {
-    const nums = new Set();
-    document.querySelectorAll("[data-num]").forEach(el => nums.add(el.dataset.num));
-
-    const palette = document.getElementById("palette");
-
-    nums.forEach(n => {
-        const btn = document.createElement("div");
-        btn.className = "color-btn";
-        btn.dataset.num = n;
-        btn.dataset.color = ["#ff9999","#99ff99","#9999ff","#ffff99","#ffcc99","#cc99ff"][n-1] || "#ccc";
-        btn.style.background = btn.dataset.color;
-        btn.textContent = n;
-
-        btn.addEventListener("click", () => {
-            document.querySelectorAll(".color-btn").forEach(b=>b.classList.remove("selected"));
-            btn.classList.add("selected");
-        });
-
-        palette.appendChild(btn);
-    });
-};
 </script>
 
 </body>
 </html>
+
 
 
 
