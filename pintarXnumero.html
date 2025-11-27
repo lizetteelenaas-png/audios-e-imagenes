@@ -1,3 +1,5 @@
+a este codigo dime donde le puedo agregar para que tenga 3 svg para que pueda colorear aleatoriamente al iniciar el juego y un boton de volver a jugar la idea es que al iniciar salga un dibujo para colorear (un svg) y si quieere volver a jugar al darle clic en el boton de volver a jugar ahora le de un difujo diferente de los3 que hay de opcion
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,27 +119,6 @@
 
 <h1 id="title" style="display:none;">🎨 Color the Picture</h1>
 
-	<!-- PALETA DE COLORES (TÚ LA EDITAS LIBREMENTE) -->
-<div class="palette" id="palette">
-    <div class="color-circle" style="background:#5c3b1e" data-num="1"></div> //cafe
-    <div class="color-circle" style="background:#F8C1E1" data-num="2"></div> //rosa claro
-    <div class="color-circle" style="background:#ffdab9" data-num="3"></div> //carne
-    <div class="color-circle" style="background:#7695F4" data-num="4"></div> //azul claro
-    <div class="color-circle" style="background:#F5E54C" data-num="5"></div> //amarillo clarito
-    <div class="color-circle" style="background:#C680F6" data-num="6"></div> //morado clarito
-    
-    <div class="color-circle" style="background:#EDAE26" data-num="7"></div> //naranja
-    <div class="color-circle" style="background:#938C89" data-num="8"></div> //gris
-    <div class="color-circle" style="background:##5B7F38" data-num="9"></div> //verde 
-    <div class="color-circle" style="background:#020202" data-num="10"></div> //negro
-</div>
-	<!-- BOTÓN VOLVER A JUGAR -->
-<button id="play-again" style="display:none;">Volver a jugar</button>
-
-<!-- CONTENEDOR DONDE VA EL SVG -->
-<div class="svg-box">
-    <div id="svg-container"></div>
-</div>
 <!-- 🔳 CAJA DONDE VA EL SVG -->
 <div class="svg-box">
 <svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -351,8 +332,27 @@
 		c-13.01,11.26-49.43,45.8-58.35,101.49c-4.31,26.93-0.74,49.75,3.1,64.86"/>
 </g>
 <text transform="matrix(1.2362 0 0 1 282.7378 117.7393)" font-family="'MyriadPro-Regular'" font-size="22.3339px">1</text>
-</svg>  
+</svg>
+
     
+    
+    
+</div>
+
+<!-- 🎨 PALETA -->
+<div class="palette" id="palette">
+ 	<div class="color-circle" style="background:#5c3b1e" data-num="1"></div> //cafe
+    <div class="color-circle" style="background:#F8C1E1" data-num="2"></div> //rosa claro
+    <div class="color-circle" style="background:#ffdab9" data-num="3"></div> //carne
+    <div class="color-circle" style="background:#7695F4" data-num="4"></div> //azul claro
+    <div class="color-circle" style="background:#F5E54C" data-num="5"></div> //amarillo clarito
+    <div class="color-circle" style="background:#C680F6" data-num="6"></div> //morado clarito
+    
+    <div class="color-circle" style="background:#EDAE26" data-num="7"></div> //naranja
+    <div class="color-circle" style="background:#938C89" data-num="8"></div> //gris
+    <div class="color-circle" style="background:##5B7F38" data-num="9"></div> //verde 
+    <div class="color-circle" style="background:#020202" data-num="10"></div> //negro
+    </div>
 </div>
 
 <script>
