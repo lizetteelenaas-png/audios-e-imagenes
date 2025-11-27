@@ -113,7 +113,7 @@ function showNextEmotion(){
   }
 
   const emotion = emotions[currentIndex];
-  document.getElementById('emotionPrompt').textContent = `Emotion: ${emotion.name}`;
+  document.getElementById('emotionPrompt').textContent = `Word: ${emotion.name}`;
 
   const imageGrid = document.getElementById('imageChoices');
   imageGrid.innerHTML='';
@@ -176,6 +176,7 @@ function shuffle(array){
 
 </body>
 </html>
+
 
 
 
