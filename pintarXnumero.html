@@ -1,66 +1,123 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Juego para Colorear</title>
+<title>Color by Number</title>
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
+    body{
+        font-family: "Comic Sans MS", sans-serif;
+        background: #eef8ff;
         text-align: center;
-        background: #f5f5f5;
+        margin: 0;
+        padding: 0;
     }
 
-    #start-screen {
-        margin-top: 50px;
+    h1{
+        font-size: 40px;
+        margin-top: 20px;
+        color: #333;
     }
 
-    #start-btn, #play-again {
-        padding: 15px 30px;
-        font-size: 22px;
+    /* Pantalla de inicio */
+    #start-screen{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #eef8ff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
+
+    #start-screen h1{
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+
+    #start-btn{
+        font-size: 28px;
+        padding: 15px 35px;
         border: none;
         background: #4CAF50;
         color: white;
         border-radius: 10px;
         cursor: pointer;
-        margin-top: 20px;
+        transition: .2s;
     }
 
-    .palette {
+    #start-btn:hover{
+        transform: scale(1.1);
+        background: #45a049;
+    }
+
+    .svg-box{
+        width: 750px;
+        height: 750px;
+        margin: 20px auto;
+        border: 4px dashed #999;
+        border-radius: 20px;
+        background: white;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    svg{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .palette{
         margin-top: 20px;
         display: none;
         justify-content: center;
-        gap: 10px;
+        gap: 20px;
     }
 
-    .color-circle {
-        width: 40px;
-        height: 40px;
+    .color-btn{
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
-        border: 2px solid #333;
+        border: 5px solid #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
         cursor: pointer;
+        color: black;
+        font-weight: bold;
+        transition: transform .2s;
     }
 
-    .svg-box {
-        margin-top: 20px;
-        display: none;
-        justify-content: center;
+    .color-btn:hover{
+        transform: scale(1.1);
+    }
+
+    svg [data-num] {
+        cursor: pointer;
+        transition: fill 0.25s ease;
     }
 </style>
 
 </head>
 <body>
 
-<h1 id="title" style="display:none;">Colorea el Dibujo</h1>
-
-<!-- 🟢 PANTALLA DE INICIO --> 
-    <div id="start-screen"> 
-<h1>🎨 Color by Number</h1> 
+<!-- 🟢 PANTALLA DE INICIO -->
+<div id="start-screen">
+    <h1>🎨 Color by Number</h1>
     <button id="start-btn">Start Game</button>
-    </div> 
+</div>
+
 <h1 id="title" style="display:none;">🎨 Color the Picture</h1>
 
-<!-- PALETA DE COLORES (TÚ LA EDITAS LIBREMENTE) -->
+	<!-- PALETA DE COLORES (TÚ LA EDITAS LIBREMENTE) -->
 <div class="palette" id="palette">
     <div class="color-circle" style="background:#5c3b1e" data-num="1"></div> //cafe
     <div class="color-circle" style="background:#F8C1E1" data-num="2"></div> //rosa claro
@@ -74,22 +131,15 @@
     <div class="color-circle" style="background:##5B7F38" data-num="9"></div> //verde 
     <div class="color-circle" style="background:#020202" data-num="10"></div> //negro
 </div>
-
-<!-- BOTÓN VOLVER A JUGAR -->
+	<!-- BOTÓN VOLVER A JUGAR -->
 <button id="play-again" style="display:none;">Volver a jugar</button>
 
 <!-- CONTENEDOR DONDE VA EL SVG -->
 <div class="svg-box">
     <div id="svg-container"></div>
 </div>
-
-
-<script>
-// ------------------------------------------------------
-// 🔹 🔹 🔹   AQUI PEGAS TUS 3 SVG COMPLETOS   🔹 🔹 🔹
-// ------------------------------------------------------
-
-const svg1 = 
+<!-- 🔳 CAJA DONDE VA EL SVG -->
+<div class="svg-box">
 <svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 612 792" enable-background="new 0 0 612 792" xml:space="preserve">
 <polygon data-num="6" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="236.24,625.04 
@@ -301,69 +351,43 @@ const svg1 =
 		c-13.01,11.26-49.43,45.8-58.35,101.49c-4.31,26.93-0.74,49.75,3.1,64.86"/>
 </g>
 <text transform="matrix(1.2362 0 0 1 282.7378 117.7393)" font-family="'MyriadPro-Regular'" font-size="22.3339px">1</text>
-</svg>
-;
+</svg>  
+    
+</div>
 
-const svg2 = `
-<!-- SVG 2 AQUÍ -->
-`;
-
-const svg3 = `
-<!-- SVG 3 AQUÍ -->
-`;
-
-const svgList = [svg1, svg2, svg3];
-
-
-// ---------------------------------------------
-//   FUNCIÓN PARA CARGAR UN SVG AL AZAR
-// ---------------------------------------------
-let selectedColor = "#000";
-
-function loadRandomSVG() {
-    const randomIndex = Math.floor(Math.random() * svgList.length);
-    document.getElementById("svg-container").innerHTML = svgList[randomIndex];
-
-    // asignar eventos a cada pieza con el atributo "data-colorable"
-    document.querySelectorAll("[data-colorable]").forEach(part => {
-        part.addEventListener("click", function() {
-            this.setAttribute("fill", selectedColor);
-        });
-    });
-}
-
-
-// ---------------------------------------------
-//   INICIO DEL JUEGO
-// ---------------------------------------------
+<script>
 document.getElementById("start-btn").addEventListener("click", () => {
     document.getElementById("start-screen").style.display = "none";
-    document.getElementById("title").style.display = "block";
-    document.querySelector(".palette").style.display = "flex";
     document.querySelector(".svg-box").style.display = "flex";
-    document.getElementById("play-again").style.display = "inline-block";
-
-    loadRandomSVG();
+    document.querySelector(".palette").style.display = "flex";
+    document.getElementById("title").style.display = "block";
 });
 
+/* 🎨 Crear paleta automáticamente según números del SVG */
 
-// ---------------------------------------------
-//   SELECCIÓN DE COLOR
-// ---------------------------------------------
-document.querySelectorAll(".color-circle").forEach(circle => {
-    circle.addEventListener("click", function() {
-        selectedColor = this.getAttribute("data-color");
+
+window.onload = () => {
+    const nums = new Set();
+    document.querySelectorAll("[data-num]").forEach(el => nums.add(el.dataset.num));
+
+    const palette = document.getElementById("palette");
+
+    nums.forEach(n => {
+        const btn = document.createElement("div");
+        btn.className = "color-btn";
+        btn.dataset.num = n;
+        btn.dataset.color = ["#ff9999","#99ff99","#9999ff","#ffff99","#ffcc99","#cc99ff"][n-1] || "#ccc";
+        btn.style.background = btn.dataset.color;
+        btn.textContent = n;
+
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".color-btn").forEach(b=>b.classList.remove("selected"));
+            btn.classList.add("selected");
+        });
+
+        palette.appendChild(btn);
     });
-});
-
-
-// ---------------------------------------------
-//   VOLVER A JUGAR
-// ---------------------------------------------
-document.getElementById("play-again").addEventListener("click", () => {
-    loadRandomSVG();
-});
-
+};
 </script>
 
 </body>
