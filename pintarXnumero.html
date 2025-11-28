@@ -10,9 +10,23 @@
         background: #f5f5f5;
     }
 
-    #start-screen, #finish-screen {
-        margin-top: 40px;
-    }
+    #start-screen {
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	    align-items: center;
+	    height: 100vh;
+	    background: linear-gradient(135deg, #ff9ac9, #6aa6ff); /* ⭐ fondo rosa-azul */
+	    color: white;
+	    text-align: center;
+	    text-shadow: 1px 1px 2px #333;
+}
+	#start-screen h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
 
     #palette {
         display: none;
@@ -61,6 +75,23 @@
         font-size: 16px;
         cursor: pointer;
     }
+	#start-btn {
+    padding: 14px 28px;
+    font-size: 20px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #ffe169, #ff9ac9);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background 0.3s;
+}
+
+#start-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #ff9ac9, #ffe169);
+}
 
     #finish-message {
         display: none;
@@ -699,6 +730,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
