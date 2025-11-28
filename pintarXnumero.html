@@ -43,9 +43,12 @@
     }
 
     svg {
-        width: 100%;
-        height: auto;
-        cursor: pointer;
+        width: 80%;       /* ajusta el porcentaje según lo que quieras */
+	    max-width: 600px; /* ⭐ límite máximo en píxeles */
+	    height: auto;
+	    cursor: pointer;
+	    margin: auto;     /* centrar */
+	    display: block;
     }
 
     #restart-btn {
@@ -693,6 +696,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
