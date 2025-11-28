@@ -45,6 +45,13 @@
         height: auto;
         cursor: pointer;
     }
+	 #restart-btn { /* ⭐ Botón reinicio */
+        display: none;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
@@ -260,6 +267,7 @@
 </g>
 </svg>
     </div>
+	
 	<div id="svg2" class="svg-container">
 	<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 841.89 595.28" enable-background="new 0 0 841.89 595.28" xml:space="preserve">
@@ -426,6 +434,8 @@
 </g>
 </svg>
 </div>
+
+	
 	<div id="svg3" class="svg-container">
 		<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 841.89 595.28" enable-background="new 0 0 841.89 595.28" xml:space="preserve">
@@ -552,12 +562,26 @@
 </svg>
 </div>
 </div>
+	<!-- ⭐ Botón reinicio -->
+	<button id="restart-btn">Volver a jugar</button>
+	
 <script>
 /* ----------------------
    VARIABLES BÁSICAS
 -----------------------*/
 
 let currentColor = null;
+const svgs = document.querySelectorAll(".svg-container");
+const restartBtn = document.getElementById("restart-btn");
+
+/* ---------------------------------------------
+⭐ Función para mostrar un dibujo aleatorio
+-------------------------------------------------*/
+function mostrarDibujoAleatorio() {
+    svgs.forEach(svg => svg.style.display = "none");
+    const indice = Math.floor(Math.random() * svgs.length);
+    svgs[indice].style.display = "block";
+}
 
 /* ----------------------
    BOTÓN INICIAR
@@ -568,6 +592,7 @@ document.getElementById("start-btn").addEventListener("click", () => {
     document.getElementById("palette").style.display = "flex";
     document.getElementById("game-area").style.display = "block";
     document.getElementById("title").style.display = "block";
+	mostrarDibujoAleatorio(); // ⭐ Mostrar uno al azar
 });
 
 /* ----------------------
@@ -606,14 +631,25 @@ function enableSVGPainting() {
         });
     });
 }
-
 // Activar al cargar
 enableSVGPainting();
 
+// ⭐ Reinicio del juego
+restartBtn.addEventListener("click", () => {
+    restartBtn.style.display = "none";
+    mostrarDibujoAleatorio();
+});
+
+// ⭐ Ejemplo: cuando quieras mostrar el botón al terminar (puedes engancharlo a tu lógica)
+function terminarJuego() {
+    restartBtn.style.display = "inline-block";
+}
+	
 </script>
 
 </body>
 </html>
+
 
 
 
