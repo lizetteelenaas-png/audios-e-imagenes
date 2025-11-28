@@ -627,6 +627,7 @@ function enableSVGPainting() {
 
                 area.setAttribute("fill", fillColor);
                 area.style.pointerEvents = "none"; // evitar recolorear
+				checkIfFinished(); // ⭐ Verificar si ya terminó
             }
         });
     });
@@ -634,21 +635,30 @@ function enableSVGPainting() {
 // Activar al cargar
 enableSVGPainting();
 
+// ⭐ Verificar si todas las áreas están coloreadas
+function checkIfFinished() {
+    const areas = document.querySelectorAll("svg [data-num]");
+    const allColored = Array.from(areas).every(a => a.getAttribute("fill") !== null);
+    if (allColored) {
+        terminarJuego();
+    }
+}
+
+// ⭐ Mostrar botón reinicio
+function terminarJuego() {
+    restartBtn.style.display = "inline-block";
+}	
+
 // ⭐ Reinicio del juego
 restartBtn.addEventListener("click", () => {
     restartBtn.style.display = "none";
     mostrarDibujoAleatorio();
-});
-
-// ⭐ Ejemplo: cuando quieras mostrar el botón al terminar (puedes engancharlo a tu lógica)
-function terminarJuego() {
-    restartBtn.style.display = "inline-block";
-}
-	
+});	
 </script>
 
 </body>
 </html>
+
 
 
 
