@@ -1,123 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Color by Number</title>
-
+<title>Juego de Colorear</title>
 <style>
-    body{
-        font-family: "Comic Sans MS", sans-serif;
-        background: #eef8ff;
+    body {
+        font-family: Arial, sans-serif;
         text-align: center;
-        margin: 0;
-        padding: 0;
+        background: #f5f5f5;
     }
 
-    h1{
-        font-size: 40px;
-        margin-top: 20px;
-        color: #333;
+    #start-screen, #finish-screen {
+        margin-top: 40px;
     }
 
-    /* Pantalla de inicio */
-    #start-screen{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #eef8ff;
-        display: flex;
-        flex-direction: column;
+    #palette {
+        display: none;
         justify-content: center;
-        align-items: center;
-        z-index: 10;
-    }
-
-    #start-screen h1{
-        font-size: 50px;
-        margin-bottom: 20px;
-    }
-
-    #start-btn{
-        font-size: 28px;
-        padding: 15px 35px;
-        border: none;
-        background: #4CAF50;
-        color: white;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: .2s;
-    }
-
-    #start-btn:hover{
-        transform: scale(1.1);
-        background: #45a049;
-    }
-
-    .svg-box{
-        width: 750px;
-        height: 750px;
+        gap: 10px;
         margin: 20px auto;
-        border: 4px dashed #999;
-        border-radius: 20px;
-        background: white;
-        display: none; /* oculto al iniciar */
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
     }
 
-    svg{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .palette{
-        margin-top: 20px;
-        display: none; /* oculto al iniciar */
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .color-btn{
-        width: 70px;
-        height: 70px;
+    .color-btn {
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
-        border: 5px solid #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
+        border: 3px solid #333;
         cursor: pointer;
-        color: black;
-        font-weight: bold;
-        transition: transform .2s;
     }
 
-    .color-btn:hover{
-        transform: scale(1.1);
+    #game-area {
+        width: 80%;
+        margin: auto;
+        display: none;
     }
 
-    svg [data-num] {
-        cursor: pointer;
-        transition: fill 0.25s ease;
+    svg {
+        width: 100%;
+        height: auto;
     }
 </style>
-
 </head>
 <body>
 
-<!-- 🟢 PANTALLA DE INICIO -->
+<!-- PANTALLA DE INICIO -->
 <div id="start-screen">
-    <h1>🎨 Color by Number</h1>
-    <button id="start-btn">Start Game</button>
+    <h1>Colorea la Imagen</h1>
+    <button id="start-btn">Iniciar</button>
 </div>
 
-<h1 id="title" style="display:none;">🎨 Color the Picture</h1>	
-	<div id="svg2" class="svg-img">
-<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<!-- PALETA DE COLORES ORIGINAL -->
+<div id="palette">
+    <div class="color-btn" data-color="#8B4513" data-num="1" style="background:#8B4513;"></div>
+    <div class="color-btn" data-color="#ff9ac9" data-num="2" style="background:#ff9ac9;"></div>
+    <div class="color-btn" data-color="#ffddb3" data-num="3" style="background:#ffddb3;"></div>
+    <div class="color-btn" data-color="#6aa6ff" data-num="4" style="background:#6aa6ff;"></div>
+    <div class="color-btn" data-color="#ffe169" data-num="5" style="background:#ffe169;"></div>
+    <div class="color-btn" data-color="#b573ff" data-num="6" style="background:#b573ff;"></div>
+
+	<div class="color-btn" data-color="#EDAE26" data-num="7" style="background:#EDAE26;"></div>
+    <div class="color-btn" data-color="#938C89" data-num="8" style="background:#938C89;"></div>
+    <div class="color-btn" data-color="#5B7F38" data-num="9" style="background:#5B7F38;"></div>
+    <div class="color-btn" data-color="#E8320C" data-num="10" style="background:#E8320C;"></div>	
+</div>
+
+<!-- ÁREA DEL JUEGO -->
+<div id="game-area">
+
+    <!-- DIBUJOS SVG (solo uno se mostrará) -->
+    <div id="svg1" class="svg-container">
+		<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 841.89 595.28" enable-background="new 0 0 841.89 595.28" xml:space="preserve">
 <g id="baseL">
 	<path data-num="10" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M304.8,525.96
@@ -165,7 +117,7 @@
 <g id="lampA1">
 	<g id="lamp1">
 		<g>
-			<path fill="#FFFFFF" stroke="#000000" stroke-width="11" stroke-miterlimit="10" d="M468.05,416.79
+			<path data-num="4" fill="#FFFFFF" stroke="#000000" stroke-width="11" stroke-miterlimit="10" d="M468.05,416.79
 				c-0.05-2.09,0.03-5.24,0.78-8.89c0.48-2.37,1.04-5.1,2.52-7.59c2.21-3.7,4.49-3.51,6.72-5.74c2.06-2.06,4.19-6.31,4.34-15.95"/>
 			<path fill="#FFFFFF" stroke="#000000" stroke-width="11" stroke-miterlimit="10" d="M413.2,416.76c0.19-1.67,0.45-5.26-0.46-9.19
 				c-1.21-5.21-4.23-5.46-6.72-9.73c-1.49-2.55-3.19-7.04-3.66-15.48"/>
@@ -173,7 +125,7 @@
 				c2.25-5.5,4.61-11.07,7.08-16.71c3.26-7.44,6.58-14.69,9.94-21.77"/>
 			
 				<line fill="#FFFFFF" stroke="#000000" stroke-width="6" stroke-miterlimit="10" x1="668.36" y1="364.92" x2="652.28" y2="320.28"/>
-			<path data-num="4" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M230.33,294.54c3.83-1.39,8.9,5.58,13.6,10.4
+			<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M230.33,294.54c3.83-1.39,8.9,5.58,13.6,10.4
 				c6.55,6.71,15.52,10.4,33.45,17.78c41.23,16.96,84.13,24.15,84.13,24.15c11.52,1.93,49.03,7.74,98.59,5.11
 				c42.76-2.27,73.15-9.68,102.5-16.84c35.37-8.63,60.82-15.03,71.41-27.23c1.05-1.21,7.69-9.08,11.66-7.43
 				c1.19,0.5,1.7,1.67,3.89,7.92c3.53,10.11,3.86,10.65,3.72,11.87c-0.49,4.37-3.9,7.13-8.87,11.13c-1.94,1.57-5.49,4.21-15.44,8.96
@@ -302,132 +254,9 @@
 	<text transform="matrix(1.0637 0 0 1 434.251 78.3742)" font-family="'MyriadPro-Regular'" font-size="21.2447px">5</text>
 </g>
 </svg>
-
+	</div>
+    <div id="svg2" class="svg-container">
 		<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 841.89 595.28" enable-background="new 0 0 841.89 595.28" xml:space="preserve">
-<g id="pata1">
-	<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M132.71,365.87c-2.53,1.69-2.63,5.18-1.43,22.85
-		c1.05,15.38,1.54,18.92,4.74,22.29c0.76,0.8,4.49,4.73,10.02,4.71c6.25-0.02,10.27-5.06,10.8-5.76c2.94-3.82,2.42-7.17,2.16-20.88
-		c-0.33-17.21,0.31-21.57-2.9-23.52c-2.06-1.26-3.09,0.07-11.85,0.16C135.79,365.8,134.64,364.58,132.71,365.87z"/>
-	<text transform="matrix(1.2533 0 0 1 138.4795 388.8457)" font-family="'MyriadPro-Regular'" font-size="19.3678px">1</text>
-</g>
-<g id="pata2">
-	<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M243.23,364.39c-2.68,1.86-2.6,5.63-1.43,21.89
-		c1.35,18.82,1.87,22.66,5.4,25.12c3.97,2.77,9.95,2.54,10.44,2.52c1.23-0.06,4.59-0.22,7.2-1.8c2.95-1.79,5.02-5.46,5.76-26.56
-		c0.59-16.86-0.53-20.08-2.89-21.5c-1.98-1.2-3.09-0.06-10.79,0.14C247.26,364.47,245.56,362.77,243.23,364.39z"/>
-	<text transform="matrix(0.984 0 0 1 254.3999 393.6885)" font-family="'MyriadPro-Regular'" font-size="19.1307px">1</text>
-</g>
-<g id="pata3">
-	<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M354.13,408.19c-0.45,0.97,2.48,2.1,4.67,5.81
-		c2.66,4.51,2.16,9.34,1.44,16.2c-0.79,7.62-2.22,11.74-0.04,17.35c0.18,0.47,0.43,0.9,0.76,1.37c3.89,5.55,13.5,7.61,20.16,4.32
-		c4.48-2.21,6.35-7.94,10.08-19.44c5.33-16.43,2.39-20.44,1.5-21.48c-1.82-2.13-4.56-2.95-4.75-3.01c-3.78-1.09-7.1,0.54-9.01,1.25
-		C367.82,414.71,355.11,406.07,354.13,408.19z"/>
-	<text transform="matrix(1.0467 0 0 1 371.7603 437.0547)" font-family="'MyriadPro-Regular'" font-size="19.3292px">1</text>
-</g>
-<g id="pata4">
-	<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M666.37,409.26c-0.72,0.5,1.79,3.97,3.64,9.28
-		c1.74,5,1.98,9.4,2.47,18.19c0.54,9.64-0.12,12.36,2.47,14.91c2.95,2.89,7.61,3.13,8.3,3.15c1.23,0.05,4.57,0.18,7.02-1.59
-		c3.11-2.24,2.59-5.97,2.62-20.05c0.02-11.27,0.37-13.89-1.86-15.5c-3.27-2.38-6.82,1.27-13.34-0.59
-		C670.61,415.05,667.29,408.62,666.37,409.26z"/>
-	<text transform="matrix(1.2602 0 0 1 678.4814 441.8867)" font-family="'MyriadPro-Regular'" font-size="16.4997px">1</text>
-</g>
-<g id="pata5">
-	<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M722.29,408.63c2.36,1.41-1.57,7.15-0.97,19.69
-		c0.19,3.92,0.74,6.71-0.72,10.44c-0.52,1.34-1.96,4.88-5.76,7.2c-3.93,2.4-7.88,1.98-9.36,1.8c-1.52-0.19-5.81-0.71-8.64-3.96
-		c-1.12-1.28-1.87-2.84-2.52-14.04c-0.55-9.53-0.13-10.64,0.66-11.56c2.5-2.89,6.1-0.68,13.1-2.57
-		C717.01,413.23,719.98,407.25,722.29,408.63z"/>
-	<text transform="matrix(0.9512 0 0 1 705.4005 438.1201)" font-family="'MyriadPro-Regular'" font-size="19.1021px">1</text>
-</g>
-<g id="cajon1">
-	<polygon data-num="9" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" points="120.12,275.4 120.12,365.04 
-		281.04,362.88 280.32,273.96 	"/>
-	<text transform="matrix(0.8688 0 0 1 234.7105 339.8311)" font-family="'MyriadPro-Regular'" font-size="21.1627px">9</text>
-</g>
-<g id="cajon2">
-	<polygon data-num="9" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" points="120.12,183.24 120.12,273.96 
-		280.32,273.96 281.04,184.32 	"/>
-	<text transform="matrix(1.0808 0 0 1 141.0037 244.4637)" font-family="'MyriadPro-Regular'" font-size="17.8508px">9</text>
-</g>
-<g id="cajon3">
-	<path data-num="3" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M198.08,210.97
-		c-7.33,0.46-12.26,8.26-11.31,15.01c0.79,5.62,5.74,11.1,11.75,11.26c7.5,0.2,13.89-7.98,12.62-15.42
-		C210.15,216.04,204.55,210.56,198.08,210.97z"/>
-	<text transform="matrix(1.6381 0 0 1 193.9719 228.6)" font-family="'MyriadPro-Regular'" font-size="13.7897px">3</text>
-</g>
-<g id="cajon4">
-	<path data-num="3" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M205.38,297.9
-		c-7.24-0.58-14.05,6.65-13.82,13.78c0.23,7,7.27,13.85,14.48,13.01c7.14-0.84,11.37-8.85,10.46-15.24
-		C215.78,304.37,211.55,298.39,205.38,297.9z"/>
-	<text transform="matrix(1.4926 0 0 1 199.725 314.2686)" font-family="'MyriadPro-Regular'" font-size="15.853px">3</text>
-</g>
-<g id="cajon5">
-	<path data-num="8" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M104.64,181.44c-1.16-1.15-1.91-2.7-2.1-15.11
-		c-0.22-14.08,0.69-15.75,1.49-16.81c3.17-4.15,9.14-4.32,17.17-4.44c9.33-0.14,18.11-0.73,34.19-0.1c6.73,0.26,5.97,0.29,9.74,0.42
-		c19.09,0.66,23.83-0.62,43.91-0.65c11.86-0.02,11.63,0.42,30.27,0.49c10.81,0.04,16.21,0.06,18.7-0.03
-		c6.28-0.23,13.91-0.72,24.11-0.13c8.8,0.51,10.91,1.33,12.46,2.98c2.23,2.38,1.73,4.82,1.94,15.74c0.27,13.93,1.21,16.4-1.08,18.72
-		c-2.37,2.4-5.63,2.03-14.4,1.8c-7.32-0.19-14.66,0.52-21.96,0c-5.58-0.4-23.28-0.38-58.68-0.36c-19.92,0.01-39.84-0.17-59.76,0
-		c-6.84,0.06-13.68-0.86-20.52-0.72C111.23,183.42,107.38,184.15,104.64,181.44z"/>
-	<text transform="matrix(1.0761 0 0 1 170.2065 169.8605)" font-family="'MyriadPro-Regular'" font-size="19.2529px">8</text>
-</g>
-<g id="sofa1">
-	<path data-num="9" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M398.4,229.32c-1.73-3.73-0.52-5.79,0.72-17.28
-		c1.59-14.77-0.01-15.08,1.44-23.04c0.73-4.01,2.61-15.22,10.08-24.48c1.93-2.4,9.25-10.94,32.4-18
-		c17.72-5.41,32.18-6.13,40.32-6.48c42.78-1.85,72-1.44,72-1.44c57.04,0.8,37.62,2.48,77.76,2.88c12.43,0.13,27.94,0.1,47.52,5.76
-		c12.99,3.75,22.24,6.55,30.24,15.12c11.78,12.61,12.41,28.67,12.96,42.48c0.36,9.16,0.92,23.29-6.48,27.36
-		c-4.71,2.59-7.86-1.52-15.84-0.72c-14.46,1.46-23.9,16.79-27.36,22.32c-4.17,6.65-6.27,13.16-6.61,14.23
-		c-1.2,3.8-0.66,3.41-3.47,14.57c-1.39,5.53-1.8,6.71-2.02,9.37c-0.54,6.48,1.11,8.34-0.14,10.07c-2.39,3.3-10.71,0.15-23.04-2.88
-		c-4.87-1.2-15.25-1.76-36-2.88c-31.93-1.73-37.22,0.36-72-0.72c-21.34-0.66-36.38-1.49-60.48-1.44c0,0-14.62,0.03-27.73,3.14
-		c-6.18,1.47-9.27,2.2-12.34,3.64c-3.25,1.53-4.21,2.52-5.31,2.03c-2.74-1.21-0.46-8.96-0.7-21.05c-0.16-7.92-1.36-13.79-2.16-18
-		c-2.13-11.24-3.19-16.86-7.41-21.91C408.24,234.17,401.64,236.33,398.4,229.32z"/>
-	<text transform="matrix(0.8708 0 0 1 543.8398 205.082)" font-family="'MyriadPro-Regular'" font-size="23.4733px">9</text>
-</g>
-<g id="sofa2">
-	<path data-num="5" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M659.92,353.18c-2.55,4.61-10.99,3.9-17.44,4.3
-		c-19.09,1.17-28.63,1.76-33.04,1.45c-21.1-1.48-42.3-0.6-63.44-1.45c-55.72-2.25-83.58-3.38-90.72-2.88
-		c-15.33,1.08-30.75-2.55-46.08-1.44c-5.85,0.42-14.12,1.28-17.83-3.52c-3.15-4.07-1.94-10.79-0.49-18.81
-		c1.07-5.94,1.61-8.92,3.41-11.85c3.34-5.46,10.01-8.1,23.2-13.15c13.92-5.33,20.88-8,21.23-8.1c14.69-4.26,26.89-4.48,44.66-4.18
-		c26.84,0.45,35.9,1.56,56.11,2.24c19.23,0.64,17.77-0.14,56.09,0.15c46.45,0.36,61.24,1.61,65.31,10.36
-		c1.16,2.49-0.52,1.84-0.71,19.45c-0.14,13.12-0.22,19.68-0.1,20.57C660.49,349.66,660.94,351.33,659.92,353.18z"/>
-	<text transform="matrix(1.0509 0 0 1 519.3604 326.4346)" font-family="'MyriadPro-Regular'" font-size="20.5002px">5</text>
-</g>
-<g id="sofa3">
-	<path data-num="9" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M390.49,413.62c4.19,6.76,14.9,4.76,37.96,4.57
-		c24.6-0.21,17.29,2.02,49.64,2.28c11.62,0.1,13.27-0.19,56.21-1.52c28.87-0.9,43.31-1.35,48.22-1.28
-		c17.26,0.22,34.54-0.33,51.79,0.52c17.58,0.87,26.69,2.06,30.66-3.8c3.35-4.95-0.89-9.29-2.11-25.06
-		c-1.46-18.85,3.01-32.71-0.85-34.19c-1.25-0.48-1.95,0.88-6.18,2.07c-4.28,1.21-7.64,0.96-9.84,0.88
-		c-7.59-0.29-12.4,0.28-24.13,1.44c-13.84,1.37-33,0.27-64.2-1.15c-61.68-2.81-47.54-1.29-81.8-3.16c-8.91-0.49-20.52-0.34-43.71-1
-		c-31.2-0.89-11.16-0.86-15.76-0.91c-10.95-0.12-16.12,0.89-21.51-2.87c-2.52-1.76-3.99-3.79-4.84-3.27
-		c-1.37,0.83,1.12,6.81,2.62,13.17c2.08,8.8,1.63,15.54,0.92,26.07C392.29,405.86,387.53,408.85,390.49,413.62z"/>
-	<text transform="matrix(1.3843 0 0 1 492.7197 392.7832)" font-family="'MyriadPro-Regular'" font-size="17.1882px">9</text>
-</g>
-<g id="sofa4">
-	<path data-num="7" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M366.72,259.29c3.19,0.91,8.74,3.03,13.25,8.05
-		c0,0,6.85,7.61,7.12,17.74c0.01,0.29,2.64,27.67,3.61,41.02c0.61,8.4-0.56,7.27-0.22,14.69c0.29,6.26,0.85,7.36,2.16,18.81
-		c1.11,9.7,1.67,14.65,1.44,19.51c-0.31,6.59-1.13,5.76-2.16,15.33c-0.27,2.5-0.66,6.68-3.27,11.27c-0.17,0.29-0.25,0.43-0.33,0.57
-		c-3.88,6.43-19.41,4.28-25.2,3.48c-6.66-0.92-10.81-1.49-15.12-4.18c-5.2-3.24-10.47-9.47-14.4-30.65
-		c-2.51-13.57-2.67-23.51-2.88-36.22c-0.79-46.63-1.07-49.25,0.72-57.12c2.67-11.79,5.95-25.38,18-36.92
-		c3.65-3.5,12.21-11.48,25.92-13.93c11.83-2.12,29.49-0.48,39.39,10.85c5.88,6.72,7.09,15.65,9.2,33.77
-		c1.76,15.12,2.53,22.79-2.51,27.83c-5.45,5.45-12.38,2.6-20.88,9.06c-5.58,4.24-8.38,9.85-9.86,13.87"/>
-	<text transform="matrix(0.9816 0 0 1 350.1602 306.207)" font-family="'MyriadPro-Regular'" font-size="20.4195px">7</text>
-</g>
-<g id="sofa5">
-	<g>
-		<path data-num="7" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M671.05,417.25
-			c-3.83-2.24-6.61-6.09-9.13-13.69c-4.15-12.53-2.67-20.38-2.16-43.2c0.42-18.55,0.62-27.83,0.41-34.61
-			c-0.32-10.09,2.04-14.45,1.75-23.71c-0.08-2.54-0.3-6.62,0.36-12.24c0.41-3.47,1.07-6.81,2.36-11.55
-			c1.97-7.21,3.57-13.72,7.09-20.34c5.24-9.86,10.61-19.95,21.64-24.02c7.42-2.74,14.49-1.68,19.84-0.87
-			c2.31,0.35,10.29,1.54,17.11,5.66c13.1,7.91,16.93,23.6,19.44,34.56c2,8.72,2.84,17.37,0.72,47.52
-			c-3.41,48.53-8,60.38-13.68,69.84c-7.63,12.69-15.24,17.75-18,19.44c-7.74,4.74-14.76,5.8-28.8,7.92
-			C677.1,419.91,673.44,418.65,671.05,417.25z"/>
-		<path fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M695.76,265.32c3.52,0.94,8.98,3,12.96,7.92
-			c4.89,6.05,4.97,13.24,5.04,18c0.64,41.5,2.35,26.22,1.44,44.64c-0.63,12.74-1.62,25.47-2.88,38.16c-0.93,9.35-1.97,23-2.17,40.3"
-			/>
-	</g>
-	</g>
-	<text transform="matrix(0.986 0 0 1 682.7998 331.0283)" font-family="'MyriadPro-Regular'" font-size="16.526px">7</text>
-</g>
-</svg>
-<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 841.89 595.28" enable-background="new 0 0 841.89 595.28" xml:space="preserve">
 <g id="base">
 	<path data-num="1" fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M93.6,267.72c-2.26,0.94-1.12,7.13-0.96,17.76
@@ -591,38 +420,157 @@
 		<text transform="matrix(1.1245 0 0 1 280.6274 183.9626)" fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" font-family="'MyriadPro-Regular'" font-size="15.3931px">9</text>
 </g>
 </svg>
-		
-
-		
 	</div>
-
-<!-- 🎨 PALETA (Ejemplo de colores — agrega los tuyos) -->
-<div class="palette">
-    <div class="color-btn" data-color="1" style="background:#8B4513;">1</div>
-    <div class="color-btn" data-color="2" style="background:#ff9ac9;">2</div>
-    <div class="color-btn" data-color="3" style="background:#ffddb3;">3</div>
-    <div class="color-btn" data-color="4" style="background:#6aa6ff;">4</div>
-    <div class="color-btn" data-color="5" style="background:#ffe169;">5</div>
-    <div class="color-btn" data-color="6" style="background:#b573ff;">6</div>
-
-	<div class="color-btn" data-color="7" style="background:#EDAE26;">7</div>
-    <div class="color-btn" data-color="8" style="background:#938C89;">8</div> 
-    <div class="color-btn" data-color="9" style="background:#5B7F38;">9</div> 
-    <div class="color-btn" data-color="10" style="background:#E8320C;">10</div> 
+    <div id="svg3" class="svg-container">
+		<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 841.89 595.28" enable-background="new 0 0 841.89 595.28" xml:space="preserve">
+<g id="pata1">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M132.71,365.87c-2.53,1.69-2.63,5.18-1.43,22.85
+		c1.05,15.38,1.54,18.92,4.74,22.29c0.76,0.8,4.49,4.73,10.02,4.71c6.25-0.02,10.27-5.06,10.8-5.76c2.94-3.82,2.42-7.17,2.16-20.88
+		c-0.33-17.21,0.31-21.57-2.9-23.52c-2.06-1.26-3.09,0.07-11.85,0.16C135.79,365.8,134.64,364.58,132.71,365.87z"/>
+	<text transform="matrix(1.2533 0 0 1 138.4795 388.8457)" font-family="'MyriadPro-Regular'" font-size="19.3678px">1</text>
+</g>
+<g id="pata2">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M243.23,364.39c-2.68,1.86-2.6,5.63-1.43,21.89
+		c1.35,18.82,1.87,22.66,5.4,25.12c3.97,2.77,9.95,2.54,10.44,2.52c1.23-0.06,4.59-0.22,7.2-1.8c2.95-1.79,5.02-5.46,5.76-26.56
+		c0.59-16.86-0.53-20.08-2.89-21.5c-1.98-1.2-3.09-0.06-10.79,0.14C247.26,364.47,245.56,362.77,243.23,364.39z"/>
+	<text transform="matrix(0.984 0 0 1 254.3999 393.6885)" font-family="'MyriadPro-Regular'" font-size="19.1307px">1</text>
+</g>
+<g id="pata3">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M354.13,408.19c-0.45,0.97,2.48,2.1,4.67,5.81
+		c2.66,4.51,2.16,9.34,1.44,16.2c-0.79,7.62-2.22,11.74-0.04,17.35c0.18,0.47,0.43,0.9,0.76,1.37c3.89,5.55,13.5,7.61,20.16,4.32
+		c4.48-2.21,6.35-7.94,10.08-19.44c5.33-16.43,2.39-20.44,1.5-21.48c-1.82-2.13-4.56-2.95-4.75-3.01c-3.78-1.09-7.1,0.54-9.01,1.25
+		C367.82,414.71,355.11,406.07,354.13,408.19z"/>
+	<text transform="matrix(1.0467 0 0 1 371.7603 437.0547)" font-family="'MyriadPro-Regular'" font-size="19.3292px">1</text>
+</g>
+<g id="pata4">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M666.37,409.26c-0.72,0.5,1.79,3.97,3.64,9.28
+		c1.74,5,1.98,9.4,2.47,18.19c0.54,9.64-0.12,12.36,2.47,14.91c2.95,2.89,7.61,3.13,8.3,3.15c1.23,0.05,4.57,0.18,7.02-1.59
+		c3.11-2.24,2.59-5.97,2.62-20.05c0.02-11.27,0.37-13.89-1.86-15.5c-3.27-2.38-6.82,1.27-13.34-0.59
+		C670.61,415.05,667.29,408.62,666.37,409.26z"/>
+	<text transform="matrix(1.2602 0 0 1 678.4814 441.8867)" font-family="'MyriadPro-Regular'" font-size="16.4997px">1</text>
+</g>
+<g id="pata5">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M722.29,408.63c2.36,1.41-1.57,7.15-0.97,19.69
+		c0.19,3.92,0.74,6.71-0.72,10.44c-0.52,1.34-1.96,4.88-5.76,7.2c-3.93,2.4-7.88,1.98-9.36,1.8c-1.52-0.19-5.81-0.71-8.64-3.96
+		c-1.12-1.28-1.87-2.84-2.52-14.04c-0.55-9.53-0.13-10.64,0.66-11.56c2.5-2.89,6.1-0.68,13.1-2.57
+		C717.01,413.23,719.98,407.25,722.29,408.63z"/>
+	<text transform="matrix(0.9512 0 0 1 705.4005 438.1201)" font-family="'MyriadPro-Regular'" font-size="19.1021px">1</text>
+</g>
+<g id="cajon1">
+	<polygon fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" points="120.12,275.4 120.12,365.04 
+		281.04,362.88 280.32,273.96 	"/>
+	<text transform="matrix(0.8688 0 0 1 234.7105 339.8311)" font-family="'MyriadPro-Regular'" font-size="21.1627px">9</text>
+</g>
+<g id="cajon2">
+	<polygon fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" points="120.12,183.24 120.12,273.96 
+		280.32,273.96 281.04,184.32 	"/>
+	<text transform="matrix(1.0808 0 0 1 141.0037 244.4637)" font-family="'MyriadPro-Regular'" font-size="17.8508px">9</text>
+</g>
+<g id="cajon3">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M198.08,210.97
+		c-7.33,0.46-12.26,8.26-11.31,15.01c0.79,5.62,5.74,11.1,11.75,11.26c7.5,0.2,13.89-7.98,12.62-15.42
+		C210.15,216.04,204.55,210.56,198.08,210.97z"/>
+	<text transform="matrix(1.6381 0 0 1 193.9719 228.6)" font-family="'MyriadPro-Regular'" font-size="13.7897px">3</text>
+</g>
+<g id="cajon4">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M205.38,297.9
+		c-7.24-0.58-14.05,6.65-13.82,13.78c0.23,7,7.27,13.85,14.48,13.01c7.14-0.84,11.37-8.85,10.46-15.24
+		C215.78,304.37,211.55,298.39,205.38,297.9z"/>
+	<text transform="matrix(1.4926 0 0 1 199.725 314.2686)" font-family="'MyriadPro-Regular'" font-size="15.853px">3</text>
+</g>
+<g id="cajon5">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M104.64,181.44c-1.16-1.15-1.91-2.7-2.1-15.11
+		c-0.22-14.08,0.69-15.75,1.49-16.81c3.17-4.15,9.14-4.32,17.17-4.44c9.33-0.14,18.11-0.73,34.19-0.1c6.73,0.26,5.97,0.29,9.74,0.42
+		c19.09,0.66,23.83-0.62,43.91-0.65c11.86-0.02,11.63,0.42,30.27,0.49c10.81,0.04,16.21,0.06,18.7-0.03
+		c6.28-0.23,13.91-0.72,24.11-0.13c8.8,0.51,10.91,1.33,12.46,2.98c2.23,2.38,1.73,4.82,1.94,15.74c0.27,13.93,1.21,16.4-1.08,18.72
+		c-2.37,2.4-5.63,2.03-14.4,1.8c-7.32-0.19-14.66,0.52-21.96,0c-5.58-0.4-23.28-0.38-58.68-0.36c-19.92,0.01-39.84-0.17-59.76,0
+		c-6.84,0.06-13.68-0.86-20.52-0.72C111.23,183.42,107.38,184.15,104.64,181.44z"/>
+	<text transform="matrix(1.0761 0 0 1 170.2065 169.8605)" font-family="'MyriadPro-Regular'" font-size="19.2529px">8</text>
+</g>
+<g id="sofa1">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M398.4,229.32c-1.73-3.73-0.52-5.79,0.72-17.28
+		c1.59-14.77-0.01-15.08,1.44-23.04c0.73-4.01,2.61-15.22,10.08-24.48c1.93-2.4,9.25-10.94,32.4-18
+		c17.72-5.41,32.18-6.13,40.32-6.48c42.78-1.85,72-1.44,72-1.44c57.04,0.8,37.62,2.48,77.76,2.88c12.43,0.13,27.94,0.1,47.52,5.76
+		c12.99,3.75,22.24,6.55,30.24,15.12c11.78,12.61,12.41,28.67,12.96,42.48c0.36,9.16,0.92,23.29-6.48,27.36
+		c-4.71,2.59-7.86-1.52-15.84-0.72c-14.46,1.46-23.9,16.79-27.36,22.32c-4.17,6.65-6.27,13.16-6.61,14.23
+		c-1.2,3.8-0.66,3.41-3.47,14.57c-1.39,5.53-1.8,6.71-2.02,9.37c-0.54,6.48,1.11,8.34-0.14,10.07c-2.39,3.3-10.71,0.15-23.04-2.88
+		c-4.87-1.2-15.25-1.76-36-2.88c-31.93-1.73-37.22,0.36-72-0.72c-21.34-0.66-36.38-1.49-60.48-1.44c0,0-14.62,0.03-27.73,3.14
+		c-6.18,1.47-9.27,2.2-12.34,3.64c-3.25,1.53-4.21,2.52-5.31,2.03c-2.74-1.21-0.46-8.96-0.7-21.05c-0.16-7.92-1.36-13.79-2.16-18
+		c-2.13-11.24-3.19-16.86-7.41-21.91C408.24,234.17,401.64,236.33,398.4,229.32z"/>
+	<text transform="matrix(0.8708 0 0 1 543.8398 205.082)" font-family="'MyriadPro-Regular'" font-size="23.4733px">9</text>
+</g>
+<g id="sofa2">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M659.92,353.18c-2.55,4.61-10.99,3.9-17.44,4.3
+		c-19.09,1.17-28.63,1.76-33.04,1.45c-21.1-1.48-42.3-0.6-63.44-1.45c-55.72-2.25-83.58-3.38-90.72-2.88
+		c-15.33,1.08-30.75-2.55-46.08-1.44c-5.85,0.42-14.12,1.28-17.83-3.52c-3.15-4.07-1.94-10.79-0.49-18.81
+		c1.07-5.94,1.61-8.92,3.41-11.85c3.34-5.46,10.01-8.1,23.2-13.15c13.92-5.33,20.88-8,21.23-8.1c14.69-4.26,26.89-4.48,44.66-4.18
+		c26.84,0.45,35.9,1.56,56.11,2.24c19.23,0.64,17.77-0.14,56.09,0.15c46.45,0.36,61.24,1.61,65.31,10.36
+		c1.16,2.49-0.52,1.84-0.71,19.45c-0.14,13.12-0.22,19.68-0.1,20.57C660.49,349.66,660.94,351.33,659.92,353.18z"/>
+	<text transform="matrix(1.0509 0 0 1 519.3604 326.4346)" font-family="'MyriadPro-Regular'" font-size="20.5002px">5</text>
+</g>
+<g id="sofa3">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M390.49,413.62c4.19,6.76,14.9,4.76,37.96,4.57
+		c24.6-0.21,17.29,2.02,49.64,2.28c11.62,0.1,13.27-0.19,56.21-1.52c28.87-0.9,43.31-1.35,48.22-1.28
+		c17.26,0.22,34.54-0.33,51.79,0.52c17.58,0.87,26.69,2.06,30.66-3.8c3.35-4.95-0.89-9.29-2.11-25.06
+		c-1.46-18.85,3.01-32.71-0.85-34.19c-1.25-0.48-1.95,0.88-6.18,2.07c-4.28,1.21-7.64,0.96-9.84,0.88
+		c-7.59-0.29-12.4,0.28-24.13,1.44c-13.84,1.37-33,0.27-64.2-1.15c-61.68-2.81-47.54-1.29-81.8-3.16c-8.91-0.49-20.52-0.34-43.71-1
+		c-31.2-0.89-11.16-0.86-15.76-0.91c-10.95-0.12-16.12,0.89-21.51-2.87c-2.52-1.76-3.99-3.79-4.84-3.27
+		c-1.37,0.83,1.12,6.81,2.62,13.17c2.08,8.8,1.63,15.54,0.92,26.07C392.29,405.86,387.53,408.85,390.49,413.62z"/>
+	<text transform="matrix(1.3843 0 0 1 492.7197 392.7832)" font-family="'MyriadPro-Regular'" font-size="17.1882px">9</text>
+</g>
+<g id="sofa4">
+	<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M366.72,259.29c3.19,0.91,8.74,3.03,13.25,8.05
+		c0,0,6.85,7.61,7.12,17.74c0.01,0.29,2.64,27.67,3.61,41.02c0.61,8.4-0.56,7.27-0.22,14.69c0.29,6.26,0.85,7.36,2.16,18.81
+		c1.11,9.7,1.67,14.65,1.44,19.51c-0.31,6.59-1.13,5.76-2.16,15.33c-0.27,2.5-0.66,6.68-3.27,11.27c-0.17,0.29-0.25,0.43-0.33,0.57
+		c-3.88,6.43-19.41,4.28-25.2,3.48c-6.66-0.92-10.81-1.49-15.12-4.18c-5.2-3.24-10.47-9.47-14.4-30.65
+		c-2.51-13.57-2.67-23.51-2.88-36.22c-0.79-46.63-1.07-49.25,0.72-57.12c2.67-11.79,5.95-25.38,18-36.92
+		c3.65-3.5,12.21-11.48,25.92-13.93c11.83-2.12,29.49-0.48,39.39,10.85c5.88,6.72,7.09,15.65,9.2,33.77
+		c1.76,15.12,2.53,22.79-2.51,27.83c-5.45,5.45-12.38,2.6-20.88,9.06c-5.58,4.24-8.38,9.85-9.86,13.87"/>
+	<text transform="matrix(0.9816 0 0 1 350.1602 306.207)" font-family="'MyriadPro-Regular'" font-size="20.4195px">7</text>
+</g>
+<g id="sofa5">
+	<g>
+		<path fill="#FFFFFF" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M671.05,417.25
+			c-3.83-2.24-6.61-6.09-9.13-13.69c-4.15-12.53-2.67-20.38-2.16-43.2c0.42-18.55,0.62-27.83,0.41-34.61
+			c-0.32-10.09,2.04-14.45,1.75-23.71c-0.08-2.54-0.3-6.62,0.36-12.24c0.41-3.47,1.07-6.81,2.36-11.55
+			c1.97-7.21,3.57-13.72,7.09-20.34c5.24-9.86,10.61-19.95,21.64-24.02c7.42-2.74,14.49-1.68,19.84-0.87
+			c2.31,0.35,10.29,1.54,17.11,5.66c13.1,7.91,16.93,23.6,19.44,34.56c2,8.72,2.84,17.37,0.72,47.52
+			c-3.41,48.53-8,60.38-13.68,69.84c-7.63,12.69-15.24,17.75-18,19.44c-7.74,4.74-14.76,5.8-28.8,7.92
+			C677.1,419.91,673.44,418.65,671.05,417.25z"/>
+		<path fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M695.76,265.32c3.52,0.94,8.98,3,12.96,7.92
+			c4.89,6.05,4.97,13.24,5.04,18c0.64,41.5,2.35,26.22,1.44,44.64c-0.63,12.74-1.62,25.47-2.88,38.16c-0.93,9.35-1.97,23-2.17,40.3"
+			/>
+	</g>
+	<text transform="matrix(0.986 0 0 1 682.7998 331.0283)" font-family="'MyriadPro-Regular'" font-size="16.526px">7</text>
+</g>
+</svg>
+	</div>
 
 </div>
 
+<!-- PANTALLA DE FINAL -->
+<div id="finish-screen" style="display:none;">
+    <h2>¡Felicidades, has terminado!</h2>
+    <button id="restart-btn">Volver a jugar</button>
+</div>
+
 <script>
-// 🎮 Mostrar juego al presionar Start
-<script>
+/* ---------- CONTROL DE INICIO ---------- */
+
 document.getElementById("start-btn").onclick = () => {
     document.getElementById("start-screen").style.display = "none";
-    document.getElementById("title").style.display = "block";
-    document.getElementById("palette").style.display = "flex";
+    startGame();
 };
+
+/* ---------- VARIABLES GLOBALES ---------- */
 
 let selectedColor = null;
 let selectedNum = null;
+let totalZones = 0;
+let paintedZones = 0;
+
+/* ---------- SELECCIÓN DE COLOR ---------- */
 
 document.querySelectorAll(".color-btn").forEach(btn => {
     btn.onclick = () => {
@@ -631,41 +579,72 @@ document.querySelectorAll(".color-btn").forEach(btn => {
     };
 });
 
-document.querySelectorAll("svg [data-num]").forEach(area => {
-    area.onclick = () => {
-        if(area.getAttribute("data-num") === selectedNum){
-            area.style.fill = selectedColor;
-        }
-    };
-});
-// Colores reales según número
-function btnColor(n){
-    const c = {
-    1: "#8B4513",   // café
-    2: "#ff9ac9",   // rosa
-    3: "#ffddb3",   // carne
-    4: "#6aa6ff",   // azul
-    5: "#ffe169",   // amarillo
-    6: "#b573ff",   // morado
-	7: "#EDAE26",   // naranja
-	8: "#938C89",   // gris
-	9: "#5B7F38",   // verde
-	10: "#E8320C",   // rojo
+/* ---------- FUNCIÓN PARA INICIAR JUEGO ---------- */
 
-    };
-    return c[n];
+function startGame() {
+
+    document.getElementById("finish-screen").style.display = "none";
+
+    // Ocultar todos los SVG
+    document.querySelectorAll(".svg-container").forEach(div => {
+        div.style.display = "none";
+    });
+
+    // Seleccionar uno aleatorio
+    const svgs = ["svg1", "svg2", "svg3"];
+    const chosen = svgs[Math.floor(Math.random() * svgs.length)];
+
+    document.getElementById("game-area").style.display = "block";
+    document.getElementById(chosen).style.display = "block";
+
+    // Reiniciar contadores
+    selectedColor = null;
+    selectedNum = null;
+    paintedZones = 0;
+
+    // Contar zonas
+    const areas = document.querySelectorAll(`#${chosen} [data-num]`);
+    totalZones = areas.length;
+
+    // Activar coloreo
+    areas.forEach(area => {
+        area.onclick = () => {
+            if (!selectedColor || !selectedNum) return;
+
+            if (area.getAttribute("data-num") === selectedNum) {
+                area.style.fill = selectedColor;
+                area.setAttribute("painted", "yes");
+
+                checkCompletion();
+            }
+        };
+    });
 }
+
+/* ---------- REVISAR SI TERMINÓ ---------- */
+
+function checkCompletion() {
+    const chosen = document.querySelector(".svg-container[style*='block']");
+    const areas = chosen.querySelectorAll("[data-num]");
+
+    let done = 0;
+    areas.forEach(a => {
+        if (a.getAttribute("painted") === "yes") done++;
+    });
+
+    if (done === areas.length) {
+        document.getElementById("game-area").style.display = "none";
+        document.getElementById("finish-screen").style.display = "block";
+    }
+}
+
+/* ---------- VOLVER A JUGAR ---------- */
+
+document.getElementById("restart-btn").onclick = () => {
+    startGame();
+};
+
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
