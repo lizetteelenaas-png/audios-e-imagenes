@@ -34,13 +34,16 @@
         font-weight: bold;
     }
 
-    #game-area {
-        width: 80%;
-        margin: auto;
-        display: none;
-        background: #ddd; /* ⭐ Fondo gris para contraste */
-        padding: 10px;
-    }
+	#game-area {
+	    width: 600px;              /* ⭐ ancho fijo más estrecho */
+	    max-width: 90%;            /* se adapta en pantallas pequeñas */
+	    margin: 20px auto;         /* centrado horizontal y espacio arriba/abajo */
+	    display: none;
+	    background: #ddd;
+	    padding: 20px;
+	    border-radius: 12px;       /* bordes redondeados opcionales */
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* sombra suave opcional */
+	}
 
     svg {
         width: 80%;       /* ajusta el porcentaje según lo que quieras */
@@ -696,6 +699,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
