@@ -11,7 +11,13 @@
     }
 
     #start-screen, #finish-screen {
-        margin-top: 40px;
+          display: flex;              /* activa flexbox */
+		    flex-direction: column;     /* coloca título y botón en columna */
+		    justify-content: center;    /* centra verticalmente */
+		    align-items: center;        /* centra horizontalmente */
+		    height: 100vh;              /* ocupa toda la altura de la ventana */
+		    background: linear-gradient(135deg, #ff9ac9, #6aa6ff); /* ⭐ fondo colorido */
+		    color: white; 
     }
 
     #palette {
@@ -704,6 +710,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
