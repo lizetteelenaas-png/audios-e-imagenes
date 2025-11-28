@@ -609,12 +609,16 @@ function btnColor(n){
 
 function startGame() {
 
-    document.getElementById("finish-screen").style.display = "none";
-
-    // Ocultar todos los SVG
+    document.getElementById("start-btn").onclick = fuction(){
+		document.getElementById("start-screen").style.display = "none";
+	    document.querySelector(".svg-box").style.display = "flex";
+	    document.querySelector(".palette").style.display = "flex";
+	    document.getElementById("title").style.display = "block";
+	};
+    /*// Ocultar todos los SVG
     document.querySelectorAll(".svg-container").forEach(div => {
         div.style.display = "none";
-    });
+    });*/
 
     // Seleccionar uno aleatorio
     const svgs = ["svg1", "svg2", "svg3"];
@@ -674,4 +678,5 @@ document.getElementById("restart-btn").onclick = () => {
 
 </body>
 </html>
+
 
