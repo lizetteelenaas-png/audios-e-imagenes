@@ -16,12 +16,18 @@
 	    justify-content: center;
 	    align-items: center;
 	    height: 100vh;
-	    background: linear-gradient(135deg, #ff9ac9, #6aa6ff); /* ⭐ fondo rosa-azul */
+	    background: linear-gradient(135deg, #ff9ac9, #6aa6ff); 
 	    color: white;
 	    text-align: center;
 	    text-shadow: 1px 1px 2px #333;
 }
-	#start-screen h1,h2 {
+	#start-screen h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+	#start-screen h2 {
     font-size: 48px;
     margin-bottom: 20px;
     font-weight: bold;
@@ -49,22 +55,22 @@
     }
 
 	#game-area {
-	    width: 600px;              /* ⭐ ancho fijo más estrecho */
-	    max-width: 90%;            /* se adapta en pantallas pequeñas */
-	    margin: 20px auto;         /* centrado horizontal y espacio arriba/abajo */
+	    width: 600px;             
+	    max-width: 90%;        
+	    margin: 20px auto;    
 	    display: none;
 	    background: #ddd;
 	    padding: 20px;
-	    border-radius: 12px;       /* bordes redondeados opcionales */
-	    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* sombra suave opcional */
+	    border-radius: 12px;    
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
 	}
 
     svg {
-        width: 80%;       /* ajusta el porcentaje según lo que quieras */
-	    max-width: 600px; /* ⭐ límite máximo en píxeles */
+        width: 80%;    
+	    max-width: 600px;
 	    height: auto;
 	    cursor: pointer;
-	    margin: auto;     /* centrar */
+	    margin: auto;   
 	    display: block;
     }
 
@@ -731,6 +737,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
