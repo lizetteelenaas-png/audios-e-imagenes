@@ -10,38 +10,39 @@
         background: #f5f5f5;
     }
 
+    /* Pantalla de inicio */
     #start-screen {
-	    display: flex;
-	    flex-direction: column;
-	    justify-content: center;
-	    align-items: center;
-	    height: 100vh;
-	    background: linear-gradient(135deg, #ff9ac9, #6aa6ff); 
-	    color: white;
-	    text-align: center;
-	    text-shadow: 1px 1px 2px #333;
-}
-	#start-screen h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-	#start-screen h2 {
-    font-size: 24px;
-    font-weight: normal;
-    margin-top: 10px;
-    color: white;
-    text-shadow: 1px 1px 2px #333;
-}
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9ac9, #6aa6ff); 
+        color: white;
+        text-align: center;
+        text-shadow: 1px 1px 2px #333;
+    }
+    #start-screen h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    #start-screen h2 {
+        font-size: 24px;
+        font-weight: normal;
+        margin-top: 10px;
+        color: white;
+        text-shadow: 1px 1px 2px #333;
+    }
 
+    /* Paleta de colores */
     #palette {
         display: none;
         justify-content: center;
         gap: 10px;
         margin: 20px auto;
     }
-
     .color-btn {
         width: 45px;
         height: 45px;
@@ -55,54 +56,63 @@
         font-weight: bold;
     }
 
-#game-area {
-    width: 600px;              /* ⭐ ancho fijo más estrecho */
-    max-width: 90%;            /* se adapta en pantallas pequeñas */
-    margin: 20px auto;         /* centrado horizontal y espacio arriba/abajo */
-    display: none;
-    background: linear-gradient(135deg, #ffe169, #b573ff);
-    padding: 20px;
-    border-radius: 12px;       /* bordes redondeados opcionales */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* sombra suave opcional */
-}
-
+    /* Área de juego */
+    #game-area {
+        display: none;              /* oculto al inicio */
+        min-height: 100vh;          /* ocupa toda la pantalla */
+        width: 600px;
+        max-width: 90%;
+        margin: 20px auto;
+        background: linear-gradient(135deg, #ffe169, #b573ff);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        text-align: center;
+        color: white;
+    }
 
     svg {
         width: 80%;    
-	    max-width: 600px;
-	    height: auto;
-	    cursor: pointer;
-	    margin: auto;   
-	    display: block;
+        max-width: 600px;
+        height: auto;
+        cursor: pointer;
+        margin: auto;   
+        display: none; /* ocultos al inicio */
     }
 
-	#restart-btn {
-	    margin-top: 20px;
-	    padding: 14px 28px;
-	    font-size: 20px;
-	    cursor: pointer;
-	    background: linear-gradient(45deg, #ffe169, #ff9ac9); /* ⭐ igual que Start Game */
-	    color: white;
-	    border: none;
-	    border-radius: 10px;
-	    font-weight: bold;
-	    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-	    transition: transform 0.2s, background 0.3s;
-		display: none;
-}
-	#start-btn {
-    padding: 14px 28px;
-    font-size: 20px;
-    cursor: pointer;
-    background: linear-gradient(45deg, #ffe169, #ff9ac9);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: transform 0.2s, background 0.3s;
-}
+    /* Botones */
+    #restart-btn {
+        margin-top: 20px;
+        padding: 14px 28px;
+        font-size: 20px;
+        cursor: pointer;
+        background: linear-gradient(45deg, #ffe169, #ff9ac9);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        transition: transform 0.2s, background 0.3s;
+        display: none; /* oculto al inicio */
+    }
+    #restart-btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #ff9ac9, #ffe169);
+    }
+    #start-btn {
+        padding: 14px 28px;
+        font-size: 20px;
+        cursor: pointer;
+        background: linear-gradient(45deg, #ffe169, #ff9ac9);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        transition: transform 0.2s, background 0.3s;
+    }
 
+    /* Mensaje final */
     #finish-message {
         display: none;
         font-size: 24px;
@@ -110,15 +120,6 @@
         margin-top: 20px;
         animation: fadeInOut 3s ease;
     }
-	#game-screen {
-    display: none;
-    min-height: 100vh; /* ⭐ ocupa toda la altura de la pantalla */
-    background: linear-gradient(135deg, #ffe169, #b573ff); /* ⭐ fondo degradado diferente al de inicio */
-    padding: 40px 20px;
-    text-align: center;
-    color: white;
-}
-
 
     @keyframes fadeInOut {
       0% {opacity:0;}
@@ -155,7 +156,6 @@
 </div>
 
 <!-- ÁREA DEL JUEGO -->
-<div id="game-area">
     <div id="svg1" class="svg-container">
 		<svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 841.89 595.28" enable-background="new 0 0 841.89 595.28" xml:space="preserve">
@@ -749,35 +749,3 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
