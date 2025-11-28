@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coloring game</title>
 <style>
     body {
@@ -38,7 +39,8 @@
 
     /* Paleta de colores */
     #palette {
-        display: none;
+        display: flex;
+		flex-wrap: wrap;
         justify-content: center;
         gap: 10px;
         margin: 20px auto;
@@ -60,8 +62,8 @@
     #game-area {
         display: none;              /* oculto al inicio */
         min-height: 100vh;          /* ocupa toda la pantalla */
-        width: 600px;
-        max-width: 90%;
+        width: 100%;
+        max-width: 800px;
         margin: 20px auto;
         background: linear-gradient(135deg, #ffe169, #b573ff);
         padding: 20px;
@@ -72,8 +74,8 @@
     }
 
     svg {
-        width: 80%;    
-        max-width: 600px;
+        width: 100%;    
+        max-width: 100%;
         height: auto;
         cursor: pointer;
         margin: auto;   
@@ -638,10 +640,10 @@
 </svg>
 </div>
 	<!-- Mensaje de felicitación -->
-<div id="finish-message">🎉 ¡Felicidades, terminaste el dibujo! 🎉</div>
+<div id="finish-message">🎉 ¡EXCELLENT, KEEP IT UP! 🎉</div>
 	
 	<!-- ⭐ Botón reinicio -->
-	<button id="restart-btn">Volver a jugar</button>
+	<button id="restart-btn">Restart</button>
 	</div>
 <script>
 /* ----------------------
@@ -749,6 +751,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
