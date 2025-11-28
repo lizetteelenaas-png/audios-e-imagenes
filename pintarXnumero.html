@@ -109,6 +109,15 @@
         margin-top: 20px;
         animation: fadeInOut 3s ease;
     }
+	#game-screen {
+    display: none;
+    min-height: 100vh; /* ⭐ ocupa toda la altura de la pantalla */
+    background: linear-gradient(135deg, #ffe169, #b573ff); /* ⭐ fondo degradado diferente al de inicio */
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+}
+
 
     @keyframes fadeInOut {
       0% {opacity:0;}
@@ -740,6 +749,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
