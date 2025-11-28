@@ -88,6 +88,7 @@
 	    font-weight: bold;
 	    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 	    transition: transform 0.2s, background 0.3s;
+		display: none;
 }
 	#start-btn {
     padding: 14px 28px;
@@ -135,7 +136,8 @@
 	<h2>🎨 Color each part of the drawing according to its corresponding number. </h2>
     <button id="start-btn">Start Game</button>
 </div>
-
+	
+<div id="game-screen" style="display:none;">
 <h1 id="title" style="display:none;">🎨 Color the Picture</h1>
 
 <!-- PALETA DE COLORES -->
@@ -636,7 +638,6 @@
 </svg>
 </div>
 </div>
-
 	<!-- Mensaje de felicitación -->
 <div id="finish-message">🎉 ¡Felicidades, terminaste el dibujo! 🎉</div>
 	
@@ -749,6 +750,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
