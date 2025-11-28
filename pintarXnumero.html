@@ -42,17 +42,31 @@
     }
 
     svg {
-        width: 100%;
-        height: auto;
-        cursor: pointer;
+        width: 80%;       
+	    max-width: 600px; 
+	    height: auto;
+	    cursor: pointer;
+	    margin: auto; 
+	    display: block;
     }
 	 #restart-btn { /* ⭐ Botón reinicio */
-        display: none;
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
+           display: none;
+		    margin-top: 20px;
+		    padding: 12px 24px;
+		    font-size: 18px;
+		    cursor: pointer;
+		    background: linear-gradient(45deg, #ff9ac9, #6aa6ff); 
+		    color: white;
+		    border: none;
+		    border-radius: 8px;
+		    font-weight: bold;
+		    transition: transform 0.2s, background 0.3s;
     }
+	
+	#restart-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #6aa6ff, #ff9ac9);
+}
 	    #finish-message {
         display: none;
         font-size: 24px;
@@ -690,6 +704,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
