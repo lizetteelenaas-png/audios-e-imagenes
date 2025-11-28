@@ -28,10 +28,11 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 	#start-screen h2 {
-    font-size: 48px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 10px;
+    color: white;
+    text-shadow: 1px 1px 2px #333;
 }
 
     #palette {
@@ -55,14 +56,10 @@
     }
 
 	#game-area {
-	    width: 600px;             
-	    max-width: 90%;        
-	    margin: 20px auto;    
-	    display: none;
-	    background: #ddd;
+	    background: linear-gradient(135deg, #ffe169, #b573ff); /* ⭐ degradado amarillo-violeta */
 	    padding: 20px;
-	    border-radius: 12px;    
-	    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+	    border-radius: 12px;
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 	}
 
     svg {
@@ -74,13 +71,19 @@
 	    display: block;
     }
 
-    #restart-btn {
-        display: none;
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
+	#restart-btn {
+	    margin-top: 20px;
+	    padding: 14px 28px;
+	    font-size: 20px;
+	    cursor: pointer;
+	    background: linear-gradient(45deg, #ffe169, #ff9ac9); /* ⭐ igual que Start Game */
+	    color: white;
+	    border: none;
+	    border-radius: 10px;
+	    font-weight: bold;
+	    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+	    transition: transform 0.2s, background 0.3s;
+}
 	#start-btn {
     padding: 14px 28px;
     font-size: 20px;
@@ -94,9 +97,13 @@
     transition: transform 0.2s, background 0.3s;
 }
 
-#start-btn:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg, #ff9ac9, #ffe169);
+	#start-btn:hover {
+	    transform: scale(1.05);
+	    background: linear-gradient(45deg, #ff9ac9, #ffe169);
+}
+	#restart-btn:hover {
+	    transform: scale(1.05);
+	    background: linear-gradient(45deg, #ff9ac9, #ffe169);
 }
 
     #finish-message {
@@ -737,6 +744,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
