@@ -53,6 +53,20 @@
         font-size: 16px;
         cursor: pointer;
     }
+	    #finish-message {
+        display: none;
+        font-size: 24px;
+        color: green;
+        margin-top: 20px;
+        animation: fadeInOut 3s ease;
+    }
+
+    @keyframes fadeInOut {
+      0% {opacity:0;}
+      20% {opacity:1;}
+      80% {opacity:1;}
+      100% {opacity:0;}
+    }
 </style>
 </head>
 <body>
@@ -563,6 +577,10 @@
 </svg>
 </div>
 </div>
+
+	<!-- Mensaje de felicitación -->
+<div id="finish-message">🎉 ¡Felicidades, terminaste el dibujo! 🎉</div>
+	
 	<!-- ⭐ Botón reinicio -->
 	<button id="restart-btn">Volver a jugar</button>
 	
@@ -584,6 +602,14 @@ function mostrarDibujoAleatorio() {
     svgs[indice].style.display = "block";
 }
 
+// ⭐ Resetear todos los dibujos a blanco
+function resetSVGs() {
+    document.querySelectorAll("svg [data-num]").forEach(area => {
+        area.setAttribute("fill", "#FFFFFF");
+        area.style.pointerEvents = "auto";
+    });
+}
+
 /* ----------------------
    BOTÓN INICIAR
 -----------------------*/
@@ -603,8 +629,6 @@ document.getElementById("start-btn").addEventListener("click", () => {
 document.querySelectorAll(".color-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         currentColor = btn.getAttribute("data-color");
-
-        // Visual feedback
         document.querySelectorAll(".color-btn").forEach(b => b.style.borderColor = "#333");
         btn.style.borderColor = "yellow";
     });
@@ -647,7 +671,12 @@ function checkIfFinished() {
 
 // ⭐ Mostrar botón reinicio
 function terminarJuego() {
+    const msg = document.getElementById("finish-message");
+    msg.style.display = "block";
     restartBtn.style.display = "inline-block";
+    setTimeout(() => {
+        msg.style.display = "none";
+    }, 3000);
 }	
 
 // ⭐ Reinicio del juego
@@ -659,6 +688,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
