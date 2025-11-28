@@ -614,30 +614,30 @@
 
 <script>
 // 🎮 Mostrar juego al presionar Start
-document.getElementById("start-btn").onclick = function(){
+<script>
+document.getElementById("start-btn").onclick = () => {
     document.getElementById("start-screen").style.display = "none";
-    document.querySelector(".svg-box").style.display = "flex";
-    document.querySelector(".palette").style.display = "flex";
     document.getElementById("title").style.display = "block";
+    document.getElementById("palette").style.display = "flex";
 };
 
-// 🎨 Sistema de coloreo
 let selectedColor = null;
+let selectedNum = null;
 
-document.querySelectorAll(".color-btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
+document.querySelectorAll(".color-btn").forEach(btn => {
+    btn.onclick = () => {
         selectedColor = btn.getAttribute("data-color");
-    });
+        selectedNum = btn.getAttribute("data-num");
+    };
 });
 
-document.querySelectorAll("[data-num]").forEach(area=>{
-    area.addEventListener("click", ()=>{
-        if(selectedColor && area.getAttribute("data-num") === selectedColor){
-            area.style.fill = btnColor(selectedColor);
+document.querySelectorAll("svg [data-num]").forEach(area => {
+    area.onclick = () => {
+        if(area.getAttribute("data-num") === selectedNum){
+            area.style.fill = selectedColor;
         }
-    });
+    };
 });
-
 // Colores reales según número
 function btnColor(n){
     const c = {
@@ -659,6 +659,7 @@ function btnColor(n){
 
 </body>
 </html>
+
 
 
 
