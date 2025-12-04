@@ -247,7 +247,7 @@ function startGame(){
 function startRound(){
   if(current>=emotions.length){ showResult(); return; }
   const emotion=emotions[current];
-  message.textContent="";
+  feedbackLine.textContent="";
   egg.style.display="none";
   setTimeout(()=>{ showEgg(emotion); },500);
 }
@@ -307,7 +307,7 @@ function showEgg(emotion){
             feedbackLine.textContent = `❌ Oops! Try again next time.`;
             feedbackLine.style.color = "#ff595e";
           }
-          document.getElementById("feedbackLine").textContent = feedbackLine.textContent;
+         //document.getElementById("feedbackLine").textContent = feedbackLine.textContent;
           egg.style.display = "none";
           current++;
           setTimeout(startRound,1000);
@@ -343,7 +343,7 @@ zones.forEach(zone=>{
       feedbackLine.textContent=`❌ Oops! Try again next time.`;
       feedbackLine.style.color="#ff595e";
     }
-    document.getElementById("feedbackLine").textContent = feedbackLine.textContent;
+   //document.getElementById("feedbackLine").textContent = feedbackLine.textContent;
     egg.style.display="none";
     current++;
     setTimeout(startRound,1000);
@@ -357,6 +357,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
