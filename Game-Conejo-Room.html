@@ -142,6 +142,17 @@
     overflow: hidden;
     transition: transform 0.3s ease, border-color 0.3s ease;
   }
+  .play-button {
+  position: absolute;
+  bottom: 5px;   /* esquina inferior */
+  right: 5px;    /* esquina derecha */
+  background: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px;
+}
 
   .dropzone img {
     width: 100%;
@@ -200,17 +211,45 @@
 </div>
 
 <div class="targets" id="targetArea">
-  <div class="dropzone" data-match="bedroom"><img src="bedroom.jpg" alt="bedroom"></div>
-  <div class="dropzone" data-match="bed"><img src="bed4.jpg" alt="bed"></div>
-  <div class="dropzone" data-match="chair"><img src="chair.jpg" alt="chair"></div>
-  <div class="dropzone" data-match="lamp"><img src="lamp.jpg" alt="lamp"></div>
-  <div class="dropzone" data-match="mat"><img src="mat.jpg" alt="mat"></div>
+  <div class="dropzone" data-match="bedroom"><img src="bedroom.jpg" alt="bedroom">
+      <button class="play-button" onclick="playAudio('bedroomAudio')">▶️</button>
+      <audio id="bedroomAudio" src="bedroom.mp3"></audio></div>
   
-  <div class="dropzone" data-match="pillow"><img src="pillow.jpg" alt="pillow"></div>
-  <div class="dropzone" data-match="table"><img src="table.jpg" alt="table"></div>
-  <div class="dropzone" data-match="share"><img src="share.jpg" alt="share"></div>
-  <div class="dropzone" data-match="teddy bear"><img src="teddy bear.jpg" alt="teddy bear"></div>
-  <div class="dropzone" data-match="toys"><img src="toys.jpg" alt="toys"></div>
+  <div class="dropzone" data-match="bed"><img src="bed4.jpg" alt="bed">
+      <button class="play-button" onclick="playAudio('bedAudio')">▶️</button>
+    <audio id="bedAudio" src="bed.mp3"></audio></div>
+  
+  <div class="dropzone" data-match="chair"><img src="chair.jpg" alt="chair">
+      <button class="play-button" onclick="playAudio('chairAudio')">▶️</button>
+      <audio id="chairAudio" src="chair.mp3"></audio></div>
+  
+  <div class="dropzone" data-match="lamp"><img src="lamp.jpg" alt="lamp">
+      <button class="play-button" onclick="playAudio('lampAudio')">▶️</button>
+      <audio id="lampAudio" src="lamp.mp3"></audio></div>
+  
+  <div class="dropzone" data-match="mat"><img src="mat.jpg" alt="mat">
+      <button class="play-button" onclick="playAudio('matAudio')">▶️</button>
+      <audio id="matAudio" src="mat.mp3"></audio></div>
+  
+  <div class="dropzone" data-match="pillow"><img src="pillow.jpg" alt="pillow">
+      <button class="play-button" onclick="playAudio('pillowAudio')">▶️</button>
+      <audio id="pillowAudio" src="pillow.mp3"></audio></div>
+  
+  <div class="dropzone" data-match="table"><img src="table.jpg" alt="table">
+      <button class="play-button" onclick="playAudio('tableAudio')">▶️</button>
+      <audio id="tableAudio" src="table.mp3"></audio></div>
+  
+  <div class="dropzone" data-match="share"><img src="share.jpg" alt="share">
+      <button class="play-button" onclick="playAudio('shareAudio')">▶️</button>
+      <audio id="shareAudio" src="share.mp3"></audio></div>
+  
+  <div class="dropzone" data-match="teddy bear"><img src="teddy bear.jpg" alt="teddy bear">
+      <button class="play-button" onclick="playAudio('teddyAudio')">▶️</button>
+      <audio id="teddyAudio" src="teddy-bear.mp3"></audio></div>
+  
+  <div class="dropzone" data-match="toys"><img src="toys.jpg" alt="toys">
+      <button class="play-button" onclick="playAudio('toysAudio')">▶️</button>
+      <audio id="toysAudio" src="toys.mp3"></audio></div>
 </div>
   
   <div class="feedback-line" id="feedbackLine"></div>
@@ -354,9 +393,17 @@ function showResult(){
   document.getElementById("finalScore").textContent=`You got ${score}/${emotions.length} correct!`;
   endScreen.style.display="flex";
 }
+  function playAudio(id) {
+  const audio = document.getElementById(id);
+  if (audio) {
+    audio.currentTime = 0; // reinicia si ya se estaba reproduciendo
+    audio.play();
+  }
+}
 </script>
 </body>
 </html>
+
 
 
 
