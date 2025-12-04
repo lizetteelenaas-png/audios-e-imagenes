@@ -83,6 +83,17 @@ h1 { color:var(--accent); margin:0 0 12px 0; text-align:center; }
   bottom: 20px;
   right: 20px;
 }
+  .play-button {
+  margin-left: 8px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
 #finalMessage { font-size:28px; font-weight:700; color:green; margin-top:12px; text-align:center; }
 
 @media (max-width: 600px) {
@@ -126,16 +137,16 @@ h1 { color:var(--accent); margin:0 0 12px 0; text-align:center; }
 <script>
 // Emotions and images
 const emotions = [
-  {name:"bedroom", img:"bedroom.jpg"},
-  {name:"bed", img:"bed4.jpg"},
-  {name:"chair", img:"chair4.jpg"},
-  {name:"lamp", img:"lamp4.jpg"},
-  {name:"mat", img:"mat4.jpg"},
-  {name:"pillow", img:"pillow4.jpg"},
-  {name:"table", img:"table4.jpg"},
-  {name:"share", img:"share4.jpg"},
-  {name:"teddy bear", img:"teddy4.jpg"},
-  {name:"toys", img:"toys4.jpg"}
+  {name:"bedroom", img:"bedroom.jpg", "bedroom.mp3"},
+  {name:"bed", img:"bed4.jpg", "bed.mp3"},
+  {name:"chair", img:"chair4.jpg", "char.mp3"},
+  {name:"lamp", img:"lamp4.jpg", "lamp.mp3"},
+  {name:"mat", img:"mat4.jpg", "mat.mp3"},
+  {name:"pillow", img:"pillow4.jpg", "pillow.mp3"},
+  {name:"table", img:"table4.jpg", "table.mp3"},
+  {name:"share", img:"share4.jpg", "share.mp3"},
+  {name:"teddy bear", img:"teddy4.jpg", "teddy-bear.mp3"},
+  {name:"toys", img:"toys4.jpg", "toys.mp3"}
 ];
 
 const allImages = emotions.map(e=>e.img);
@@ -160,7 +171,25 @@ function showNextEmotion(){
   }
 
   const emotion = emotions[currentIndex];
-  document.getElementById('emotionPrompt').textContent = `Word: ${emotion.name}`;
+  const promptEl = document.getElementById('emotionPrompt');
+promptEl.innerHTML = ''; // limpia
+
+// palabra
+const nameSpan = document.createElement('span');
+nameSpan.textContent = `Word: ${emotion.name}`;
+
+// botón de audio
+const btn = document.createElement('button');
+btn.className = 'play-button';
+btn.textContent = '🔊';
+
+if (emotion.audio) {
+  btn.addEventListener('click', () => playAudio(emotion.audio));
+}
+
+promptEl.appendChild(nameSpan);
+promptEl.appendChild(btn);
+
 
   const imageGrid = document.getElementById('imageChoices');
   imageGrid.innerHTML='';
@@ -219,10 +248,17 @@ function shuffle(array){
     [array[i],array[j]]=[array[j],array[i]];
   }
 }
+  function playAudio(src) {
+  const audio = new Audio(src);
+  audio.currentTime = 0;
+  audio.play();
+}
+
 </script>
 
 </body>
 </html>
+
 
 
 
