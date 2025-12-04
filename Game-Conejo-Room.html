@@ -84,7 +84,7 @@
     font-size: clamp(20px,4vw,28px);
     padding: clamp(12px,2vw,20px);
     margin: 10px auto;
-    width: 90%;
+    width: 70%;
     border-radius: 15px;
     box-shadow: 0 3px 5px rgba(0,0,0,0.1);
   }
@@ -276,7 +276,6 @@ function showEgg(emotion){
       document.ontouchend = null;
 
       let droppedOnZone = false;
-//<div class="instructions-line" id="instructionsLine">
       zones.forEach(zone=>{
         const rect = zone.getBoundingClientRect();
         const eggRect = egg.getBoundingClientRect();
@@ -296,12 +295,12 @@ function showEgg(emotion){
             message.textContent = `❌ Oops! Try again next time.`;
             message.style.color = "#ff595e";
           }
-
+          document.getElementById("instructionsLine").textContent = message.textContent;
           egg.style.display = "none";
           current++;
           setTimeout(startRound,1000);
         }
-      }); //</div>
+      }); 
 
       if(!droppedOnZone){
         egg.style.left = startLeft + "px";
@@ -332,6 +331,7 @@ zones.forEach(zone=>{
       message.textContent=`❌ Oops! Try again next time.`;
       message.style.color="#ff595e";
     }
+    document.getElementById("instructionsLine").textContent = message.textContent;
     egg.style.display="none";
     current++;
     setTimeout(startRound,1000);
@@ -345,6 +345,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
