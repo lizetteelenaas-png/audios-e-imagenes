@@ -102,37 +102,37 @@
 }
   
   /* Zanahoria */
-  .egg {
-    position: absolute;
-    font-weight: bold;
-    font-size: clamp(14px,3vw,22px);
-    color: #000;
-    display: flex;
-    z-index: 5;
-    width: clamp(170px,22vw,190px);   /* ancho */
-    height: clamp(170px,22vw,190px);  /* alto */
-    padding-top: 10px;
-    background-image: url("nube.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    text-align: center;
-    line-height: 1.2;
-    cursor: grab;
-    justify-content: center;
-    align-items: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .egg-container {
+.egg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(170px,22vw,190px);
+  height: clamp(170px,22vw,190px);
+  background-image: url("nube.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  font-size: clamp(14px,3vw,22px);
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  white-space: pre-line;
+  z-index: 5;
+}
+
+.egg-container {
   position: relative;
   width: 100%;
-  height: 200px; /* ajusta según tu diseño */
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 
   .targets {
     position: absolute;
@@ -191,11 +191,11 @@
   /* Ajuste responsivo para teléfonos */
   @media (max-width: 600px) {
     .egg {
-      width: 60px;
-      height: 80px;
-      font-size: 16px;
-       top: 55%;
-    }
+    width: 100px;
+    height: 100px;
+    font-size: 16px;
+    top: 50%;
+  }
      .egg-container {
     height: 160px;
   }
@@ -204,6 +204,7 @@
       height: 80px;
     }
   }
+
 </style>
 </head>
 <body>
@@ -419,6 +420,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
