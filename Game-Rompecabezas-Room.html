@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>🧩 Unit 2 My Room </title>
+<title>🧩 Unit 2, My Room </title>
 <style>
   :root{
     --accent:#0077b6;
@@ -109,6 +109,16 @@
   bottom: 20px;
   right: 20px;
 }
+  .play-button {
+  margin-left: 8px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
 
 
   @keyframes bounceIn {
@@ -209,17 +219,17 @@
 
 <script>
 const emotions = [
-  { name: "bedroom", img: "bedroom3.jpg" },
-  { name: "bed", img: "bed3.jpg" },
-  { name: "chair", img: "chair3.jpg" },
-  { name: "lamp", img: "lamp3.jpg" },
-  { name: "mat", img: "mat3.jpg" },
+  { name: "bedroom", img: "bedroom3.jpg", audio: "bedroom.mp3" },
+  { name: "bed", img: "bed3.jpg", audio: "bed.mp3" },
+  { name: "chair", img: "chair3.jpg", audio: "chair.mp3" },
+  { name: "lamp", img: "lamp3.jpg", audio: "lamp.mp3" },
+  { name: "mat", img: "mat3.jpg", audio: "mat.mp3" },
   
-  { name: "pillow", img: "pillow.jpg" },
-  { name: "table", img: "table2.jpg" },
-  { name: "share", img: "share3.jpg" },
-  { name: "teddy bear", img: "teddy2.jpg" },
-  { name: "toys", img: "toys3.jpg" }
+  { name: "pillow", img: "pillow.jpg", audio: "pillow.mp3" },
+  { name: "table", img: "table2.jpg", audio: "table.mp3" },
+  { name: "share", img: "share3.jpg", audio: "share.mp3" },
+  { name: "teddy bear", img: "teddy2.jpg", audio: "teddy-bear.mp3" },
+  { name: "toys", img: "toys3.jpg", audio: "toys.mp3" }
 ];
 
 const SIZE = 3;
@@ -242,7 +252,27 @@ function startGame(){
 
 function loadPuzzle(){
   const emo = emotions[current];
-  document.getElementById('emotionName').textContent = emo.name + " 😊";
+  const emotionTitle = document.getElementById('emotionName');
+emotionTitle.innerHTML = ''; // limpia el contenido anterior
+
+// Nombre de la emoción
+const nameSpan = document.createElement('span');
+nameSpan.textContent = emo.name + " 😊";
+
+// Botón de audio
+const btn = document.createElement('button');
+btn.className = 'play-button';
+btn.textContent = '🔊';
+
+// Conecta el botón al audio si existe
+if (emo.audio) {
+  btn.addEventListener('click', () => playAudio(emo.audio));
+}
+
+// Añade nombre y botón al contenedor
+emotionTitle.appendChild(nameSpan);
+emotionTitle.appendChild(btn);
+
   document.getElementById('message').style.display = 'none';
   board.innerHTML = '';
 
@@ -386,9 +416,15 @@ function shuffle(a){
     [a[i],a[j]]=[a[j],a[i]];
   }
 }
+  function playAudio(src) {
+  const audio = new Audio(src);
+  audio.currentTime = 0;
+  audio.play();
+}
 </script>
 </body>
 </html>
+
 
 
 
