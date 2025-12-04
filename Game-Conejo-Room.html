@@ -72,7 +72,7 @@
     bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
-    width: clamp(90px, 12vw, 140px);
+    width: clamp(120px, 15vw, 180px);
     z-index: 3;
   }
 
@@ -109,8 +109,8 @@
     color: #000;
     display: flex;
     z-index: 5;
-    width: clamp(40px,10vw,80px);   /* ancho */
-    height: clamp(60px,14vw,100px);  /* alto */
+    width: clamp(60px,12vw,100px);   /* ancho */
+    height: clamp(80px,16vw,120px);  /* alto */
     padding-top: 10px;
     background-image: url("nube.png");
     background-size: contain;
@@ -195,7 +195,7 @@
 
 <div class="start-screen" id="startScreen">
   <h1> 🛌🏻 Unit 2 My Room 🧸</h1>
-  <p>Help Bunny learn about her room in English!</p>
+  <p>Help bear learn about her room in English!</p>
   <button class="start-button" onclick="startGame()">Start Game</button>
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
@@ -404,4 +404,5 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
