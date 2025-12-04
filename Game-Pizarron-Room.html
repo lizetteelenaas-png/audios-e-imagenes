@@ -250,9 +250,6 @@
     <p style="color:#2c3e50;">Click to start your creative journey 🎨✨</p>
     <button onclick="openBook()">Start Game</button>
     <img src="osito.png" alt="teddy bear" class="cover-teddy">
-      <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
   </div>
 
   <div class="left-page">
@@ -289,16 +286,16 @@
 
 <script>
 const emotions = [
-  { name: "bedroom", img: "bedroom2.jpg", text: "Click and draw a bedroom. 💛", audio: "bedroom.mp3"  },
-  { name: "bed", img: "bed2.jpg", text: "Click and draw a bed. 💙" },
-  { name: "chair", img: "chair.jpg", text: "Click and draw a chair. ❤️" },
-  { name: "lamp", img: "lamp2.jpg", text: "Click and draw a lamp. 💜" },
-  { name: "mat", img: "mat2.jpg", text: "Click and draw a mat. 💚" },
-  { name: "pillow", img: "pillow.jpg", text: "Click and draw a pillow. 💤" },
-  { name: "table", img: "table2.jpg", text: "Click and draw a table. 🍽️" },
-  { name: "share", img: "share2.jpg", text: "Click and draw a share. 🤝" },
-  { name: "teddy bear", img: "teddy2.jpg", text: "Click and draw a teddy bear. 🧸" },
-  { name: "toys", img: "toys2.jpg", text: "Click and draw a toys. 🎲" }
+  { name: "bedroom", img: "bedroom2.jpg", text: "Click and draw a bedroom. 💛", audio: "bedroom.mp3" },
+  { name: "bed", img: "bed2.jpg", text: "Click and draw a bed. 💙",  audio: "bed.mp3" },
+  { name: "chair", img: "chair.jpg", text: "Click and draw a chair. ❤️",  audio: "chair.mp3" },
+  { name: "lamp", img: "lamp2.jpg", text: "Click and draw a lamp. 💜",  audio: "lamp.mp3" },
+  { name: "mat", img: "mat2.jpg", text: "Click and draw a mat. 💚",  audio: "mat.mp3" },
+  { name: "pillow", img: "pillow.jpg", text: "Click and draw a pillow. 💤",  audio: "pillow.mp3" },
+  { name: "table", img: "table2.jpg", text: "Click and draw a table. 🍽️",  audio: "table.mp3" },
+  { name: "share", img: "share2.jpg", text: "Click and draw a share. 🤝",  audio: "share.mp3" },
+  { name: "teddy bear", img: "teddy2.jpg", text: "Click and draw a teddy bear. 🧸",  audio: "teddy-bear.mp3" },
+  { name: "toys", img: "toys2.jpg", text: "Click and draw a toys. 🎲",  audio: "toys.mp3" }
 ];
 
   function playAudio(src) {
@@ -452,6 +449,7 @@ window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
 </body>
 </html>
+
 
 
 
