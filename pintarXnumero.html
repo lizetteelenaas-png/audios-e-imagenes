@@ -81,6 +81,11 @@
         margin: auto;   
        /* display: none;  ocultos al inicio */
     }
+	.cover-teddy {
+  display: block;
+  margin: 20px auto 0 auto; /* espacio arriba y centrado */
+  width: 250px;
+}
 
     /* Botones */
     #restart-btn {
@@ -138,9 +143,7 @@
     <h1>🎨 Unit 2 My Room </h1>
 	<h2> Color each part of the drawing according to its corresponding number. </h2>
     <button id="start-btn">Start Game</button>
-	  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+	<img src="osito.png" alt="teddy bear" class="cover-teddy">
 </div>
 	
 <div id="game-area" style="display:none;">
@@ -754,6 +757,7 @@ restartBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
