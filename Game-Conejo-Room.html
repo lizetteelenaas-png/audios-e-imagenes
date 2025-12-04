@@ -225,7 +225,7 @@
 let emotions=["bedroom","bed","chair","lamp","mat","pillow","table","share","teddy bear","toys"];
 const bunny=document.getElementById("bunny");
 const egg=document.getElementById("egg");
-const message=document.getElementById("message");
+const feedbackLine=document.getElementById("feedbackLine");
 const zones=document.querySelectorAll(".dropzone");
 const startScreen=document.getElementById("startScreen");
 const endScreen=document.getElementById("endScreen");
@@ -300,14 +300,14 @@ function showEgg(emotion){
 
           if(zone.dataset.match === draggingWord){
             score++;
-            message.textContent = `✅ Correct! (${score}/${emotions.length})`;
-            message.style.color = "#00a86b";
+            feedback.textContent = `✅ Correct! (${score}/${emotions.length})`;
+            feedback.style.color = "#00a86b";
             zone.classList.add("correct");
           } else {
-            message.textContent = `❌ Oops! Try again next time.`;
-            message.style.color = "#ff595e";
+            feedback.textContent = `❌ Oops! Try again next time.`;
+            feedback.style.color = "#ff595e";
           }
-          document.getElementById("feedbackLine").textContent = message.textContent;
+          document.getElementById("feedbackLine").textContent = feedback.textContent;
           egg.style.display = "none";
           current++;
           setTimeout(startRound,1000);
@@ -336,14 +336,14 @@ zones.forEach(zone=>{
     const correctWord=zone.dataset.match;
     if(draggingWord===correctWord){
       score++;
-      message.textContent=`✅ Correct! (${score}/${emotions.length})`;
-      message.style.color="#00a86b";
+      feedback.textContent=`✅ Correct! (${score}/${emotions.length})`;
+      feedback.style.color="#00a86b";
       zone.classList.add("correct");
     } else {
-      message.textContent=`❌ Oops! Try again next time.`;
-      message.style.color="#ff595e";
+      feedback.textContent=`❌ Oops! Try again next time.`;
+      feedback.style.color="#ff595e";
     }
-    document.getElementById("feedbackLine").textContent = message.textContent;
+    document.getElementById("feedbackLine").textContent = feedback.textContent;
     egg.style.display="none";
     current++;
     setTimeout(startRound,1000);
@@ -357,6 +357,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
