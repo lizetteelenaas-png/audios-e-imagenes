@@ -89,6 +89,18 @@
     font-weight: 600;
     animation: hintPulse 3s infinite;
   }
+  .cover-teddy {
+  display: block;
+  margin: 20px auto 0 auto; /* espacio arriba y centrado */
+  width: 250px;
+}
+
+.final-teddy {
+  width: 250px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
   #finalMessage {
     font-size: 32px;
     font-weight: 700;
@@ -147,9 +159,7 @@
   <p>Find all the matching pairs of images</p>
   <p><strong>If you need help, press the hint button 💡</strong></p>
   <button class="btn" onclick="startGame()">Start Game</button>
-    <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+  <img src="osito.png" alt="teddy bear" class="cover-teddy">
 </div>
 
 <!-- Game -->
@@ -159,6 +169,7 @@
   <div id="message" style="display:none;">
     <div id="finalMessage"></div>
     <button class="btn" onclick="startGame()">🔄 Play Again</button>
+    <img src="osito.png" alt="teddy bear" class="cover-teddy">
   </div>
 </div>
 
@@ -281,6 +292,7 @@ function showFinalMessage(){
 </script>
 </body>
 </html>
+
 
 
 
