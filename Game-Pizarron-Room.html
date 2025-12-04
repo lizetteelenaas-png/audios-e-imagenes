@@ -270,7 +270,7 @@
 
 <script>
 const emotions = [
-  { name: "bedroom", img: "bedroom2.jpg", text: "Click and draw a bedroom. 💛" },
+  { name: "bedroom", img: "bedroom2.jpg", text: "Click and draw a bedroom. 💛", audio: "bedroom.mp3"  },
   { name: "bed", img: "bed2.jpg", text: "Click and draw a bed. 💙" },
   { name: "chair", img: "chair.jpg", text: "Click and draw a chair. ❤️" },
   { name: "lamp", img: "lamp2.jpg", text: "Click and draw a lamp. 💜" },
@@ -281,6 +281,11 @@ const emotions = [
   { name: "teddy bear", img: "teddy2.jpg", text: "Click and draw a teddy bear. 🧸" },
   { name: "toys", img: "toys2.jpg", text: "Click and draw a toys. 🎲" }
 ];
+
+  function playAudio(src) {
+  const audio = new Audio(src);
+  audio.play();
+}
 
 let current = 0;
 let drawings = new Array(emotions.length).fill(null);
@@ -303,14 +308,14 @@ function showPage() {
   const e = emotions[current];
   emotionName.textContent = e.name;
   emotionImage.src = e.img;
+  emotionName.innerHTML = `
+    <div class="word-audio">
+      <span>${e.name}</span>
+      <button onclick="playAudio('${e.audio}')">🔊</button>
+    </div>
+  `;
   instructions.innerHTML = `✏️ ${e.text}`;
-    // Reproduce el audio automáticamente
-  const audioId = e.name.toLowerCase().replace(/\s+/g, '-') + '-audio';
-  const audio = document.getElementById(audioId);
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play();
-  }
+}
   if(drawings[current]) {
     const img = new Image();
     img.src = drawings[current];
@@ -409,18 +414,9 @@ function centerEmotionImage() {
 window.addEventListener("resize", centerEmotionImage);
 window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
-<audio id="bedroom-audio" src="bedroom.mp3"></audio>
-<audio id="bed-audio" src="bed.mp3"></audio>
-<audio id="chair-audio" src="chair.mp3"></audio>
-<audio id="lamp-audio" src="lamp.mp3"></audio>
-<audio id="mat-audio" src="mat.mp3"></audio>
-<audio id="pillow-audio" src="pillow.mp3"></audio>
-<audio id="table-audio" src="table.mp3"></audio>
-<audio id="share-audio" src="share.mp3"></audio>
-<audio id="teddy-bear-audio" src="teddy-bear.mp3"></audio>
-<audio id="toys-audio" src="toys.mp3"></audio>
 </body>
 </html>
+
 
 
 
