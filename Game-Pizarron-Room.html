@@ -304,6 +304,13 @@ function showPage() {
   emotionName.textContent = e.name;
   emotionImage.src = e.img;
   instructions.innerHTML = `✏️ ${e.text}`;
+    // Reproduce el audio automáticamente
+  const audioId = e.name.toLowerCase().replace(/\s+/g, '-') + '-audio';
+  const audio = document.getElementById(audioId);
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
   if(drawings[current]) {
     const img = new Image();
     img.src = drawings[current];
@@ -402,9 +409,19 @@ function centerEmotionImage() {
 window.addEventListener("resize", centerEmotionImage);
 window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
-
+<audio id="bedroom-audio" src="bedroom.mp3"></audio>
+<audio id="bed-audio" src="bed.mp3"></audio>
+<audio id="chair-audio" src="chair.mp3"></audio>
+<audio id="lamp-audio" src="lamp.mp3"></audio>
+<audio id="mat-audio" src="mat.mp3"></audio>
+<audio id="pillow-audio" src="pillow.mp3"></audio>
+<audio id="table-audio" src="table.mp3"></audio>
+<audio id="share-audio" src="share.mp3"></audio>
+<audio id="teddy-bear-audio" src="teddy-bear.mp3"></audio>
+<audio id="toys-audio" src="toys.mp3"></audio>
 </body>
 </html>
+
 
 
 
