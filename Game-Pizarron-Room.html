@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📖 Unit 2, My Room </title>
+<title>📖 Unit 2 My Room </title>
 <style>
   body {
     margin: 0;
@@ -257,6 +257,7 @@
 
   <div class="left-page">
      <img id="emotionImage" class="emotion-img" src="happy.png" alt="emotion">
+    <h2 id="emotionName">Happy</h2>
     <div id="wordAudio" class="word-audio"></div>
 
   </div>
@@ -330,14 +331,11 @@ function openBook() {
 
 function showPage() {
   const e = emotions[current];
-  emotionName.textContent = e.name;
   emotionImage.src = e.img;
   instructions.innerHTML = `✏️ ${e.text}`;
 
-  
-  // Contenedor de palabra + botón
   const container = document.getElementById('wordAudio');
-  container.textContent = ''; // limpia
+  container.textContent = '';
 
   const nameSpan = document.createElement('span');
   nameSpan.textContent = e.name;
@@ -346,23 +344,24 @@ function showPage() {
   btn.className = 'play-button';
   btn.textContent = '🔊';
 
-  // Si el objeto tiene audio, conecta el botón
   if (e.audio) {
     btn.addEventListener('click', () => playAudio(e.audio));
   }
 
   container.appendChild(nameSpan);
   container.appendChild(btn);
-  
-  if(drawings[current]) {
+
+  if (drawings[current]) {
     const img = new Image();
     img.src = drawings[current];
-    img.onload = () => ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   } else {
     clearCanvas();
   }
+
   message.textContent = "";
 }
+
 
 function nextPage() { 
   if(current < emotions.length-1){
@@ -454,6 +453,7 @@ window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
 </body>
 </html>
+
 
 
 
