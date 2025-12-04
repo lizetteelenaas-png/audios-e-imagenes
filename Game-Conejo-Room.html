@@ -107,7 +107,7 @@
     font-weight: bold;
     font-size: clamp(14px,3vw,22px);
     color: #000;
-    display: none;
+    display: flex;
     z-index: 5;
     width: clamp(40px,10vw,80px);   /* ancho */
     height: clamp(60px,14vw,100px);  /* alto */
@@ -116,11 +116,11 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
-    /* border: 4px solid gold;  <- quitado */
-    /* border-radius: 50% / 60%; <- quitado */
     text-align: center;
     line-height: 1.2;
     cursor: grab;
+    justify-content: center;
+    align-items: center;
   }
 
   .targets {
@@ -201,7 +201,7 @@
 
 <div class="targets" id="targetArea">
   <div class="dropzone" data-match="bedroom"><img src="bedroom.jpg" alt="bedroom"></div>
-  <div class="dropzone" data-match="bed"><img src="bed.jpg" alt="bed"></div>
+  <div class="dropzone" data-match="bed"><img src="bed4.jpg" alt="bed"></div>
   <div class="dropzone" data-match="chair"><img src="chair.jpg" alt="chair"></div>
   <div class="dropzone" data-match="lamp"><img src="lamp.jpg" alt="lamp"></div>
   <div class="dropzone" data-match="mat"><img src="mat.jpg" alt="mat"></div>
@@ -357,6 +357,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
