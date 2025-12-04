@@ -89,11 +89,16 @@
     box-shadow: 0 3px 5px rgba(0,0,0,0.1);
   }
 .feedback-line {
-  text-align: center;
-  font-size: clamp(20px,5vw,30px);
-  margin-top: 10px;
-  color: #6a0572;
-  font-weight: bold;
+    text-align: center;
+    background-color: #fffce1;
+    border: 2px dashed #f8c537;
+    color: #6a0572;
+    font-size: clamp(20px,4vw,28px);
+    padding: clamp(12px,2vw,20px);
+    margin: 10px auto;
+    width: 50%;
+    border-radius: 15px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
 }
   
   /* Zanahoria */
@@ -188,7 +193,6 @@
 <div class="instructions-line" id="instructionsLine">
  🛌🏻  Drag and Drop 🧸
 </div>
-  <div class="feedback-line" id="feedbackLine"></div>
 
 <div class="game-area" id="gameArea">
   <img src="conejo.png" class="bunny" id="bunny" alt="bunny">
@@ -208,9 +212,10 @@
   <div class="dropzone" data-match="teddy bear"><img src="teddy bear.jpg" alt="teddy bear"></div>
   <div class="dropzone" data-match="toys"><img src="toys.jpg" alt="toys"></div>
 </div>
-
+  
+  <div class="feedback-line" id="feedbackLine"></div>
+  
 <div class="message" id="message"></div>
-
 <div class="end-screen" id="endScreen" style="display:none;">
   <h1>🎉 Great Job! 🎉</h1>
   <p id="finalScore"></p>
@@ -353,6 +358,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
