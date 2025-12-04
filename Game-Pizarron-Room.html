@@ -308,12 +308,6 @@ function showPage() {
   const e = emotions[current];
   emotionName.textContent = e.name;
   emotionImage.src = e.img;
-  emotionName.innerHTML = `
-    <div class="word-audio">
-      <span>${e.name}</span>
-      <button onclick="playAudio('${e.audio}')">🔊</button>
-    </div>
-  `;
   instructions.innerHTML = `✏️ ${e.text}`;
 }
   if(drawings[current]) {
@@ -416,6 +410,7 @@ window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
 </body>
 </html>
+
 
 
 
