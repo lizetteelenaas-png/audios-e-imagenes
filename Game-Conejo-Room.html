@@ -300,14 +300,14 @@ function showEgg(emotion){
 
           if(zone.dataset.match === draggingWord){
             score++;
-            feedback.textContent = `✅ Correct! (${score}/${emotions.length})`;
-            feedback.style.color = "#00a86b";
+            feedbackLine.textContent = `✅ Correct! (${score}/${emotions.length})`;
+            feedbackLine.style.color = "#00a86b";
             zone.classList.add("correct");
           } else {
-            feedback.textContent = `❌ Oops! Try again next time.`;
-            feedback.style.color = "#ff595e";
+            feedbackLine.textContent = `❌ Oops! Try again next time.`;
+            feedbackLine.style.color = "#ff595e";
           }
-          document.getElementById("feedbackLine").textContent = feedback.textContent;
+          document.getElementById("feedbackLine").textContent = feedbackLine.textContent;
           egg.style.display = "none";
           current++;
           setTimeout(startRound,1000);
@@ -336,14 +336,14 @@ zones.forEach(zone=>{
     const correctWord=zone.dataset.match;
     if(draggingWord===correctWord){
       score++;
-      feedback.textContent=`✅ Correct! (${score}/${emotions.length})`;
-      feedback.style.color="#00a86b";
+      feedbackLine.textContent=`✅ Correct! (${score}/${emotions.length})`;
+      feedbackLine.style.color="#00a86b";
       zone.classList.add("correct");
     } else {
-      feedback.textContent=`❌ Oops! Try again next time.`;
-      feedback.style.color="#ff595e";
+      feedbackLine.textContent=`❌ Oops! Try again next time.`;
+      feedbackLine.style.color="#ff595e";
     }
-    document.getElementById("feedbackLine").textContent = feedback.textContent;
+    document.getElementById("feedbackLine").textContent = feedbackLine.textContent;
     egg.style.display="none";
     current++;
     setTimeout(startRound,1000);
@@ -357,6 +357,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
