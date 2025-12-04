@@ -191,6 +191,24 @@
   margin: 15px auto;
   display: block;
 }
+  .word-audio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.play-button {
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
 
 
   @keyframes fadeIn {
@@ -240,6 +258,8 @@
   <div class="left-page">
      <img id="emotionImage" class="emotion-img" src="happy.png" alt="emotion">
     <h2 id="emotionName">Happy</h2>
+    <div id="wordAudio" class="word-audio"></div>
+
   </div>
 
   <div class="right-page">
@@ -310,6 +330,26 @@ function showPage() {
   emotionImage.src = e.img;
   instructions.innerHTML = `✏️ ${e.text}`;
 }
+  
+  // Contenedor de palabra + botón
+  const container = document.getElementById('wordAudio');
+  container.textContent = ''; // limpia
+
+  const nameSpan = document.createElement('span');
+  nameSpan.textContent = e.name;
+
+  const btn = document.createElement('button');
+  btn.className = 'play-button';
+  btn.textContent = '🔊';
+
+  // Si el objeto tiene audio, conecta el botón
+  if (e.audio) {
+    btn.addEventListener('click', () => playAudio(e.audio));
+  }
+
+  container.appendChild(nameSpan);
+  container.appendChild(btn);
+  
   if(drawings[current]) {
     const img = new Image();
     img.src = drawings[current];
@@ -410,6 +450,7 @@ window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
 </body>
 </html>
+
 
 
 
