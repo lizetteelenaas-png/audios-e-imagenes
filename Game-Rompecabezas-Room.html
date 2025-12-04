@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>🧩 Unit 2 My Room </title>
+<title>🧩 Unit 2. My Room </title>
 <style>
   :root{
     --accent:#0077b6;
@@ -97,6 +97,20 @@
     font-size:24px;
     animation: bounceIn 0.5s ease;
   }
+  .cover-teddy {
+  width: 120px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.final-teddy {
+  width: 120px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
 
   @keyframes bounceIn {
     0% {transform: scale(0.5); opacity:0;}
@@ -163,9 +177,7 @@
   <h1>🧩 Unit 2 My Room </h1>
   <p>Drag the pieces and complete. </p>
   <button class="btn" onclick="startGame()">Start Game</button>
-    <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+  <img src="osito.png" alt="teddy bear" class="cover-teddy">
 </div>
 
 <!-- Game -->
@@ -192,6 +204,7 @@
   <div id="finalGallery" style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:12px;"></div>
   <div style="margin-top:12px;">
     <button class="btn" onclick="restart()">Play Again</button>
+    <img src="osito.png" alt="teddy bear" class="cover-teddy">
   </div>
 </div>
 
@@ -377,6 +390,7 @@ function shuffle(a){
 </script>
 </body>
 </html>
+
 
 
 
