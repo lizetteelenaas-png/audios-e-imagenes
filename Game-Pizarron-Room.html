@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📖 Unit 2 My Room </title>
+<title>📖 Unit 2, My Room </title>
 <style>
   body {
     margin: 0;
@@ -257,7 +257,6 @@
 
   <div class="left-page">
      <img id="emotionImage" class="emotion-img" src="happy.png" alt="emotion">
-    <h2 id="emotionName">Happy</h2>
     <div id="wordAudio" class="word-audio"></div>
 
   </div>
@@ -322,14 +321,19 @@ const gallery = document.getElementById("gallery");
 const finalMessage = document.getElementById("finalMessage");
 let drawing = false;
 
-function openBook() { cover.style.display = "none"; }
+function openBook() { 
+    cover.style.display = "none";              
+  document.getElementById("book").classList.add("open"); 
+  current = 0;                        
+  showPage();    
+}
 
 function showPage() {
   const e = emotions[current];
   emotionName.textContent = e.name;
   emotionImage.src = e.img;
   instructions.innerHTML = `✏️ ${e.text}`;
-}
+
   
   // Contenedor de palabra + botón
   const container = document.getElementById('wordAudio');
@@ -450,6 +454,7 @@ window.addEventListener("load", () => { showPage(); centerEmotionImage(); });
 </script>
 </body>
 </html>
+
 
 
 
