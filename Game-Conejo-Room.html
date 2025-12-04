@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🛌🏻My Room🧸</title>
+<title>🛌🏻 Unit 2 My Room 🧸</title>
 <style>
   body {
     margin: 0;
@@ -170,7 +170,7 @@
 <body>
 
 <div class="start-screen" id="startScreen">
-  <h1> 🛌🏻My Room 🧸</h1>
+  <h1> 🛌🏻 Unit 2 My Room 🧸</h1>
   <p>Help Bunny learn about her room in English!</p>
   <button class="start-button" onclick="startGame()">Start Game</button>
   <audio id="bgMusic" loop>
@@ -179,7 +179,7 @@
 </div>
 
 <div class="instructions-line" id="instructionsLine">
- 🛌🏻 Read the word and drag it to the correct image! 🧸
+ 🛌🏻  Drag and Drop 🧸
 </div>
 
 <div class="game-area" id="gameArea">
@@ -276,7 +276,7 @@ function showEgg(emotion){
       document.ontouchend = null;
 
       let droppedOnZone = false;
-
+<div class="instructions-line" id="instructionsLine">
       zones.forEach(zone=>{
         const rect = zone.getBoundingClientRect();
         const eggRect = egg.getBoundingClientRect();
@@ -301,7 +301,7 @@ function showEgg(emotion){
           current++;
           setTimeout(startRound,1000);
         }
-      });
+      }); </div>
 
       if(!droppedOnZone){
         egg.style.left = startLeft + "px";
@@ -345,6 +345,7 @@ function showResult(){
 </script>
 </body>
 </html>
+
 
 
 
